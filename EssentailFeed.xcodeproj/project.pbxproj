@@ -10,6 +10,7 @@
 		A67EAA5F2ADF759200245BD2 /* EssentailFeed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A67EAA562ADF759200245BD2 /* EssentailFeed.framework */; };
 		A67EAA642ADF759200245BD2 /* EssentailFeedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A67EAA632ADF759200245BD2 /* EssentailFeedTests.swift */; };
 		A67EAA652ADF759200245BD2 /* EssentailFeed.h in Headers */ = {isa = PBXBuildFile; fileRef = A67EAA592ADF759200245BD2 /* EssentailFeed.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A67EAA6F2ADF759A00245BD2 /* FeedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A67EAA6E2ADF759A00245BD2 /* FeedItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,6 +28,7 @@
 		A67EAA592ADF759200245BD2 /* EssentailFeed.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EssentailFeed.h; sourceTree = "<group>"; };
 		A67EAA5E2ADF759200245BD2 /* EssentailFeedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EssentailFeedTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A67EAA632ADF759200245BD2 /* EssentailFeedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EssentailFeedTests.swift; sourceTree = "<group>"; };
+		A67EAA6E2ADF759A00245BD2 /* FeedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +72,7 @@
 			isa = PBXGroup;
 			children = (
 				A67EAA592ADF759200245BD2 /* EssentailFeed.h */,
+				A67EAA6E2ADF759A00245BD2 /* FeedItem.swift */,
 			);
 			path = EssentailFeed;
 			sourceTree = "<group>";
@@ -144,6 +147,7 @@
 				TargetAttributes = {
 					A67EAA552ADF759200245BD2 = {
 						CreatedOnToolsVersion = 14.1;
+						LastSwiftMigration = 1410;
 					};
 					A67EAA5D2ADF759200245BD2 = {
 						CreatedOnToolsVersion = 14.1;
@@ -191,6 +195,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A67EAA6F2ADF759A00245BD2 /* FeedItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -335,6 +340,7 @@
 		A67EAA692ADF759200245BD2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -356,6 +362,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -363,6 +370,7 @@
 		A67EAA6A2ADF759200245BD2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -391,6 +399,7 @@
 		A67EAA6C2ADF759200245BD2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = JFZ2LR645L;
@@ -406,6 +415,7 @@
 		A67EAA6D2ADF759200245BD2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = JFZ2LR645L;
