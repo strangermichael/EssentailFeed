@@ -17,7 +17,7 @@ class HTTPClient {
 
 final class RemoteFeedLoaderTests: XCTestCase {
   
-  func test_init() {
+  func test_init_notDoNetworkRequest() {
     let _ = RemoteFeedLoader()
     let client = HTTPClient()
     XCTAssertNil(client.requestedURL)
