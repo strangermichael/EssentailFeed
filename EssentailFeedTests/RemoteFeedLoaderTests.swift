@@ -37,23 +37,27 @@ final class RemoteFeedLoaderTests: XCTestCase {
   
   //naming rule:  test + actionName + result
   func test_init_notDoNetworkRequest() {
-    let url = URL(string: "a-url.com")!
-    let client = HTTPClientSpy()
-    let _ = RemoteFeedLoader(client: client, url: url)
+    let (_, client) = makeSUT()
     XCTAssertNil(client.requestedURL)
   }
   
   func test_load_requestDataFromURL() {
     //Arrange
-    let url = URL(string: "a-url.com")!
-    let client = HTTPClientSpy()
-    let sut = RemoteFeedLoader(client: client, url: url)
+    let url = URL(string: "https://url.com")!
+    let (sut, client) = makeSUT(url: url)
     
     //Act
     sut.load()
     
     //Assert
     XCTAssertEqual(client.requestedURL, url)
+  }
+  
+  //MARK: - Helper
+  func makeSUT(url: URL = URL(string: "https://a-url.com")!) -> (sut: RemoteFeedLoader, client: HTTPClientSpy) {
+    let client = HTTPClientSpy()
+    let sut = RemoteFeedLoader(client: client, url: url)
+    return (sut, client)
   }
   
 }
