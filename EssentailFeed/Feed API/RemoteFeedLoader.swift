@@ -7,16 +7,6 @@
 
 import Foundation
 
-public enum HTTPClientResult {
-  case success(HTTPURLResponse, Data)
-  case failure(Error)
-}
-
-public protocol HTTPClient {
-  //shouldn't use RemoteFeedLoader.Error here, since it's domain error
-  func get(from url: URL, completion: @escaping (HTTPClientResult) -> Void)
-}
-
 public final class RemoteFeedLoader {
   private let client: HTTPClient
   private let url: URL
@@ -50,31 +40,4 @@ public final class RemoteFeedLoader {
       }
     }
   }
-}
-
-private class FeedItemMapper {
-  static var okCode = 200
-  
-  static func map(_ data: Data, _ response: HTTPURLResponse) throws -> [FeedItem] {
-    guard response.statusCode == okCode else {
-      throw RemoteFeedLoader.Error.invalidData
-    }
-    return try JSONDecoder().decode(Root.self, from: data).items.map { $0.item }
-  }
-  
-  private struct Root: Decodable {
-    let items: [Item]
-  }
-
-  private struct Item: Decodable {
-    public let id: UUID
-    public let description: String?
-    public let location: String?
-    public let image: URL
-    
-    var item: FeedItem {
-      FeedItem(id: id, description: description, location: location, imageURL: image)
-    }
-  }
-
 }
