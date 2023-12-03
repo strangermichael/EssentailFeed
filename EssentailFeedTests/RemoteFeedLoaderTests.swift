@@ -22,7 +22,7 @@ final class RemoteFeedLoaderTests: XCTestCase {
     let (sut, client) = makeSUT(url: url)
     
     //Act
-    sut.load()
+    sut.load { _ in }
     
     //Assert
     XCTAssertEqual(client.requestedURLs, [url])
@@ -33,8 +33,8 @@ final class RemoteFeedLoaderTests: XCTestCase {
     let url = URL(string: "https://url.com")!
     let (sut, client) = makeSUT(url: url)
     
-    sut.load()
-    sut.load()
+    sut.load { _ in }
+    sut.load { _ in }
     
     XCTAssertEqual(client.requestedURLs, [url, url])
   }
@@ -59,16 +59,18 @@ final class RemoteFeedLoaderTests: XCTestCase {
   }
   
   class HTTPClientSpy: HTTPClient {
-    var requestedURLs: [URL] = []
-    var completions: [(Error) -> Void] = []
+    var requestedURLs: [URL] {
+      messages.map { $0.url }
+    }
+    
+    var messages: [(url: URL, completion: (Error) -> Void)] = []
     
     func get(from url: URL, completion: @escaping (Error) -> Void) {
-      completions.append(completion)
-      requestedURLs.append(url)
+      messages.append((url, completion))
     }
     
     func complete(error: Error, at index: Int) {
-      completions[index](error)
+      messages[index].completion(error)
     }
   }
 }
