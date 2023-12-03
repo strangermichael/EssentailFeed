@@ -41,37 +41,27 @@ final class RemoteFeedLoaderTests: XCTestCase {
   
   func test_load_deliverErrorOnClientError() {
     let (sut, client) = makeSUT()
-    
-    var capturedErrors: [RemoteFeedLoader.Error] = []
-    sut.load {
-      capturedErrors.append($0)
+    except(sut: sut, toCompleteWithError: .connectivity) {
+      client.complete(error: NSError(domain: "Test", code: 0), at: 0)
     }
-    client.complete(error: NSError(domain: "Test", code: 0), at: 0)
-    
-    XCTAssertEqual(capturedErrors, [.connectivity])
   }
   
   func test_load_deliverErrorOnNon200HTTPResponse() {
     let (sut, client) = makeSUT()
     let samples = [199, 201, 300, 400, 500]
     samples.enumerated().forEach { index, code in
-      var capturedErrors: [RemoteFeedLoader.Error] = []
-      sut.load { capturedErrors.append($0) }
-      client.complete(withStatusCode: code, data: Data(), at: index)
-      XCTAssertEqual(capturedErrors, [.invalidData])
+      except(sut: sut, toCompleteWithError: .invalidData) {
+        client.complete(withStatusCode: code, data: Data(), at: index)
+      }
     }
   }
   
   func test_load_deliverErrorOn200ResponeWithInvalidJSON() {
     let (sut, client) = makeSUT()
     let invalidData = Data("invalid json".utf8)
-    
-    var capturedErrors: [RemoteFeedLoader.Error] = []
-    sut.load {
-      capturedErrors.append($0)
+    except(sut: sut, toCompleteWithError: .invalidData) {
+      client.complete(withStatusCode: 200, data: invalidData, at: 0)
     }
-    client.complete(withStatusCode: 200, data: invalidData, at: 0)
-    XCTAssertEqual(capturedErrors, [.invalidData])
   }
   
   //MARK: - Helper
@@ -79,6 +69,15 @@ final class RemoteFeedLoaderTests: XCTestCase {
     let client = HTTPClientSpy()
     let sut = RemoteFeedLoader(client: client, url: url)
     return (sut, client)
+  }
+  
+  func except(sut: RemoteFeedLoader, toCompleteWithError error: RemoteFeedLoader.Error, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
+    var capturedErrors: [RemoteFeedLoader.Error] = []
+    sut.load {
+      capturedErrors.append($0)
+    }
+    action()
+    XCTAssertEqual(capturedErrors, [error], file: file, line: line) //to report exact line and file
   }
   
   class HTTPClientSpy: HTTPClient {
