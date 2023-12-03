@@ -8,14 +8,6 @@
 import XCTest
 import EssentailFeed
 
-class HTTPClientSpy: HTTPClient {
-  var requestedURLs: [URL] = []
-  
-  func get(from url: URL) {
-    requestedURLs.append(url)
-  }
-}
-
 final class RemoteFeedLoaderTests: XCTestCase {
   
   //naming rule:  test + actionName + result
@@ -54,4 +46,11 @@ final class RemoteFeedLoaderTests: XCTestCase {
     return (sut, client)
   }
   
+  class HTTPClientSpy: HTTPClient {
+    var requestedURLs: [URL] = []
+    
+    func get(from url: URL) {
+      requestedURLs.append(url)
+    }
+  }
 }
