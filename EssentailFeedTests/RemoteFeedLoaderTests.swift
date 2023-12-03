@@ -9,10 +9,10 @@ import XCTest
 import EssentailFeed
 
 class HTTPClientSpy: HTTPClient {
-  var requestedURL: URL?
+  var requestedURLs: [URL] = []
   
   func get(from url: URL) {
-    requestedURL = url
+    requestedURLs.append(url)
   }
 }
 
@@ -21,7 +21,7 @@ final class RemoteFeedLoaderTests: XCTestCase {
   //naming rule:  test + actionName + result
   func test_init_notDoNetworkRequest() {
     let (_, client) = makeSUT()
-    XCTAssertNil(client.requestedURL)
+    XCTAssertEqual(client.requestedURLs, [])
   }
   
   func test_load_requestDataFromURL() {
@@ -33,7 +33,18 @@ final class RemoteFeedLoaderTests: XCTestCase {
     sut.load()
     
     //Assert
-    XCTAssertEqual(client.requestedURL, url)
+    XCTAssertEqual(client.requestedURLs, [url])
+  }
+  
+  
+  func test_loadTwice_requestDataTwice() {
+    let url = URL(string: "https://url.com")!
+    let (sut, client) = makeSUT(url: url)
+    
+    sut.load()
+    sut.load()
+    
+    XCTAssertEqual(client.requestedURLs, [url, url])
   }
   
   //MARK: - Helper
