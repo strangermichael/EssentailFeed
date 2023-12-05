@@ -7,15 +7,11 @@
 
 import Foundation
 
-/*
-  Feed app要load Feed数据, 结果可能成功或失败
- */
-
-enum LoadFeedResult {
+public enum LoadFeedResult {
   case success([FeedItem])
-  case fail(Error)
+  case failure(Error)
 }
 
-protocol FeedLoader {
-  func loadFeed(completion: @escaping (LoadFeedResult) -> Void)
+public protocol FeedLoader {
+  func load(completion: @escaping (LoadFeedResult) -> Void)
 }
