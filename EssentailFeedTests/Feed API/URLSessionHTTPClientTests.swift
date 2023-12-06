@@ -39,7 +39,10 @@ class URLSessionHTTPClientTests: XCTestCase {
     sut.get(from: url) { result in
       switch result {
       case let .failure(recivedError as NSError):
-        XCTAssertEqual(recivedError, error)
+        //Since iOS 14, URLSession replaces received errors with a new error instance containing the data task in the  userInfo dictionary.
+        //So we cannot compare the errors for equality anymore:
+        XCTAssertEqual(recivedError.code, error.code)
+        XCTAssertEqual(recivedError.domain, error.domain)
       default:
         XCTFail("Expect failure with error:\(error), got: \(result)")
       }
@@ -82,6 +85,14 @@ class URLSessionHTTPClientTests: XCTestCase {
     
     override func startLoading() {
       guard let url = request.url, let stub = URLProtocolStub.stubs[url] else { return }
+      if let data = stub.data {
+        client?.urlProtocol(self, didLoad: data)
+      }
+      
+      if let response = stub.response {
+        client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
+      }
+      
       if let error = stub.error {
         client?.urlProtocol(self, didFailWithError: error)
       }
