@@ -82,39 +82,21 @@ class URLSessionHTTPClientTests: XCTestCase {
   //if stub nil data and got data and httpresponse and no error, system will replace empty data instead of nil
   func test_getFromURL_succeedsWithEmptyDataOnHTTPURLResponseWithNilData() {
     let response = anyHTTPURLResponse()
-    URLProtocolStub.stub(data: nil, response: response, error: nil)
-    let exp = expectation(description: "wait for completion")
-    makeSUT().get(from: anyURL()) { result in
-      switch result {
-      case let .success(receivedResponse, receivedData):
-        XCTAssertEqual(receivedResponse.url, response.url)
-        XCTAssertEqual(receivedResponse.statusCode, response.statusCode)
-        XCTAssertEqual(receivedData, Data())
-      default:
-        XCTFail("Expected success, got: \(result) instead")
-      }
-      exp.fulfill()
-    }
-    wait(for: [exp], timeout: 1.0)
+    let recivedResponse = resultValuesFor(data: nil, response: response, error: nil)
+    let emptyData = Data()
+    XCTAssertEqual(recivedResponse?.response.url, response.url)
+    XCTAssertEqual(recivedResponse?.response.statusCode, response.statusCode)
+    XCTAssertEqual(recivedResponse?.data, emptyData)
   }
   
   func test_getFromURL_succeedsOnHTTPURLResponseWithData() {
     let data = anyData()
     let response = anyHTTPURLResponse()
+    let recivedResponse = resultValuesFor(data: data, response: response, error: nil)
     URLProtocolStub.stub(data: data, response: response, error: nil)
-    let exp = expectation(description: "wait for completion")
-    makeSUT().get(from: anyURL()) { result in
-      switch result {
-      case let .success(receivedResponse, receivedData):
-        XCTAssertEqual(receivedResponse.url, response.url)
-        XCTAssertEqual(receivedResponse.statusCode, response.statusCode)
-        XCTAssertEqual(receivedData, data)
-      default:
-        XCTFail("Expected success, got: \(result) instead")
-      }
-      exp.fulfill()
-    }
-    wait(for: [exp], timeout: 1.0)
+    XCTAssertEqual(recivedResponse?.response.url, response.url)
+    XCTAssertEqual(recivedResponse?.response.statusCode, response.statusCode)
+    XCTAssertEqual(recivedResponse?.data, data)
   }
   
   // MARK: - Helpers
@@ -145,23 +127,42 @@ class URLSessionHTTPClientTests: XCTestCase {
   }
   
   private func resultErrorFor(data: Data?, response: URLResponse?, error: Error?, file: StaticString = #file, line: UInt = #line) -> Error? {
+    let result = resultFor(data: data, response: response, error: error)
+    var receivedError: Error?
+    switch result {
+    case let .failure(error):
+      receivedError = error
+    default:
+      XCTFail("Expect failure, got: \(result)", file: file, line: line)
+    }
+    return receivedError
+  }
+  
+  private func resultValuesFor(data: Data?, response: URLResponse?, error: Error?, file: StaticString = #file, line: UInt = #line) -> (data: Data?, response: HTTPURLResponse)? {
+    let result = resultFor(data: data, response: response, error: error)
+    var receivedValues: (data: Data?, response: HTTPURLResponse)?
+    switch result {
+    case let .success(response, data):
+      receivedValues = (data, response)
+    default:
+      XCTFail("Expect success, got: \(result)", file: file, line: line)
+    }
+    return receivedValues
+  }
+  
+  private func resultFor(data: Data?, response: URLResponse?, error: Error?, file: StaticString = #file, line: UInt = #line) -> HTTPClientResult {
     let url = anyURL()
     URLProtocolStub.stub(data: data, response: response, error: error)
     
     let sut = makeSUT(file: file, line: line)
     let exp = expectation(description: "wait for completion")
-    var receivedError: Error?
+    var receivedResult: HTTPClientResult!
     sut.get(from: url) { result in
-      switch result {
-      case let .failure(error):
-        receivedError = error
-      default:
-        XCTFail("Expect failure, got: \(result)", file: file, line: line)
-      }
+      receivedResult = result
       exp.fulfill()
     }
     wait(for: [exp], timeout: 1.0)
-    return receivedError
+    return receivedResult
   }
   
   class URLProtocolStub: URLProtocol {
