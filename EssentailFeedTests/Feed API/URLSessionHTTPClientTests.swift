@@ -61,10 +61,10 @@ class URLSessionHTTPClientTests: XCTestCase {
   }
   
   func test_getFromURL_failsOnAllInvalidRepresentationCases() {
-    let anyData = Data("any data".utf8)
-    let anyError = NSError(domain: "any error", code: 0)
-    let nonHTTPURLResponse = URLResponse(url: anyURL(), mimeType: nil, expectedContentLength: 0, textEncodingName: nil)
-    let anyHTTPURLResponse = HTTPURLResponse(url: anyURL(), statusCode: 200, httpVersion: nil, headerFields: nil)
+    let anyData = anyData()
+    let anyError = anyNSError()
+    let nonHTTPURLResponse = nonHTTPUrlResponse()
+    let anyHTTPURLResponse = anyHTTPURLResponse()
     
     XCTAssertNotNil(resultErrorFor(data: nil, response: nil, error: nil))
     XCTAssertNotNil(resultErrorFor(data: nil, response: nonHTTPURLResponse, error: nil))
@@ -81,6 +81,22 @@ class URLSessionHTTPClientTests: XCTestCase {
   // MARK: - Helpers
   func anyURL() -> URL {
     URL(string: "http://url.com")!
+  }
+  
+  func anyData() -> Data {
+    Data("any data".utf8)
+  }
+  
+  func anyNSError() -> NSError {
+    NSError(domain: "any error", code: 0)
+  }
+  
+  func anyHTTPURLResponse() -> HTTPURLResponse {
+    HTTPURLResponse(url: anyURL(), statusCode: 200, httpVersion: nil, headerFields: nil)!
+  }
+  
+  func nonHTTPUrlResponse() -> URLResponse {
+    URLResponse(url: anyURL(), mimeType: nil, expectedContentLength: 0, textEncodingName: nil)
   }
   
   func makeSUT(file: StaticString = #file, line: UInt = #line) -> URLSessionHTTPClient {
