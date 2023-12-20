@@ -34,7 +34,8 @@ class EssentailFeedAPIEndToEndTests: XCTestCase {
     let client = URLSessionHTTPClient()
     let loader = RemoteFeedLoader(client: client, url: testServerURL)
     let exp = expectation(description: "wait for load completion")
-    
+    trackForMemoryLeaks(client)
+    trackForMemoryLeaks(loader)
     var recivedResult: LoadFeedResult?
     loader.load { result in
       recivedResult = result
