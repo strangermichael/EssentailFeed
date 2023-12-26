@@ -8,7 +8,7 @@
 import XCTest
 import EssentailFeed
 
-final class RemoteFeedLoaderTests: XCTestCase {
+final class LoadFeedFromRemoteUseCaseTests: XCTestCase {
   
   //naming rule:  test + actionName + result
   func test_init_notDoNetworkRequest() {
