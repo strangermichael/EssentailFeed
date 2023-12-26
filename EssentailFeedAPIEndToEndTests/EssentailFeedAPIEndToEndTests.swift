@@ -31,7 +31,7 @@ class EssentailFeedAPIEndToEndTests: XCTestCase {
   
   private func getFeedResult() -> LoadFeedResult? {
     let testServerURL = URL(string: "https://www.essentialdeveloper.com/feed-case-study/test-api/feed")!
-    let client = URLSessionHTTPClient()
+    let client = URLSessionHTTPClient(session: URLSession(configuration: .ephemeral))
     let loader = RemoteFeedLoader(client: client, url: testServerURL)
     let exp = expectation(description: "wait for load completion")
     trackForMemoryLeaks(client)
