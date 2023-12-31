@@ -17,6 +17,10 @@ public final class LocalFeedLoader {
     self.currentDate = currentDate
   }
   
+  public func load() {
+    store.retrieve()
+  }
+  
   public func save(items: [FeedImage], completion: @escaping (SaveResult) -> Void) {
     store.deleteCachedFeed { [weak self] cacheDeletionError in
       guard let this = self else { return }
