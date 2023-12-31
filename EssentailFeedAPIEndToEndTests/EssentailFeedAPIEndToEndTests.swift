@@ -45,8 +45,8 @@ class EssentailFeedAPIEndToEndTests: XCTestCase {
     return recivedResult
   }
   
-  private func expecedItems(at index: Int) -> FeedItem {
-    FeedItem(id: id(at: index), description: description(at: index), location: location(at: index), imageURL: imageURL(at: index))
+  private func expecedItems(at index: Int) -> FeedImage {
+    FeedImage(id: id(at: index), description: description(at: index), location: location(at: index), imageURL: imageURL(at: index))
   }
   
   private func id(at index: Int) -> UUID {
