@@ -50,6 +50,10 @@ class FeedStoreSpy: FeedStore {
     retrievalCompletions[index](error)
   }
   
+  func complelteRetrievalWithEmptyCache(at index: Int = 0) {
+    retrievalCompletions[index](nil)
+  }
+  
   func retrieve(completion: @escaping RetrievalCompletion) {
     retrievalCompletions.append(completion)
     receivedMessages.append(.retrieval)
