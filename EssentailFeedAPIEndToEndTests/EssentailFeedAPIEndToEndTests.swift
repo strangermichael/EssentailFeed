@@ -12,16 +12,16 @@ class EssentailFeedAPIEndToEndTests: XCTestCase {
   
   func test_endToEndTestServerGETFeedResult_matchesFixedTestAccountData() {
     switch getFeedResult() {
-    case let .success(items):
-      XCTAssertEqual(items.count, 8, "Exepected 8 items in the test data")
-      XCTAssertEqual(items[0], expecedItems(at: 0))
-      XCTAssertEqual(items[1], expecedItems(at: 1))
-      XCTAssertEqual(items[2], expecedItems(at: 2))
-      XCTAssertEqual(items[3], expecedItems(at: 3))
-      XCTAssertEqual(items[4], expecedItems(at: 4))
-      XCTAssertEqual(items[5], expecedItems(at: 5))
-      XCTAssertEqual(items[6], expecedItems(at: 6))
-      XCTAssertEqual(items[7], expecedItems(at: 7))
+    case let .success(images):
+      XCTAssertEqual(images.count, 8, "Exepected 8 items in the test data")
+      XCTAssertEqual(images[0], expecedImage(at: 0))
+      XCTAssertEqual(images[1], expecedImage(at: 1))
+      XCTAssertEqual(images[2], expecedImage(at: 2))
+      XCTAssertEqual(images[3], expecedImage(at: 3))
+      XCTAssertEqual(images[4], expecedImage(at: 4))
+      XCTAssertEqual(images[5], expecedImage(at: 5))
+      XCTAssertEqual(images[6], expecedImage(at: 6))
+      XCTAssertEqual(images[7], expecedImage(at: 7))
     case let .failure(error):
       XCTFail("Expeced successful feed result, got \(error) instead")
     default:
@@ -45,7 +45,7 @@ class EssentailFeedAPIEndToEndTests: XCTestCase {
     return recivedResult
   }
   
-  private func expecedItems(at index: Int) -> FeedImage {
+  private func expecedImage(at index: Int) -> FeedImage {
     FeedImage(id: id(at: index), description: description(at: index), location: location(at: index), imageURL: imageURL(at: index))
   }
   
