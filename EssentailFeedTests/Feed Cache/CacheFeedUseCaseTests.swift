@@ -17,15 +17,13 @@ final class CacheFeedUseCaseTests: XCTestCase {
   
   func test_save_requestCacheDeletion() {
     let (sut, store) = makeSUT()
-    let items = [uniqueItem(), uniqueItem()]
-    sut.save(items: items) { _ in }
+    sut.save(items: uniqueItems().models) { _ in }
     XCTAssertEqual(store.receivedMessages, [.deleteCachedFeed])
   }
   
   func test_save_doesNotRequestCacheInsertionOnDeletionError() {
     let (sut, store) = makeSUT()
-    let items = [uniqueItem(), uniqueItem()]
-    sut.save(items: items) { _ in }
+    sut.save(items: uniqueItems().models) { _ in }
     store.completDeletion(with: anyNSError())
     XCTAssertEqual(store.receivedMessages, [.deleteCachedFeed])
   }
@@ -33,11 +31,10 @@ final class CacheFeedUseCaseTests: XCTestCase {
   func test_save_requestCacheInsertionWithTimeStampOnSuccessfulDeletion() {
     let timeStamp = Date() //use injection to avoid timestamp different
     let (sut, store) = makeSUT(currentDate: { timeStamp })
-    let items = [uniqueItem(), uniqueItem()]
-    let localItems = items.map { LocalFeedItem(id: $0.id, description: $0.description, location: $0.location, imageURL: $0.imageURL) }
-    sut.save(items: items) { _ in }
+    let items = uniqueItems()
+    sut.save(items: items.models) { _ in }
     store.completDeletionSuccessfully()
-    XCTAssertEqual(store.receivedMessages, [.deleteCachedFeed, .insert(localItems, timeStamp)])
+    XCTAssertEqual(store.receivedMessages, [.deleteCachedFeed, .insert(items.local, timeStamp)])
   }
   
   func test_save_failsOnDeletionError(file: StaticString = #file, line: UInt = #line) {
@@ -113,6 +110,14 @@ final class CacheFeedUseCaseTests: XCTestCase {
   
   private func uniqueItem() -> FeedItem {
     FeedItem(id: UUID(), description: "any", location: "any", imageURL: anyURL())
+  }
+  
+  private func uniqueItems() -> (models: [FeedItem], local: [LocalFeedItem]) {
+    let model = [uniqueItem(), uniqueItem()]
+    let local = model.map {
+      LocalFeedItem(id: $0.id, description: $0.description, location: $0.location, imageURL: $0.imageURL)
+    }
+    return (model, local)
   }
   
   func anyURL() -> URL {
