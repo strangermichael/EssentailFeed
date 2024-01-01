@@ -33,7 +33,7 @@ class FeedStoreSpy: FeedStore {
     deletionCompletions[index](nil)
   }
   
-  func completInsertion(with error: Error, at index: Int = 0) {
+  func completeInsertion(with error: Error, at index: Int = 0) {
     insertionCompletions[index](error)
   }
   
