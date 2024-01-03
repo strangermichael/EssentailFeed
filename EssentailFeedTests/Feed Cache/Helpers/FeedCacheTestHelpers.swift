@@ -9,6 +9,10 @@ import Foundation
 import EssentailFeed
 
 extension Date {
+  func minusFeedCacheMaxAge() -> Date {
+    adding(days: -7)
+  }
+  
   //some days may not have 24 hours
   func adding(days: Int) -> Date {
     Calendar(identifier: .gregorian).date(byAdding: .day, value: days, to: self)!
