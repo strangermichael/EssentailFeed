@@ -86,12 +86,7 @@ final class CodableFeedStoreTests: XCTestCase {
     let sut = makeSUT()
     let feed = uniqueImageFeed().local
     let timestamp = Date()
-    let exp = expectation(description: "Wait for cache retrieval")
-    sut.insert(items: feed, timeStamp: timestamp) { insertionError in
-      XCTAssertNil(insertionError, "Expected feed to be inserted successfully")
-      exp.fulfill()
-    }
-    wait(for: [exp], timeout: 1.0)
+    insert(items: feed, timeStamp: timestamp, to: sut)
     expect(sut, toRetrieve: .found(feed: feed, timeStamp: timestamp))
   }
   
@@ -99,12 +94,7 @@ final class CodableFeedStoreTests: XCTestCase {
     let sut = makeSUT()
     let feed = uniqueImageFeed().local
     let timestamp = Date()
-    let exp = expectation(description: "Wait for cache retrieval")
-    sut.insert(items: feed, timeStamp: timestamp) { insertionError in
-      XCTAssertNil(insertionError, "Expected feed to be inserted successfully")
-      exp.fulfill()
-    }
-    wait(for: [exp], timeout: 1.0)
+    insert(items: feed, timeStamp: timestamp, to: sut)
     expect(sut, toRetrieveTwice: .found(feed: feed, timeStamp: timestamp))
   }
   
@@ -118,6 +108,15 @@ final class CodableFeedStoreTests: XCTestCase {
   private func expect(_ sut: CodableFeedStore, toRetrieveTwice expectedResult: RetrieveCachedFeedResult, file: StaticString = #file, line: UInt = #line) {
     expect(sut, toRetrieve: expectedResult, file: file, line: line)
     expect(sut, toRetrieve: expectedResult, file: file, line: line)
+  }
+  
+  private func insert(items: [LocalFeedImage], timeStamp: Date, to sut: CodableFeedStore) {
+    let exp = expectation(description: "Wait for cache retrieval")
+    sut.insert(items: items, timeStamp: timeStamp) { insertionError in
+      XCTAssertNil(insertionError, "Expected feed to be inserted successfully")
+      exp.fulfill()
+    }
+    wait(for: [exp], timeout: 1.0)
   }
   
   private func expect(_ sut: CodableFeedStore, toRetrieve expectedResult: RetrieveCachedFeedResult, file: StaticString = #file, line: UInt = #line) {
