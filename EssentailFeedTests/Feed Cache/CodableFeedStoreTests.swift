@@ -74,17 +74,7 @@ final class CodableFeedStoreTests: XCTestCase {
   
   func test_retrieve_deliversEmptyOnEmptyCache() {
     let sut = makeSUT()
-    let exp = expectation(description: "wait for cache retrieval")
-    sut.retrieve { result in
-      switch result {
-      case .empty:
-        break
-      default:
-        XCTFail("Expected empty, got \(result) instead")
-      }
-      exp.fulfill()
-    }
-    wait(for: [exp], timeout: 1.0)
+    expect(sut, toRetrieve: .empty)
   }
   
   func test_retrieve_hasNoSideEffectsOnEmptyCache() {
@@ -111,18 +101,10 @@ final class CodableFeedStoreTests: XCTestCase {
     let exp = expectation(description: "Wait for cache retrieval")
     sut.insert(items: feed, timeStamp: timestamp) { insertionError in
       XCTAssertNil(insertionError, "Expected feed to be inserted successfully")
-      sut.retrieve { retrieveResult in
-        switch retrieveResult {
-        case let .found(retrivedFeed, retrivedTimestamp):
-          XCTAssertEqual(retrivedFeed, feed)
-          XCTAssertEqual(retrivedTimestamp, timestamp)
-        default:
-          XCTFail("Expected found with \(feed) and \(timestamp), but got \(retrieveResult) instead")
-        }
-        exp.fulfill()
-      }
+      exp.fulfill()
     }
     wait(for: [exp], timeout: 1.0)
+    expect(sut, toRetrieve: .found(feed: feed, timeStamp: timestamp))
   }
   
   func test_retrieve_hasNoSideEffectsOnNonEmptyCache() {
@@ -153,6 +135,24 @@ final class CodableFeedStoreTests: XCTestCase {
     let sut = CodableFeedStore(storeURL: testSpecificStoreURL())
     trackForMemoryLeaks(sut, file: file, line: line)
     return sut
+  }
+  
+  private func expect(_ sut: CodableFeedStore, toRetrieve expectedResult: RetrieveCachedFeedResult, file: StaticString = #file, line: UInt = #line) {
+    let exp = expectation(description: "Wait for cache retriveval")
+    sut.retrieve { retrievedResult in
+      switch (retrievedResult, expectedResult) {
+      case (.empty, .empty):
+        break
+      case let (.found(expected), .found(retrieved)):
+        XCTAssertEqual(expected.feed, retrieved.feed)
+        XCTAssertEqual(expected.timeStamp, retrieved.timeStamp)
+      default:
+        XCTFail("Expected to retrieve \(expectedResult), but got \(retrievedResult) instead")
+      }
+      exp.fulfill()
+    }
+    
+    wait(for: [exp], timeout: 1.0)
   }
   
   private func setupEmptyStoreState() {
