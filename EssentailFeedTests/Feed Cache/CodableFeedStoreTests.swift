@@ -116,6 +116,18 @@ final class CodableFeedStoreTests: XCTestCase {
     expect(sut, toRetrieveTwice: .failure(anyNSError()))
   }
   
+  func test_insert_overridesPreviouslyInsertedCacheValues() {
+    let sut = makeSUT()
+    let firstInsertionError = insert(items: uniqueImageFeed().local, timeStamp: Date(), to: sut)
+    XCTAssertNil(firstInsertionError, "Expected to insert cache successfully")
+    
+    let latestFeed = uniqueImageFeed().local
+    let latestTimestamp = Date()
+    let lasteInsertionError = insert(items: latestFeed, timeStamp: latestTimestamp, to: sut)
+    XCTAssertNil(lasteInsertionError, "Expected to override cache successfully")
+    expect(sut, toRetrieve: .found(feed: latestFeed, timeStamp: latestTimestamp))
+  }
+  
   //- MARK: Helpers
   private func makeSUT(storeURL: URL? = nil, file: StaticString = #file, line: UInt = #line) -> CodableFeedStore {
     let sut = CodableFeedStore(storeURL: storeURL ?? testSpecificStoreURL())
@@ -128,13 +140,17 @@ final class CodableFeedStoreTests: XCTestCase {
     expect(sut, toRetrieve: expectedResult, file: file, line: line)
   }
   
-  private func insert(items: [LocalFeedImage], timeStamp: Date, to sut: CodableFeedStore) {
+  @discardableResult
+  private func insert(items: [LocalFeedImage], timeStamp: Date, to sut: CodableFeedStore) -> Error? {
     let exp = expectation(description: "Wait for cache retrieval")
-    sut.insert(items: items, timeStamp: timeStamp) { insertionError in
-      XCTAssertNil(insertionError, "Expected feed to be inserted successfully")
+    var insertionError: Error?
+    sut.insert(items: items, timeStamp: timeStamp) { error in
+      insertionError = error
+      XCTAssertNil(error, "Expected feed to be inserted successfully")
       exp.fulfill()
     }
     wait(for: [exp], timeout: 1.0)
+    return insertionError
   }
   
   private func expect(_ sut: CodableFeedStore, toRetrieve expectedResult: RetrieveCachedFeedResult, file: StaticString = #file, line: UInt = #line) {
@@ -144,9 +160,9 @@ final class CodableFeedStoreTests: XCTestCase {
       case (.empty, .empty),
            (.failure, .failure):
         break
-      case let (.found(expected), .found(retrieved)):
-        XCTAssertEqual(expected.feed, retrieved.feed)
-        XCTAssertEqual(expected.timeStamp, retrieved.timeStamp)
+      case let (.found(expectedFeed, expectedTimeStamp), .found(retrievedFeed, retrievedTimeStamp)):
+        XCTAssertEqual(expectedFeed, retrievedFeed)
+        XCTAssertEqual(expectedTimeStamp, retrievedTimeStamp)
       default:
         XCTFail("Expected to retrieve \(expectedResult), but got \(retrievedResult) instead")
       }
