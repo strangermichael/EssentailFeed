@@ -9,6 +9,7 @@ import Foundation
 
 public class CodableFeedStore: FeedStore {
   private let storeURL: URL
+  private let queue = DispatchQueue(label: "\(CodableFeedStore.self)Queue", qos: .userInitiated)
   
   public init(storeURL: URL) {
     self.storeURL = storeURL
@@ -42,40 +43,49 @@ public class CodableFeedStore: FeedStore {
   }
   
   public func retrieve(completion: @escaping RetrievalCompletion) {
-    guard let data = try? Data(contentsOf: storeURL) else {
-      completion(.empty)
-      return
-    }
-    do {
-      let decoder = JSONDecoder()
-      let cache = try decoder.decode(Cache.self, from: data)
-      completion(.found(feed: cache.localFeed, timeStamp: cache.timestamp))
-    } catch {
-      completion(.failure(error))
+    let storeURL = self.storeURL
+    queue.async {
+      guard let data = try? Data(contentsOf: storeURL) else {
+        completion(.empty)
+        return
+      }
+      do {
+        let decoder = JSONDecoder()
+        let cache = try decoder.decode(Cache.self, from: data)
+        completion(.found(feed: cache.localFeed, timeStamp: cache.timestamp))
+      } catch {
+        completion(.failure(error))
+      }
     }
   }
   
   public func insert(items: [LocalFeedImage], timeStamp: Date, completion: @escaping InsertionCompletion) {
-    do {
-      let encoder = JSONEncoder()
-      let encoded = try encoder.encode(Cache(feed: items.map { CodableFeedImage($0) }, timestamp: timeStamp))
-      try encoded.write(to: storeURL)
-      completion(nil)
-    } catch {
-      completion(error)
+    let storeURL = self.storeURL
+    queue.async {
+      do {
+        let encoder = JSONEncoder()
+        let encoded = try encoder.encode(Cache(feed: items.map { CodableFeedImage($0) }, timestamp: timeStamp))
+        try encoded.write(to: storeURL)
+        completion(nil)
+      } catch {
+        completion(error)
+      }
     }
   }
   
   public func deleteCachedFeed(completion: @escaping DeletionCompletion) {
-    guard FileManager.default.fileExists(atPath: storeURL.path(percentEncoded: true)) else {
-      completion(nil)
-      return
-    }
-    do {
-      try FileManager.default.removeItem(at: storeURL)
-      completion(nil)
-    } catch {
-      completion(error)
+    let storeURL = self.storeURL
+    queue.async {
+      guard FileManager.default.fileExists(atPath: storeURL.path(percentEncoded: true)) else {
+        completion(nil)
+        return
+      }
+      do {
+        try FileManager.default.removeItem(at: storeURL)
+        completion(nil)
+      } catch {
+        completion(error)
+      }
     }
   }
 }
