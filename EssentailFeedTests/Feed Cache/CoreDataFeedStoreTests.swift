@@ -7,25 +7,6 @@
 
 import XCTest
 import EssentailFeed
-import CoreData
-
-class CoreDataFeedStore: FeedStore {
-  public init() {
-    
-  }
-  
-  public func deleteCachedFeed(completion: @escaping DeletionCompletion) {
-    
-  }
-  
-  public func insert(items: [EssentailFeed.LocalFeedImage], timeStamp: Date, completion: @escaping InsertionCompletion) {
-    
-  }
-  
-  public func retrieve(completion: @escaping RetrievalCompletion) {
-    completion(.empty)
-  }
-}
 
 private class ManagedCache: NSManagedObject {
   @NSManaged var timestamp: Date
@@ -119,7 +100,8 @@ final class CoreDataFeedStoreTests: XCTestCase, FailableFeedStoreSpec {
   
   //MARK: - helper
   private func makeSUT(file: StaticString = #file, line: UInt = #line) -> FeedStore {
-    let sut = CoreDataFeedStore()
+    let storeBundle = Bundle(for: CoreDataFeedStore.self)
+    let sut = try! CoreDataFeedStore(bundle: storeBundle)
     trackForMemoryLeaks(sut, file: file, line: line)
     return sut
   }
