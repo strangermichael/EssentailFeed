@@ -6,10 +6,31 @@
 //
 
 import XCTest
+import EssentailFeed
+
+class CoreDataFeedStore: FeedStore {
+  public init() {
+    
+  }
+  
+  public func deleteCachedFeed(completion: @escaping DeletionCompletion) {
+    
+  }
+  
+  public func insert(items: [EssentailFeed.LocalFeedImage], timeStamp: Date, completion: @escaping InsertionCompletion) {
+    
+  }
+  
+  public func retrieve(completion: @escaping RetrievalCompletion) {
+    completion(.empty)
+  }
+}
 
 final class CoreDataFeedStoreTests: XCTestCase, FailableFeedStoreSpec {
+  
   func test_retrieve_deliversEmptyOnEmptyCache() {
-    
+    let sut = CoreDataFeedStore()
+    assertThatRetrieveDeliversEmptyOnEmptyCache(on: sut)
   }
   
   func test_retrieve_hasNoSideEffectsOnEmptyCache() {
