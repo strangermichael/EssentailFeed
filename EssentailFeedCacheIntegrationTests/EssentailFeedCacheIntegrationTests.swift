@@ -16,7 +16,7 @@ final class EssentailFeedCacheIntegrationTests: XCTestCase {
   
   override func tearDown() {
     super.tearDown()
-    setupEmptyStoreState()
+    undoStoreSideEffects()
   }
   
   func test_load_deliversNoItemsOnEmptyCache() {
@@ -28,14 +28,20 @@ final class EssentailFeedCacheIntegrationTests: XCTestCase {
     let sutToPerformSave = makeSUT()
     let sutToPerformLoad = makeSUT()
     let feed = uniqueImageFeed().models
-    let saveExp = expectation(description: "Wait for save completion")
-    sutToPerformSave.save(items: feed) { saveError in
-      XCTAssertNil(saveError, "Expected to save feed successfully")
-      saveExp.fulfill()
-    }
-    wait(for: [saveExp], timeout: 1.0)
-    
+    save(feed, with: sutToPerformSave)
     expect(sutToPerformLoad, toLoad: feed)
+  }
+  
+  func test_load_overridesItemsSavedOnASeparateInstance() {
+    let sutToPerformFirstSave = makeSUT()
+    let sutToPerformLastSave = makeSUT()
+    let sutToPerformLoad = makeSUT()
+
+    let firstFeed = uniqueImageFeed().models
+    let lastFeed = uniqueImageFeed().models
+    save(firstFeed, with: sutToPerformFirstSave)
+    save(lastFeed, with: sutToPerformLastSave)
+    expect(sutToPerformLoad, toLoad: lastFeed)
   }
   
   //MARK: - helpers
@@ -47,6 +53,15 @@ final class EssentailFeedCacheIntegrationTests: XCTestCase {
     trackForMemoryLeaks(store, file: file, line: line)
     trackForMemoryLeaks(sut, file: file, line: line)
     return sut
+  }
+  
+  private func save(_ feed: [FeedImage], with loader: LocalFeedLoader, file: StaticString = #file, line: UInt = #line) {
+    let saveExp = expectation(description: "Wait for save completion")
+    loader.save(items: feed) { saveError in
+      XCTAssertNil(saveError, "Expected to save feed successfully")
+      saveExp.fulfill()
+    }
+    wait(for: [saveExp], timeout: 1.0)
   }
   
   private func expect(_ sut: LocalFeedLoader, toLoad expecedFeed: [FeedImage], file: StaticString = #file, line: UInt = #line) {
