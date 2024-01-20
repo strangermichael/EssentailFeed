@@ -73,8 +73,8 @@ final class EssentailFeedCacheIntegrationTests: XCTestCase {
       case let .failure(error):
         XCTFail("Expected to get successful feed result, but got \(error) instead")
       }
+      exp.fulfill()
     }
-    exp.fulfill()
     wait(for: [exp], timeout: 1.0)
   }
   
