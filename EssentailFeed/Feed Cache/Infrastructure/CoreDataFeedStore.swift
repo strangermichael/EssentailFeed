@@ -59,7 +59,6 @@ public class CoreDataFeedStore: FeedStore {
   
   private func performAndWait(_ action: @escaping (NSManagedObjectContext) -> Void) {
     let context = self.context
-    //if use perform here will frequently crash when run EssentailFeedCacheIntegrationTests
-    context.perform { action(context) }
+    context.performAndWait { action(context) }
   }
 }
