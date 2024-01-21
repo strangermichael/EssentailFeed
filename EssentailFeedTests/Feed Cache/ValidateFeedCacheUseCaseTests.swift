@@ -32,9 +32,9 @@ final class ValidateFeedCacheUseCaseTests: XCTestCase {
     let fixedCurrentDate = Date()
     let (sut, store) = makeSUT(currentDate: { fixedCurrentDate })
     let feed = uniqueImageFeed()
-    let nonExpiredTimestamp = fixedCurrentDate.minusFeedCacheMaxAge().adding(seconds: 1)
+    let nonExpiredtimestamp = fixedCurrentDate.minusFeedCacheMaxAge().adding(seconds: 1)
     sut.validateCache()
-    store.complelteRetrieval(with: feed.local, timestamp: nonExpiredTimestamp)
+    store.complelteRetrieval(with: feed.local, timestamp: nonExpiredtimestamp)
     XCTAssertEqual(store.receivedMessages, [.retrieval])
   }
   
@@ -42,9 +42,9 @@ final class ValidateFeedCacheUseCaseTests: XCTestCase {
     let fixedCurrentDate = Date()
     let (sut, store) = makeSUT(currentDate: { fixedCurrentDate })
     let feed = uniqueImageFeed()
-    let expirationTimeStamp = fixedCurrentDate.minusFeedCacheMaxAge()
+    let expirationtimestamp = fixedCurrentDate.minusFeedCacheMaxAge()
     sut.validateCache()
-    store.complelteRetrieval(with: feed.local, timestamp: expirationTimeStamp)
+    store.complelteRetrieval(with: feed.local, timestamp: expirationtimestamp)
     XCTAssertEqual(store.receivedMessages, [.retrieval, .deleteCachedFeed])
   }
   
@@ -52,9 +52,9 @@ final class ValidateFeedCacheUseCaseTests: XCTestCase {
     let fixedCurrentDate = Date()
     let (sut, store) = makeSUT(currentDate: { fixedCurrentDate })
     let feed = uniqueImageFeed()
-    let expiredTimeStamp = fixedCurrentDate.minusFeedCacheMaxAge().adding(seconds: -1)
+    let expiredtimestamp = fixedCurrentDate.minusFeedCacheMaxAge().adding(seconds: -1)
     sut.validateCache()
-    store.complelteRetrieval(with: feed.local, timestamp: expiredTimeStamp)
+    store.complelteRetrieval(with: feed.local, timestamp: expiredtimestamp)
     XCTAssertEqual(store.receivedMessages, [.retrieval, .deleteCachedFeed])
   }
   

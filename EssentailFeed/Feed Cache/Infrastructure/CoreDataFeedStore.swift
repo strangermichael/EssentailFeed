@@ -28,11 +28,11 @@ public class CoreDataFeedStore: FeedStore {
     }
   }
   
-  public func insert(items: [EssentailFeed.LocalFeedImage], timeStamp: Date, completion: @escaping InsertionCompletion) {
+  public func insert(items: [EssentailFeed.LocalFeedImage], timestamp: Date, completion: @escaping InsertionCompletion) {
     perform { context in
       do {
         let managedCache = try ManagedCache.newUniqueInstance(in: context)
-        managedCache.timestamp = timeStamp
+        managedCache.timestamp = timestamp
         managedCache.feed = ManagedFeedImage.images(from: items, in: context)
         
         try context.save()
@@ -47,9 +47,9 @@ public class CoreDataFeedStore: FeedStore {
     perform { context in
       do {
         if let cache = try ManagedCache.find(in: context) {
-          completion(.success(.found(feed: cache.localFeed, timeStamp: cache.timestamp)))
+          completion(.success(.some(CachedFeed(feed: cache.localFeed, timestamp: cache.timestamp))))
         } else {
-          completion(.success(.empty))
+          completion(.success(.none))
         }
       } catch {
         completion(.failure(error))

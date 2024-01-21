@@ -32,7 +32,7 @@ extension LocalFeedLoader {
   }
   
   private func cache(items: [FeedImage], completion: @escaping (SaveResult) -> Void) {
-    store.insert(items: items.toLocal(), timeStamp: currentDate(), completion: { [weak self] cacheInsertionError in
+    store.insert(items: items.toLocal(), timestamp: currentDate(), completion: { [weak self] cacheInsertionError in
       guard self != nil else { return }
       completion(cacheInsertionError)
     })
@@ -50,9 +50,9 @@ extension LocalFeedLoader {
       switch result {
       case let .failure(error):
         completion(.failure(error))
-      case let .success(.found(feed, timestamp)) where FeedCachePolicy.validate(timestamp, against: this.currentDate()):
-        completion(.success(feed.toModels()))
-      case .success(.found), .success(.empty):
+      case let .success(.some(cache)) where FeedCachePolicy.validate(cache.timestamp, against: this.currentDate()):
+        completion(.success(cache.feed.toModels()))
+      case .success(.some), .success(.none):
         completion(.success([]))
       }
     }
@@ -68,9 +68,9 @@ extension LocalFeedLoader {
       switch result {
       case .failure:
         this.store.deleteCachedFeed { _ in }
-      case let .success(.found(_, timestamp)) where !FeedCachePolicy.validate(timestamp, against: this.currentDate()):
+      case let .success(.some(cache)) where !FeedCachePolicy.validate(cache.timestamp, against: this.currentDate()):
         this.store.deleteCachedFeed { _ in }
-      case .success(.found), .success(.empty):
+      case .success(.some), .success(.none):
         break
       }
     }

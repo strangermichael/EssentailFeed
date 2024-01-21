@@ -28,13 +28,13 @@ final class CacheFeedUseCaseTests: XCTestCase {
     XCTAssertEqual(store.receivedMessages, [.deleteCachedFeed])
   }
     
-  func test_save_requestCacheInsertionWithTimeStampOnSuccessfulDeletion() {
-    let timeStamp = Date() //use injection to avoid timestamp different
-    let (sut, store) = makeSUT(currentDate: { timeStamp })
+  func test_save_requestCacheInsertionWithtimestampOnSuccessfulDeletion() {
+    let timestamp = Date() //use injection to avoid timestamp different
+    let (sut, store) = makeSUT(currentDate: { timestamp })
     let items = uniqueImageFeed()
     sut.save(items: items.models) { _ in }
     store.completDeletionSuccessfully()
-    XCTAssertEqual(store.receivedMessages, [.deleteCachedFeed, .insert(items.local, timeStamp)])
+    XCTAssertEqual(store.receivedMessages, [.deleteCachedFeed, .insert(items.local, timestamp)])
   }
   
   func test_save_failsOnDeletionError(file: StaticString = #file, line: UInt = #line) {
