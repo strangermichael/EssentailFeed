@@ -162,9 +162,9 @@ final class LoadFeedFromRemoteUseCaseTests: XCTestCase {
       messages.map { $0.url }
     }
     
-    var messages: [(url: URL, completion: (HTTPClientResult) -> Void)] = []
+    var messages: [(url: URL, completion: (HTTPClient.Result) -> Void)] = []
     
-    func get(from url: URL, completion: @escaping (HTTPClientResult) -> Void) {
+    func get(from url: URL, completion: @escaping (HTTPClient.Result) -> Void) {
       messages.append((url, completion))
     }
     
@@ -177,7 +177,7 @@ final class LoadFeedFromRemoteUseCaseTests: XCTestCase {
                                      statusCode: code,
                                      httpVersion: nil,
                                      headerFields: nil)!
-      messages[index].completion(.success(response, data))
+      messages[index].completion(.success((response, data)))
     }
   }
 }
