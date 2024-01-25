@@ -86,6 +86,10 @@ final class EssentailFeedCacheIntegrationTests: XCTestCase {
     return FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
   }
   
+  private func noDeletePermissionURL() -> URL {
+      return FileManager.default.urls(for: .cachesDirectory, in: .systemDomainMask).first!
+  }
+  
   private func setupEmptyStoreState() {
     deleteStoreArtifacts()
   }

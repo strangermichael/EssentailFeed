@@ -20,6 +20,20 @@
                ReferencedContainer = "container:EssentailFeed.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "A62B7BAF2B61EDF7006BAD8B"
+               BuildableName = "EssentialFeediOS.framework"
+               BlueprintName = "EssentialFeediOS"
+               ReferencedContainer = "container:EssentailFeed.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -61,6 +75,18 @@
                BlueprintIdentifier = "A6F260642B5B7DDA00C79FD5"
                BuildableName = "EssentailFeedCacheIntegrationTests.xctest"
                BlueprintName = "EssentailFeedCacheIntegrationTests"
+               ReferencedContainer = "container:EssentailFeed.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES"
+            testExecutionOrdering = "random">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "A62B7BB62B61EDF7006BAD8B"
+               BuildableName = "EssentialFeediOSTests.xctest"
+               BlueprintName = "EssentialFeediOSTests"
                ReferencedContainer = "container:EssentailFeed.xcodeproj">
             </BuildableReference>
          </TestableReference>
