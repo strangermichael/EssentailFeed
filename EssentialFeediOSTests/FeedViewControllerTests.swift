@@ -9,7 +9,7 @@ import XCTest
 import UIKit
 import EssentailFeed
 
-final class FeedViewController: UIViewController {
+final class FeedViewController: UITableViewController {
   private var loader: FeedLoader?
   
   init(loader: FeedLoader) {
@@ -19,6 +19,12 @@ final class FeedViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    refreshControl = UIRefreshControl()
+    refreshControl?.addTarget(self, action: #selector(load), for: .valueChanged)
+    load()
+  }
+  
+  @objc private func load() {
     loader?.load(completion: { _ in
       
     })
@@ -40,6 +46,20 @@ final class FeedViewControllerTests: XCTestCase {
     let (sut, loader) = makeSUT()
     sut.loadViewIfNeeded()
     XCTAssertEqual(loader.loadCallCount, 1)
+  }
+  
+  func test_pullToRefresh_loadsFeed() {
+    let (sut, loader) = makeSUT()
+    sut.loadViewIfNeeded()
+    
+    //no need to actually trigger the UI, just need to trigger the action UI binds
+    sut.refreshControl?.allTargets.forEach({ target in
+      sut.refreshControl?.actions(forTarget: target, forControlEvent: .valueChanged)?.forEach({ actionString in
+        (target as NSObject).perform(Selector(actionString))
+      })
+    })
+    
+    XCTAssertEqual(loader.loadCallCount, 2)
   }
   
   //MARK: - Helpers
