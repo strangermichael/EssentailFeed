@@ -49,39 +49,39 @@ final class FeedViewControllerTests: XCTestCase {
     XCTAssertEqual(loader.loadCallCount, 1)
   }
   
-  func test_pullToRefresh_loadsFeed() {
+  func test_userInitiatedFeedReload_loadsFeed() {
     let (sut, loader) = makeSUT()
     sut.loadViewIfNeeded()
-    sut.refreshControl?.simulatePullToRefresh()
+    sut.simulateUserInitiatedFeedReload()
     XCTAssertEqual(loader.loadCallCount, 2)
-    sut.refreshControl?.simulatePullToRefresh()
+    sut.simulateUserInitiatedFeedReload()
     XCTAssertEqual(loader.loadCallCount, 3)
   }
   
   func test_viewDidLoad_showsLoadingIndicator() {
     let (sut, _) = makeSUT()
     sut.loadViewIfNeeded()
-    XCTAssertEqual(sut.refreshControl?.isRefreshing, true)
+    XCTAssertEqual(sut.isShowingLoadingUI, true)
   }
   
   func test_viewDidLoad_hideLoadingIndicatorOnLoaderCompletion() {
     let (sut, loader) = makeSUT()
     sut.loadViewIfNeeded()
     loader.completFeedLoading()
-    XCTAssertEqual(sut.refreshControl?.isRefreshing, false)
+    XCTAssertEqual(sut.isShowingLoadingUI, false)
   }
   
-  func test_pullToRefresh_showsLoadingIndicator() {
+  func test_userInitiatedFeedReload_showsLoadingIndicator() {
     let (sut, _) = makeSUT()
-    sut.refreshControl?.simulatePullToRefresh()
-    XCTAssertEqual(sut.refreshControl?.isRefreshing, true)
+    sut.simulateUserInitiatedFeedReload()
+    XCTAssertEqual(sut.isShowingLoadingUI, true)
   }
   
-  func test_pullToRefresh_hideLoadingIndicatorOnLoaderCompletion() {
+  func test_userInitiatedFeedReload_hideLoadingIndicatorOnLoaderCompletion() {
     let (sut, loader) = makeSUT()
-    sut.refreshControl?.simulatePullToRefresh()
+    sut.simulateUserInitiatedFeedReload()
     loader.completFeedLoading()
-    XCTAssertEqual(sut.refreshControl?.isRefreshing, false)
+    XCTAssertEqual(sut.isShowingLoadingUI, false)
   }
   
   //MARK: - Helpers
@@ -108,6 +108,16 @@ final class FeedViewControllerTests: XCTestCase {
     return (sut, loader)
   }
   
+}
+
+private extension FeedViewController {
+  func simulateUserInitiatedFeedReload() {
+    refreshControl?.simulatePullToRefresh()
+  }
+  
+  var isShowingLoadingUI: Bool {
+    refreshControl?.isRefreshing == true
+  }
 }
 
 private extension UIRefreshControl {
