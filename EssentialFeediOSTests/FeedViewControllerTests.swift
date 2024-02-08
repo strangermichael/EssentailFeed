@@ -33,6 +33,11 @@ final class FeedViewControllerTests: XCTestCase {
     XCTAssertEqual(sut.isShowingLoadingUI, true, "Expected show loading once user initiates a reload")
     loader.completFeedLoading(at: 1)
     XCTAssertEqual(sut.isShowingLoadingUI, false, "Expected no loading once user initiated loading is completed")
+    
+    sut.simulateUserInitiatedFeedReload()
+    XCTAssertEqual(sut.isShowingLoadingUI, true, "Expected show loading once user initiates a reload")
+    loader.completFeedloadingWithError(at: 1)
+    XCTAssertFalse(sut.isShowingLoadingUI, "Expected no loading once user initiated loading completes with error")
   }
   
   func test_loadFeedCompletion_rendersSuccessfullyLoadedFeed() {
