@@ -35,6 +35,12 @@ final class FeedViewControllerTests: XCTestCase {
     XCTAssertEqual(sut.isShowingLoadingUI, false, "Expected no loading once user initiated loading is completed")
   }
   
+  func test_loadFeedCompletion_rendersSuccessfullyLoadedFeed() {
+    let (sut, loader) = makeSUT()
+    sut.loadViewIfNeeded()
+    XCTAssertEqual(sut.numberOfRenderedFeedImageViews(), 0)
+  }
+  
   //MARK: - Helpers
   class LoaderSpy: FeedLoader {
     var loadCallCount: Int {
@@ -68,6 +74,14 @@ private extension FeedViewController {
   
   var isShowingLoadingUI: Bool {
     refreshControl?.isRefreshing == true
+  }
+  
+  func numberOfRenderedFeedImageViews() -> Int {
+    tableView.numberOfRows(inSection: feedImagesSection)
+  }
+  
+  private var feedImagesSection: Int {
+    0
   }
 }
 
