@@ -36,9 +36,11 @@ final class FeedViewControllerTests: XCTestCase {
   }
   
   func test_loadFeedCompletion_rendersSuccessfullyLoadedFeed() {
+    let image0 = makeImage(description: "a description", location: "a location")
     let (sut, loader) = makeSUT()
     sut.loadViewIfNeeded()
-    XCTAssertEqual(sut.numberOfRenderedFeedImageViews(), 0)
+    loader.completFeedLoading(with: [image0], at: 0)
+    XCTAssertEqual(sut.numberOfRenderedFeedImageViews(), 1)
   }
   
   //MARK: - Helpers
@@ -52,8 +54,8 @@ final class FeedViewControllerTests: XCTestCase {
       completions.append(completion)
     }
     
-    func completFeedLoading(at index: Int) {
-      completions[index](.success([]))
+    func completFeedLoading(with images: [FeedImage] = [], at index: Int) {
+      completions[index](.success(images))
     }
   }
   
@@ -65,6 +67,9 @@ final class FeedViewControllerTests: XCTestCase {
     return (sut, loader)
   }
   
+  private func makeImage(description: String? = nil, location: String? = nil, url: URL = URL(string: "http://any-url.com")!) -> FeedImage {
+    FeedImage(id: UUID(), description: description, location: location, imageURL: url)
+  }
 }
 
 private extension FeedViewController {
