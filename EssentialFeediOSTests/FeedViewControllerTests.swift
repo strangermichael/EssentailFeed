@@ -39,8 +39,17 @@ final class FeedViewControllerTests: XCTestCase {
     let image0 = makeImage(description: "a description", location: "a location")
     let (sut, loader) = makeSUT()
     sut.loadViewIfNeeded()
+    XCTAssertEqual(sut.numberOfRenderedFeedImageViews(), 0)
+    
     loader.completFeedLoading(with: [image0], at: 0)
     XCTAssertEqual(sut.numberOfRenderedFeedImageViews(), 1)
+    
+    let view = sut.feedImageView(at: 0) as? FeedImageCell
+    XCTAssertNotNil(view)
+    XCTAssertEqual(view?.isShowingLocation, true)
+    XCTAssertEqual(view?.locationText, image0.location)
+    XCTAssertEqual(view?.descriptionText, image0.description)
+    
   }
   
   //MARK: - Helpers
@@ -87,6 +96,26 @@ private extension FeedViewController {
   
   private var feedImagesSection: Int {
     0
+  }
+  
+  func feedImageView(at row: Int) -> UITableViewCell? {
+    let ds = tableView.dataSource
+    let index = IndexPath(row: row, section: feedImagesSection)
+    return ds?.tableView(tableView, cellForRowAt: index)
+  }
+}
+
+private extension FeedImageCell {
+  var isShowingLocation: Bool {
+    return !locationContainer.isHidden
+  }
+  
+  var locationText: String? {
+    locationLabel.text
+  }
+  
+  var descriptionText: String? {
+    descriptionLabel.text
   }
 }
 
