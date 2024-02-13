@@ -136,6 +136,23 @@ final class FeedViewControllerTests: XCTestCase {
     XCTAssertEqual(view1?.renderedImage, imageData1, "Expected image for second view once loading completes successfully")
   }
   
+  func test_feedImageViewRetryButton_isVisibleOnImageURLLoadError() {
+    let (sut, loader) = makeSUT()
+    sut.loadViewIfNeeded()
+    loader.completeFeedLoading(with: [makeImage(), makeImage()])
+    let view0 = sut.simulateFeedImageViewVisible(at: 0)
+    let view1 = sut.simulateFeedImageViewVisible(at: 1)
+    XCTAssertEqual(view0?.isShowingRetryAction, false)
+    XCTAssertEqual(view1?.isShowingRetryAction, false)
+    
+    let imageData0 = UIImage.make(withColor: .red).pngData()! //not load from disk
+    loader.completeImageLoading(with: imageData0, at: 0)
+    XCTAssertEqual(view0?.isShowingRetryAction, false)
+    
+    loader.completeImageLoadingWithError(at: 1)
+    XCTAssertEqual(view1?.isShowingRetryAction, true, "Expected retry action for second view once load failed")
+  }
+  
   //MARK: - Helpers
   class LoaderSpy: FeedLoader, FeedImageDataLoader {
     var loadFeedCallCount: Int {
@@ -274,6 +291,10 @@ private extension FeedImageCell {
   
   var renderedImage: Data? {
     feedImageView.image?.pngData()
+  }
+  
+  var isShowingRetryAction: Bool {
+    !feedImageRetryButton.isHidden
   }
 }
 
