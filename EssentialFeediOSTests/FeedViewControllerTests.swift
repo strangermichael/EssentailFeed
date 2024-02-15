@@ -190,10 +190,26 @@ final class FeedViewControllerTests: XCTestCase {
     XCTAssertEqual(loader.loadedImageURLs, [], "Expected no image url requests until views is near visible")
     
     sut.simulateFeedImageViewNearVisible(at: 0)
-    XCTAssertEqual(loader.loadedImageURLs, [image0.url], "Expected first image url requests once first view is near visible")
+     XCTAssertEqual(loader.loadedImageURLs, [image0.url], "Expected first image url requests once first view is near visible")
     
     sut.simulateFeedImageViewNearVisible(at: 1)
     XCTAssertEqual(loader.loadedImageURLs, [image0.url, image1.url], "Expected second image url requests once second view is near visible")
+  }
+  
+  func test_feedImageView_cancelImageUrlLoadingWhenNotNearVisible() {
+    let image0 = makeImage(url: URL(string: "http://url-0.com")!)
+    let image1 = makeImage(url: URL(string: "http://url-1.com")!)
+    let (sut, loader) = makeSUT()
+    
+    sut.loadViewIfNeeded()
+    loader.completeFeedLoading(with: [image0, image1], at: 0)
+    XCTAssertEqual(loader.cancelledImageURLs, [], "Expected no cacncelled image url requests until views is not near visible")
+    
+    sut.simulateFeedImageViewNotNearVisible(at: 0)
+    XCTAssertEqual(loader.cancelledImageURLs, [image0.url], "Expected first cacncelled image url requests once first view is not near visible")
+    
+    sut.simulateFeedImageViewNotNearVisible(at: 1)
+    XCTAssertEqual(loader.cancelledImageURLs, [image0.url, image1.url], "Expected second cacncelled image url requests once second view is not near visible")
   }
   
   //MARK: - Helpers
@@ -318,6 +334,13 @@ private extension FeedViewController {
     let ds = tableView.prefetchDataSource
     let index = IndexPath(row: row, section: feedImagesSection)
     ds?.tableView(tableView, prefetchRowsAt: [index])
+  }
+  
+  func simulateFeedImageViewNotNearVisible(at row: Int) {
+    simulateFeedImageViewNearVisible(at: row)
+    let ds = tableView.prefetchDataSource
+    let index = IndexPath(row: row, section: feedImagesSection)
+    ds?.tableView?(tableView, cancelPrefetchingForRowsAt: [index])
   }
 }
 
