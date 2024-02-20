@@ -9,37 +9,29 @@ import UIKit
 import EssentailFeed
 
 final public class FeedViewController: UITableViewController, UITableViewDataSourcePrefetching {
-  private var feedLoader: FeedLoader?
-  private var tableModel: [FeedImage] = []
+  private var refreshController: FeedRefreshViewController?
+  private var tableModel: [FeedImage] = [] {
+    didSet {
+      tableView.reloadData()
+    }
+  }
   private var imageLoader: FeedImageDataLoader?
   private var tasks: [IndexPath : FeedImageDataLoaderTask] = [:]
   
   public init(feedLoader: FeedLoader, imageLoader: FeedImageDataLoader) {
     super.init(nibName: nil, bundle: nil)
-    self.feedLoader = feedLoader
+    self.refreshController = FeedRefreshViewController(feedLoader: feedLoader)
     self.imageLoader = imageLoader
   }
   
   public override func viewDidLoad() {
     super.viewDidLoad()
-    refreshControl = UIRefreshControl()
-    refreshControl?.addTarget(self, action: #selector(load), for: .valueChanged)
+    refreshControl = refreshController?.view
+    refreshController?.onRefresh = { [weak self] images in
+      self?.tableModel = images
+    }
     tableView.prefetchDataSource = self
-    load()
-  }
-  
-  @objc private func load() {
-    refreshControl?.beginRefreshing()
-    feedLoader?.load(completion: {[weak self] result in
-      switch result {
-      case .success(let images):
-        self?.tableModel = images
-        self?.tableView.reloadData()
-      case .failure:
-        break
-      }
-      self?.refreshControl?.endRefreshing()
-    })
+    refreshController?.refresh()
   }
   
   public override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

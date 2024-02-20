@@ -384,14 +384,23 @@ private extension UIButton {
   }
 }
 
-private extension UIRefreshControl {
-  //no need to actually trigger the UI, just need to trigger the action UI binds
+//private extension UIRefreshControl {
+//  //no need to actually trigger the UI, just need to trigger the action UI binds
+//  func simulatePullToRefresh() {
+//    allTargets.forEach({ target in
+//      actions(forTarget: target, forControlEvent: .valueChanged)?.forEach({ actionString in
+//        (target as NSObject).perform(Selector(actionString))
+//      })
+//    })
+//  }
+//}
+extension UIControl {
   func simulatePullToRefresh() {
-    allTargets.forEach({ target in
-      actions(forTarget: target, forControlEvent: .valueChanged)?.forEach({ actionString in
-        (target as NSObject).perform(Selector(actionString))
-      })
-    })
+    allTargets.forEach { target in
+      actions(forTarget: target, forControlEvent: .valueChanged)?.forEach {
+        (target as NSObject).perform(Selector($0))
+      }
+    }
   }
 }
 
