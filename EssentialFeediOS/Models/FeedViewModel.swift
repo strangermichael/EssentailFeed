@@ -9,22 +9,17 @@ import Foundation
 import EssentailFeed
 
 final class FeedViewModel {
+  typealias Observer<T> = (T) -> Void
   private let feedLoader: FeedLoader
-  var onChange: ((FeedViewModel) -> Void)?
-  var onFeedLoaded: (([FeedImage]) -> Void)?
-  
-  private(set) var isLoading: Bool = false {
-    didSet {
-      onChange?(self)
-    }
-  }
+  var onFeedLoaded: Observer<[FeedImage]>?
+  var onLoadingStateChange: Observer<Bool>?
   
   init(feedLoader: FeedLoader) {
     self.feedLoader = feedLoader
   }
   
   func loadFeed() {
-    isLoading = true
+    onLoadingStateChange?(true)
     feedLoader.load(completion: {[weak self] result in
       switch result {
       case .success(let images):
@@ -32,7 +27,7 @@ final class FeedViewModel {
       case .failure:
         break
       }
-      self?.isLoading = false
+      self?.onLoadingStateChange?(false)
     })
   }
 }
