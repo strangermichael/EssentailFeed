@@ -11,9 +11,10 @@ import EssentailFeed
 public final class FeedUIComposer {
   private init() {}
   public static func feedComposedWith(feedLoader: FeedLoader, imageLoader: FeedImageDataLoader) -> FeedViewController {
-    let refreshController = FeedRefreshViewController(feedLoader: feedLoader)
+    let refreshVM = FeedViewModel(feedLoader: feedLoader)
+    let refreshController = FeedRefreshViewController(viewModel: refreshVM)
     let feedController = FeedViewController(refreshController: refreshController)
-    refreshController.onRefresh = adaptFeedToCellControllers(frowardingTo: feedController, loader: imageLoader)
+    refreshVM.onFeedLoaded = adaptFeedToCellControllers(frowardingTo: feedController, loader: imageLoader)
     return feedController
   }
   
