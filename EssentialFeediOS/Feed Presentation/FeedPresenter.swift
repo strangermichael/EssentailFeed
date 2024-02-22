@@ -8,7 +8,7 @@
 import Foundation
 import EssentailFeed
 
-protocol FeedLoadingView: AnyObject {
+protocol FeedLoadingView {
   func display(isLoading: Bool)
 }
 
@@ -19,7 +19,7 @@ protocol FeedView {
 final class FeedPresenter {
   private let feedLoader: FeedLoader
   var feedView: FeedView?
-  weak var loadingView: FeedLoadingView?
+  var loadingView: FeedLoadingView?
   
   init(feedLoader: FeedLoader) {
     self.feedLoader = feedLoader
