@@ -8,12 +8,21 @@
 import Foundation
 import EssentailFeed
 
+//benefit, only need to change view model if add new property
+struct FeedLoadingViewModel {
+  let isLoading: Bool
+}
+
 protocol FeedLoadingView {
-  func display(isLoading: Bool)
+  func display(viewModel: FeedLoadingViewModel)
+}
+
+struct FeedViewModel {
+  let feed: [FeedImage]
 }
 
 protocol FeedView {
-  func display(feed: [FeedImage])
+  func display(viewModel: FeedViewModel)
 }
 
 final class FeedPresenter {
@@ -26,15 +35,15 @@ final class FeedPresenter {
   }
   
   func loadFeed() {
-    loadingView?.display(isLoading: true)
+    loadingView?.display(viewModel: FeedLoadingViewModel(isLoading: true))
     feedLoader.load(completion: {[weak self] result in
       switch result {
       case .success(let images):
-        self?.feedView?.display(feed: images)
+        self?.feedView?.display(viewModel: FeedViewModel(feed: images))
       case .failure:
         break
       }
-      self?.loadingView?.display(isLoading: false)
+      self?.loadingView?.display(viewModel: FeedLoadingViewModel(isLoading: false))
     })
   }
 }
