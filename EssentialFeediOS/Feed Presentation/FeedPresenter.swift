@@ -8,29 +8,33 @@
 import Foundation
 import EssentailFeed
 
-protocol FeedView {
+protocol FeedLoadingView {
   func display(isLoading: Bool)
+}
+
+protocol FeedView {
   func display(feed: [FeedImage])
 }
 
 final class FeedPresenter {
   private let feedLoader: FeedLoader
-  var view: FeedView?
+  var feedView: FeedView?
+  var loadingView: FeedLoadingView?
   
   init(feedLoader: FeedLoader) {
     self.feedLoader = feedLoader
   }
   
   func loadFeed() {
-    view?.display(isLoading: true)
+    loadingView?.display(isLoading: true)
     feedLoader.load(completion: {[weak self] result in
       switch result {
       case .success(let images):
-        self?.view?.display(feed: images)
+        self?.feedView?.display(feed: images)
       case .failure:
         break
       }
-      self?.view?.display(isLoading: false)
+      self?.loadingView?.display(isLoading: false)
     })
   }
 }
