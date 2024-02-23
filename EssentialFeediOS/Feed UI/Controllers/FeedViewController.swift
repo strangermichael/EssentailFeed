@@ -8,16 +8,11 @@
 import UIKit
 
 final public class FeedViewController: UITableViewController, UITableViewDataSourcePrefetching {
-  private var refreshController: FeedRefreshViewController?
+  var refreshController: FeedRefreshViewController?
   var tableModel: [FeedImageCellController] = [] {
     didSet {
       tableView.reloadData()
     }
-  }
-  
-  init(refreshController: FeedRefreshViewController) {
-    super.init(nibName: nil, bundle: nil)
-    self.refreshController = refreshController
   }
   
   public override func viewDidLoad() {
@@ -55,9 +50,5 @@ final public class FeedViewController: UITableViewController, UITableViewDataSou
   
   private func cancelCellControllerLoad(forRowAt indexPath: IndexPath) {
     cellController(forRowAt: indexPath).cancelLoad()
-  }
-  
-  required init?(coder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
   }
 }
