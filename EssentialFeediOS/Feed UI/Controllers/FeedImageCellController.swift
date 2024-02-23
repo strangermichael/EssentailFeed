@@ -22,10 +22,9 @@ final class FeedImageCellController: FeedImageView {
   }
   
   func view(in tableView: UITableView) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: "FeedImageCell") as! FeedImageCell
-    self.cell = cell
+    cell = tableView.dequeueReusableCell()
     delegate.didRequestImage()
-    return cell
+    return cell!
   }
   
   func preload() {
@@ -33,7 +32,13 @@ final class FeedImageCellController: FeedImageView {
   }
   
   func cancelLoad() {
+    releaseCellForReuse()
     delegate.didCancelImageRequest()
+  }
+  
+  //持有cell的问题是，比如cell里有一个是异步请求图片，图片回来之后 这个cell可能被用来展示其他数据了，但是图回来后的completion block可能被刷新成之前数据的url
+  private func releaseCellForReuse() {
+    cell = nil
   }
   
   func display(_ viewModel: FeedImageViewModel<UIImage>) {

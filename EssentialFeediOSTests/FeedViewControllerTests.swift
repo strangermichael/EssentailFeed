@@ -127,7 +127,7 @@ final class FeedViewControllerTests: XCTestCase {
     XCTAssertEqual(view0?.renderedImage, .none, "Expected no image for first view while loading first image")
     XCTAssertEqual(view1?.renderedImage, .none, "Expected no image for second view while loading second image")
     
-    let imageData0 = UIImage.make(withColor: .red).pngData()! //not load from disk
+    let imageData0 = anyImageData() //not load from disk
     loader.completeImageLoading(with: imageData0, at: 0)
     XCTAssertEqual(view0?.renderedImage, imageData0, "Expected image for first view once loading completes successfully")
     
@@ -145,7 +145,7 @@ final class FeedViewControllerTests: XCTestCase {
     XCTAssertEqual(view0?.isShowingRetryAction, false)
     XCTAssertEqual(view1?.isShowingRetryAction, false)
     
-    let imageData0 = UIImage.make(withColor: .red).pngData()! //not load from disk
+    let imageData0 = anyImageData() //not load from disk
     loader.completeImageLoading(with: imageData0, at: 0)
     XCTAssertEqual(view0?.isShowingRetryAction, false)
     
@@ -210,6 +210,15 @@ final class FeedViewControllerTests: XCTestCase {
     
     sut.simulateFeedImageViewNotNearVisible(at: 1)
     XCTAssertEqual(loader.cancelledImageURLs, [image0.url, image1.url], "Expected second cacncelled image url requests once second view is not near visible")
+  }
+  
+  func test_feedImageView_doesNotRenderLoadedImageWhenNotVisibleAnymore() {
+    let (sut, loader) = makeSUT()
+    sut.loadViewIfNeeded()
+    loader.completeFeedLoading(with: [makeImage()])
+    let view = sut.simulateFeedImageViewNotVisible(at: 0)
+    loader.completeImageLoading(with: anyImageData())
+    XCTAssertEqual(view?.renderedImage, nil, "Expected no rendered image when an image load finishes after the view is not visible any more")
   }
   
   //MARK: - Helpers
@@ -293,6 +302,10 @@ final class FeedViewControllerTests: XCTestCase {
     XCTAssertEqual(cell.locationText, image.location, "Expected location text to be \(String(describing: image.location)) for image view at index \(index)", file: file, line: line)
     XCTAssertEqual(cell.descriptionText, image.description, "Expected description text to be \(String(describing: image.description)) for image view at index \(index)", file: file, line: line)
   }
+  
+  private func anyImageData() -> Data {
+    UIImage.make(withColor: .red).pngData()!
+  }
 }
 
 private extension FeedViewController {
@@ -305,11 +318,13 @@ private extension FeedViewController {
     feedImageView(at: index) as? FeedImageCell
   }
   
-  func simulateFeedImageViewNotVisible(at row: Int) {
+  @discardableResult
+  func simulateFeedImageViewNotVisible(at row: Int) -> FeedImageCell? {
     let view = simulateFeedImageViewVisible(at: row)
     let delegate = tableView.delegate
     let index = IndexPath(row: row, section: feedImagesSection)
     delegate?.tableView?(tableView, didEndDisplaying: view!, forRowAt: index)
+    return view
   }
   
   var isShowingLoadingUI: Bool {
