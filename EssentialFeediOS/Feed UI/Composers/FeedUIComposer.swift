@@ -11,6 +11,7 @@ import EssentialFeed
 public final class FeedUIComposer {
   private init() {}
   public static func feedComposedWith(feedLoader: FeedLoader, imageLoader: FeedImageDataLoader) -> FeedViewController {
+    let feedLoader = MainQueueDispatchDecorator(decoratee: feedLoader)
     let presentationAdapter = FeedLoaderPresentationAdapter(feedLoader: feedLoader)
     let feedController = FeedViewController.makeWith(delegate: presentationAdapter, title: FeedPresenter.title)
     let presenter = FeedPresenter(feedView: FeedViewAdapter(controller: feedController, imageLoader: imageLoader), loadingView: WeakRefVirtualProxy(feedController))
@@ -57,6 +58,27 @@ private final class WeakRefVirtualProxy<T: AnyObject> {
   
   init(_ object: T) {
     self.object = object
+  }
+}
+
+//adding behavior without changing interface
+private final class MainQueueDispatchDecorator: FeedLoader {
+  private let decoratee: FeedLoader
+  
+  init(decoratee: FeedLoader) {
+    self.decoratee = decoratee
+  }
+  
+  func load(completion: @escaping (FeedLoader.Result) -> Void) {
+    decoratee.load { result in
+      if Thread.isMainThread {
+        completion(result)
+      } else {
+        DispatchQueue.main.async {
+          completion(result)
+        }
+      }
+    }
   }
 }
 
