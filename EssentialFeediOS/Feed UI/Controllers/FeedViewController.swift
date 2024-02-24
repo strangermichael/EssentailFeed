@@ -23,6 +23,7 @@ final public class FeedViewController: UITableViewController, UITableViewDataSou
     super.viewDidLoad()
     tableView.prefetchDataSource = self
     refresh()
+    title = "My Feed"
   }
   
   @IBAction private func refresh() {
