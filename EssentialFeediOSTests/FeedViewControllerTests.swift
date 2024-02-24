@@ -7,7 +7,7 @@
 
 import XCTest
 import UIKit
-import EssentailFeed
+import EssentialFeed
 import EssentialFeediOS
 
 final class FeedViewControllerTests: XCTestCase {

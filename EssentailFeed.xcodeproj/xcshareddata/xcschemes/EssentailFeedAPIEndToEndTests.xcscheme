@@ -18,8 +18,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A626CB1F2B326F6800C14763"
-               BuildableName = "EssentailFeedAPIEndToEndTests.xctest"
-               BlueprintName = "EssentailFeedAPIEndToEndTests"
+               BuildableName = "EssentialFeedAPIEndToEndTests.xctest"
+               BlueprintName = "EssentialFeedAPIEndToEndTests"
                ReferencedContainer = "container:EssentailFeed.xcodeproj">
             </BuildableReference>
          </TestableReference>

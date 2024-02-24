@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import EssentailFeed
+import EssentialFeed
 
 //benefit, only need to change view model if add new property
 struct FeedLoadingViewModel {

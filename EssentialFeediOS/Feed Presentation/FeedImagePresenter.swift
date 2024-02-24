@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import EssentailFeed
+import EssentialFeed
 
 protocol FeedImageView {
   associatedtype Image

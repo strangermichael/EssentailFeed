@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A67EAA552ADF759200245BD2"
-               BuildableName = "EssentailFeed.framework"
-               BlueprintName = "EssentailFeed"
+               BuildableName = "EssentialFeed.framework"
+               BlueprintName = "EssentialFeed"
                ReferencedContainer = "container:EssentailFeed.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -49,8 +49,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A67EAA5D2ADF759200245BD2"
-               BuildableName = "EssentailFeedTests.xctest"
-               BlueprintName = "EssentailFeedTests"
+               BuildableName = "EssentialFeedTests.xctest"
+               BlueprintName = "EssentialFeedTests"
                ReferencedContainer = "container:EssentailFeed.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -61,8 +61,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A626CB1F2B326F6800C14763"
-               BuildableName = "EssentailFeedAPIEndToEndTests.xctest"
-               BlueprintName = "EssentailFeedAPIEndToEndTests"
+               BuildableName = "EssentialFeedAPIEndToEndTests.xctest"
+               BlueprintName = "EssentialFeedAPIEndToEndTests"
                ReferencedContainer = "container:EssentailFeed.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -73,8 +73,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A6F260642B5B7DDA00C79FD5"
-               BuildableName = "EssentailFeedCacheIntegrationTests.xctest"
-               BlueprintName = "EssentailFeedCacheIntegrationTests"
+               BuildableName = "EssentialFeedCacheIntegrationTests.xctest"
+               BlueprintName = "EssentialFeedCacheIntegrationTests"
                ReferencedContainer = "container:EssentailFeed.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -113,8 +113,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A67EAA552ADF759200245BD2"
-            BuildableName = "EssentailFeed.framework"
-            BlueprintName = "EssentailFeed"
+            BuildableName = "EssentialFeed.framework"
+            BlueprintName = "EssentialFeed"
             ReferencedContainer = "container:EssentailFeed.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A67EAA552ADF759200245BD2"
-               BuildableName = "EssentailFeed.framework"
-               BlueprintName = "EssentailFeed"
+               BuildableName = "EssentialFeed.framework"
+               BlueprintName = "EssentialFeed"
                ReferencedContainer = "container:EssentailFeed.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -35,8 +35,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A67EAA5D2ADF759200245BD2"
-               BuildableName = "EssentailFeedTests.xctest"
-               BlueprintName = "EssentailFeedTests"
+               BuildableName = "EssentialFeedTests.xctest"
+               BlueprintName = "EssentialFeedTests"
                ReferencedContainer = "container:EssentailFeed.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -63,8 +63,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A67EAA552ADF759200245BD2"
-            BuildableName = "EssentailFeed.framework"
-            BlueprintName = "EssentailFeed"
+            BuildableName = "EssentialFeed.framework"
+            BlueprintName = "EssentialFeed"
             ReferencedContainer = "container:EssentailFeed.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
