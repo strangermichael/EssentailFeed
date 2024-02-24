@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A603572B2B897A7F00CDCCD3 /* Feed.strings in Resources */ = {isa = PBXBuildFile; fileRef = A603572A2B897A7F00CDCCD3 /* Feed.strings */; };
 		A603572D2B897E9200CDCCD3 /* FeedUIIntegrationTests+localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = A603572C2B897E9200CDCCD3 /* FeedUIIntegrationTests+localization.swift */; };
 		A60357302B89802400CDCCD3 /* FeedImageCell+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A603572F2B89802400CDCCD3 /* FeedImageCell+TestHelpers.swift */; };
 		A60357322B8980A400CDCCD3 /* FeedViewController+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60357312B8980A400CDCCD3 /* FeedViewController+TestHelpers.swift */; };
@@ -17,6 +16,7 @@
 		A603573A2B8981C100CDCCD3 /* UIControl+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60357392B8981C100CDCCD3 /* UIControl+TestHelpers.swift */; };
 		A603573C2B89821A00CDCCD3 /* FeedUIIntegrationTests+LoaderSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = A603573B2B89821A00CDCCD3 /* FeedUIIntegrationTests+LoaderSpy.swift */; };
 		A603573E2B89832600CDCCD3 /* FeedUIIntegrationTests+Assertion.swift in Sources */ = {isa = PBXBuildFile; fileRef = A603573D2B89832600CDCCD3 /* FeedUIIntegrationTests+Assertion.swift */; };
+		A603573F2B89838F00CDCCD3 /* Feed.strings in Resources */ = {isa = PBXBuildFile; fileRef = A60357412B89838F00CDCCD3 /* Feed.strings */; };
 		A60564E32B5A169900222D46 /* CoreDataHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60564E22B5A169900222D46 /* CoreDataHelpers.swift */; };
 		A60564E52B5A16D600222D46 /* ManagedCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60564E42B5A16D600222D46 /* ManagedCache.swift */; };
 		A60564E72B5A16DE00222D46 /* ManagedFeedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60564E62B5A16DE00222D46 /* ManagedFeedImage.swift */; };
@@ -134,7 +134,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		A603572A2B897A7F00CDCCD3 /* Feed.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Feed.strings; sourceTree = "<group>"; };
 		A603572C2B897E9200CDCCD3 /* FeedUIIntegrationTests+localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeedUIIntegrationTests+localization.swift"; sourceTree = "<group>"; };
 		A603572F2B89802400CDCCD3 /* FeedImageCell+TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeedImageCell+TestHelpers.swift"; sourceTree = "<group>"; };
 		A60357312B8980A400CDCCD3 /* FeedViewController+TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeedViewController+TestHelpers.swift"; sourceTree = "<group>"; };
@@ -144,6 +143,9 @@
 		A60357392B8981C100CDCCD3 /* UIControl+TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIControl+TestHelpers.swift"; sourceTree = "<group>"; };
 		A603573B2B89821A00CDCCD3 /* FeedUIIntegrationTests+LoaderSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeedUIIntegrationTests+LoaderSpy.swift"; sourceTree = "<group>"; };
 		A603573D2B89832600CDCCD3 /* FeedUIIntegrationTests+Assertion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeedUIIntegrationTests+Assertion.swift"; sourceTree = "<group>"; };
+		A60357402B89838F00CDCCD3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Feed.strings; sourceTree = "<group>"; };
+		A60357422B8983B300CDCCD3 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Feed.strings"; sourceTree = "<group>"; };
+		A60357432B89845300CDCCD3 /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = el.lproj/Feed.strings; sourceTree = "<group>"; };
 		A60564E22B5A169900222D46 /* CoreDataHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataHelpers.swift; sourceTree = "<group>"; };
 		A60564E42B5A16D600222D46 /* ManagedCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedCache.swift; sourceTree = "<group>"; };
 		A60564E62B5A16DE00222D46 /* ManagedFeedImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedFeedImage.swift; sourceTree = "<group>"; };
@@ -496,7 +498,7 @@
 				A6C2538C2B86D82D005AEF09 /* FeedPresenter.swift */,
 				A6E1A8A72B8592AB00AACE8E /* FeedImageViewModel.swift */,
 				A6C2538E2B870C03005AEF09 /* FeedImagePresenter.swift */,
-				A603572A2B897A7F00CDCCD3 /* Feed.strings */,
+				A60357412B89838F00CDCCD3 /* Feed.strings */,
 			);
 			path = "Feed Presentation";
 			sourceTree = "<group>";
@@ -679,7 +681,9 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				"pt-BR",
 				Base,
+				el,
 			);
 			mainGroup = A67EAA4C2ADF759200245BD2;
 			productRefGroup = A67EAA572ADF759200245BD2 /* Products */;
@@ -710,7 +714,7 @@
 			files = (
 				A6D025512B882D2100F5B47C /* Feed.storyboard in Resources */,
 				A6D025532B882E6B00F5B47C /* Feed.xcassets in Resources */,
-				A603572B2B897A7F00CDCCD3 /* Feed.strings in Resources */,
+				A603573F2B89838F00CDCCD3 /* Feed.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -879,6 +883,19 @@
 		};
 /* End PBXTargetDependency section */
 
+/* Begin PBXVariantGroup section */
+		A60357412B89838F00CDCCD3 /* Feed.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A60357402B89838F00CDCCD3 /* en */,
+				A60357422B8983B300CDCCD3 /* pt-BR */,
+				A60357432B89845300CDCCD3 /* el */,
+			);
+			name = Feed.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
 		A626CB272B326F6800C14763 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -1036,6 +1053,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -1099,6 +1117,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
