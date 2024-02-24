@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A603572B2B897A7F00CDCCD3 /* Feed.strings in Resources */ = {isa = PBXBuildFile; fileRef = A603572A2B897A7F00CDCCD3 /* Feed.strings */; };
+		A603572D2B897E9200CDCCD3 /* FeedViewControllerTest+localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = A603572C2B897E9200CDCCD3 /* FeedViewControllerTest+localization.swift */; };
 		A60564E32B5A169900222D46 /* CoreDataHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60564E22B5A169900222D46 /* CoreDataHelpers.swift */; };
 		A60564E52B5A16D600222D46 /* ManagedCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60564E42B5A16D600222D46 /* ManagedCache.swift */; };
 		A60564E72B5A16DE00222D46 /* ManagedFeedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60564E62B5A16DE00222D46 /* ManagedFeedImage.swift */; };
@@ -126,6 +127,7 @@
 
 /* Begin PBXFileReference section */
 		A603572A2B897A7F00CDCCD3 /* Feed.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Feed.strings; sourceTree = "<group>"; };
+		A603572C2B897E9200CDCCD3 /* FeedViewControllerTest+localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeedViewControllerTest+localization.swift"; sourceTree = "<group>"; };
 		A60564E22B5A169900222D46 /* CoreDataHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataHelpers.swift; sourceTree = "<group>"; };
 		A60564E42B5A16D600222D46 /* ManagedCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedCache.swift; sourceTree = "<group>"; };
 		A60564E62B5A16DE00222D46 /* ManagedFeedImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedFeedImage.swift; sourceTree = "<group>"; };
@@ -269,6 +271,7 @@
 			isa = PBXGroup;
 			children = (
 				A659C1D92B688D1E007C6037 /* FeedViewControllerTests.swift */,
+				A603572C2B897E9200CDCCD3 /* FeedViewControllerTest+localization.swift */,
 			);
 			path = EssentialFeediOSTests;
 			sourceTree = "<group>";
@@ -744,6 +747,7 @@
 				A659C1DA2B688D1E007C6037 /* FeedViewControllerTests.swift in Sources */,
 				A659C2562B6891FA007C6037 /* XCTestCase+MemoryLeakTracking.swift in Sources */,
 				A6C649072B7505AB00D94DC3 /* SharedTestHelper.swift in Sources */,
+				A603572D2B897E9200CDCCD3 /* FeedViewControllerTest+localization.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
