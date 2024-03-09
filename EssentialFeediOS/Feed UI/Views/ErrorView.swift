@@ -40,6 +40,10 @@ public final class ErrorView: UIView {
       self.alpha = 1
     }
   }
+    
+  @IBAction func labelTapped(_ sender: UITapGestureRecognizer) {
+    hideMessageAnimated()
+  }
   
   private func hideMessageAnimated() {
     UIView.animate(

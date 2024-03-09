@@ -23,6 +23,9 @@
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
+                                    <connections>
+                                        <outletCollection property="gestureRecognizers" destination="W5Z-Xz-HTW" appends="YES" id="RUV-6u-BPv"/>
+                                    </connections>
                                 </label>
                             </subviews>
                             <color key="backgroundColor" red="1" green="0.41568627450980389" blue="0.41568627450980389" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -166,6 +169,12 @@ Location</string>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aWR-y7-Hk6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="W5Z-Xz-HTW">
+                    <connections>
+                        <action selector="labelTapped:" destination="pLi-TI-3wD" id="frB-CZ-JsK"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <exit id="pLi-TI-3wD" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1105.7971014492755" y="-11.383928571428571"/>
         </scene>
