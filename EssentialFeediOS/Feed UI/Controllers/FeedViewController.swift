@@ -22,7 +22,7 @@ final public class FeedViewController: UITableViewController, UITableViewDataSou
       tableView.reloadData()
     }
   }
-  public let errorView = ErrorView()
+  @IBOutlet private(set) public weak var errorView: ErrorView!
   public override func viewDidLoad() {
     super.viewDidLoad()
     tableView.prefetchDataSource = self
