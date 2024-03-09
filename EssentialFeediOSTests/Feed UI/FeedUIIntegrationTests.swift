@@ -42,7 +42,7 @@ final class FeedUIIntegrationTests: XCTestCase {
     
     sut.simulateUserInitiatedFeedReload()
     XCTAssertEqual(sut.isShowingLoadingUI, true, "Expected show loading once user initiates a reload")
-    loader.completFeedloadingWithError(at: 1)
+    loader.completeFeedloadingWithError(at: 1)
     XCTAssertFalse(sut.isShowingLoadingUI, "Expected no loading once user initiated loading completes with error")
   }
   
@@ -73,7 +73,7 @@ final class FeedUIIntegrationTests: XCTestCase {
     assertThat(sut, isRendering: [image0])
     
     sut.simulateUserInitiatedFeedReload()
-    loader.completFeedloadingWithError(at: 1)
+    loader.completeFeedloadingWithError(at: 1)
     assertThat(sut, isRendering: [image0])
   }
   
@@ -252,10 +252,13 @@ final class FeedUIIntegrationTests: XCTestCase {
     wait(for: [exp], timeout: 1.0)
   }
   
-  func test_errorView_doesNotRenderErrorOnLoad() {
-    let (sut, _) = makeSUT()
+  func test_loadFeedCompletion_rendersErrorMessageOnError() {
+    let (sut, loader) = makeSUT()
     sut.loadViewIfNeeded()
     XCTAssertEqual(sut.errorMessage, nil)
+    
+    loader.completeFeedloadingWithError(at: 0)
+    XCTAssertEqual(sut.errorMessage, localized("FEED_VIEW_CONNECTION_ERROR"))
   }
 
   

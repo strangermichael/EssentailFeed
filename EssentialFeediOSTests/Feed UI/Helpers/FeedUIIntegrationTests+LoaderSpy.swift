@@ -32,7 +32,7 @@ extension FeedUIIntegrationTests {
       feedRequests[index](.success(images))
     }
     
-    func completFeedloadingWithError(at index: Int) {
+    func completeFeedloadingWithError(at index: Int) {
       feedRequests[index](.failure(anyNSError()))
     }
     
