@@ -16,9 +16,11 @@ protocol FeedImageView {
 
 final class FeedImagePresenter<View: FeedImageView, Image> where View.Image == Image {
   private let view: View
+  private let imageTransformer: (Data) -> Image?
   
-  init(view: View) {
+  init(view: View, imageTransformer: @escaping (Data) -> Image?) {
     self.view = view
+    self.imageTransformer = imageTransformer
   }
   
   func didStartLoadingImageData(for model: FeedImage) {
@@ -37,6 +39,21 @@ final class FeedImagePresenter<View: FeedImageView, Image> where View.Image == I
       image: nil,
       isLoading: false,
       shouldRetry: true))
+  }
+  
+  private struct InvalidImageDataError: Error {}
+  
+  func didFinishLoadingImageData(with data: Data, for model: FeedImage) {
+    guard let image = imageTransformer(data) else {
+      return didFinishLoadingImageData(with: InvalidImageDataError(), for: model)
+    }
+    
+    view.display(FeedImageViewModel(
+      description: model.description,
+      location: model.location,
+      image: image,
+      isLoading: false,
+      shouldRetry: false))
   }
 }
 
@@ -64,8 +81,6 @@ final class FeedImagePresenterTests: XCTestCase {
     let (sut, view) = makeSUT()
     let image = uniqueImage()
     sut.didStartLoadingImageData(for: image)
-    trackForMemoryLeaks(sut)
-    trackForMemoryLeaks(view)
     XCTAssertEqual(view.messages, [.display(image: nil),
                                    .display(location: image.location),
                                    .display(description: image.description),
@@ -86,10 +101,29 @@ final class FeedImagePresenterTests: XCTestCase {
                                   ])
   }
   
+  func test_didFinishLoadingImageData_displayImageAndHideRetryAndIsLoading() {
+    let (sut, view) = makeSUT()
+    let image = uniqueImage()
+    let data = Data()
+    let expecedImage = AnyImage()
+    sut.didFinishLoadingImageData(with: data, for: image)
+    XCTAssertEqual(view.messages, [.display(image: expecedImage),
+                                   .display(location: image.location),
+                                   .display(description: image.description),
+                                   .display(isLoading: false),
+                                   .display(shouldRetry: false)
+                                  ])
+  }
+  
   //MARK: - helper
   private func makeSUT() -> (FeedImagePresenter<ViewSpy, AnyImage>, ViewSpy) {
+    let imageTransformer: (Data) -> AnyImage? = { _ in
+      return AnyImage()
+    }
     let view = ViewSpy()
-    let presenter = FeedImagePresenter<ViewSpy, AnyImage>(view: view)
+    let presenter = FeedImagePresenter<ViewSpy, AnyImage>(view: view, imageTransformer: imageTransformer)
+    trackForMemoryLeaks(view)
+    trackForMemoryLeaks(presenter)
     return (presenter, view)
   }
   
