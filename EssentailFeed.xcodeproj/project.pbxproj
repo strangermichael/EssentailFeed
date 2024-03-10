@@ -68,6 +68,7 @@
 		A6B483D62B9CA881000BB8EC /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B483D52B9CA881000BB8EC /* ErrorView.swift */; };
 		A6B483D92B9CADD7000BB8EC /* FeedErrorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B483D82B9CADD7000BB8EC /* FeedErrorViewModel.swift */; };
 		A6B483DB2B9CAE0B000BB8EC /* UIRefreshControl+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B483DA2B9CAE0B000BB8EC /* UIRefreshControl+Helpers.swift */; };
+		A6B483DE2B9D44B0000BB8EC /* Feed.strings in Resources */ = {isa = PBXBuildFile; fileRef = A6B483E02B9D44B0000BB8EC /* Feed.strings */; };
 		A6C2538D2B86D82D005AEF09 /* FeedPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6C2538C2B86D82D005AEF09 /* FeedPresenter.swift */; };
 		A6C2538F2B870C03005AEF09 /* FeedImagePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6C2538E2B870C03005AEF09 /* FeedImagePresenter.swift */; };
 		A6C649052B74FEF600D94DC3 /* FeedImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6C649042B74FEF600D94DC3 /* FeedImageCell.swift */; };
@@ -205,6 +206,9 @@
 		A6B483D52B9CA881000BB8EC /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		A6B483D82B9CADD7000BB8EC /* FeedErrorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedErrorViewModel.swift; sourceTree = "<group>"; };
 		A6B483DA2B9CAE0B000BB8EC /* UIRefreshControl+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIRefreshControl+Helpers.swift"; sourceTree = "<group>"; };
+		A6B483DF2B9D44B0000BB8EC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Feed.strings; sourceTree = "<group>"; };
+		A6B483E12B9D44B6000BB8EC /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = el.lproj/Feed.strings; sourceTree = "<group>"; };
+		A6B483E22B9D44B7000BB8EC /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Feed.strings"; sourceTree = "<group>"; };
 		A6C2538C2B86D82D005AEF09 /* FeedPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPresenter.swift; sourceTree = "<group>"; };
 		A6C2538E2B870C03005AEF09 /* FeedImagePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedImagePresenter.swift; sourceTree = "<group>"; };
 		A6C649042B74FEF600D94DC3 /* FeedImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedImageCell.swift; sourceTree = "<group>"; };
@@ -561,6 +565,7 @@
 			isa = PBXGroup;
 			children = (
 				A6E328CA2B8B3316002EFC85 /* FeedPresenterTests.swift */,
+				A6B483E02B9D44B0000BB8EC /* Feed.strings */,
 			);
 			path = "Feed Presentation";
 			sourceTree = "<group>";
@@ -798,6 +803,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6B483DE2B9D44B0000BB8EC /* Feed.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -962,6 +968,16 @@
 				A60357402B89838F00CDCCD3 /* en */,
 				A60357422B8983B300CDCCD3 /* pt-BR */,
 				A60357432B89845300CDCCD3 /* el */,
+			);
+			name = Feed.strings;
+			sourceTree = "<group>";
+		};
+		A6B483E02B9D44B0000BB8EC /* Feed.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A6B483DF2B9D44B0000BB8EC /* en */,
+				A6B483E12B9D44B6000BB8EC /* el */,
+				A6B483E22B9D44B7000BB8EC /* pt-BR */,
 			);
 			name = Feed.strings;
 			sourceTree = "<group>";
