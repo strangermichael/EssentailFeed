@@ -1,9 +1,0 @@
-/* 
-  Feed.strings
-  EssentialFeed
-
-  Created by Shengjun Xia on 2024/2/24.
-  
-*/
-"FEED_VIEW_TITLE" = "Το Feed μου";
-"FEED_VIEW_CONNECTION_ERROR" = "Δεν ήταν δυνατή η σύνδεση στο διακομιστή";
