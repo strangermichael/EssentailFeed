@@ -89,7 +89,7 @@ final class FeedImagePresenterTests: XCTestCase {
                                   ])
   }
   
-  func test_didFinishLoadingImageDataWithError_displayNoImageAndNoLoadingAndNoRetry() {
+  func test_didFinishLoadingImageDataWithError_displayNoImageAndNoLoadingAndShowRetry() {
     let (sut, view) = makeSUT()
     let image = uniqueImage()
     sut.didFinishLoadingImageData(with: anyNSError(), for: image)
@@ -101,7 +101,7 @@ final class FeedImagePresenterTests: XCTestCase {
                                   ])
   }
   
-  func test_didFinishLoadingImageData_displayImageAndHideRetryAndIsLoading() {
+  func test_didFinishLoadingImageDataSuccess_displayImageAndHideRetryAndIsLoading() {
     let (sut, view) = makeSUT()
     let image = uniqueImage()
     let data = Data()
@@ -115,13 +115,25 @@ final class FeedImagePresenterTests: XCTestCase {
                                   ])
   }
   
+  func test_didFinishLoadingImageDataTransformImageFailed_displayNoImageAndShowRetryAndNoLoading() {
+    let imageTransformer: (Data) -> AnyImage? = { _ in return nil }
+    let (sut, view) = makeSUT(imageTransformer: imageTransformer)
+    let image = uniqueImage()
+    let data = Data()
+    sut.didFinishLoadingImageData(with: data, for: image)
+    XCTAssertEqual(view.messages, [.display(image: nil),
+                                   .display(location: image.location),
+                                   .display(description: image.description),
+                                   .display(isLoading: false),
+                                   .display(shouldRetry: true)
+                                  ])
+  }
+  
   //MARK: - helper
-  private func makeSUT() -> (FeedImagePresenter<ViewSpy, AnyImage>, ViewSpy) {
-    let imageTransformer: (Data) -> AnyImage? = { _ in
-      return AnyImage()
-    }
+  private func makeSUT(imageTransformer: ((Data) -> AnyImage?)? = nil) -> (FeedImagePresenter<ViewSpy, AnyImage>, ViewSpy) {
+    let defaultTransformer: (Data) -> AnyImage? = { _ in return AnyImage() }
     let view = ViewSpy()
-    let presenter = FeedImagePresenter<ViewSpy, AnyImage>(view: view, imageTransformer: imageTransformer)
+    let presenter = FeedImagePresenter<ViewSpy, AnyImage>(view: view, imageTransformer: imageTransformer ?? defaultTransformer)
     trackForMemoryLeaks(view)
     trackForMemoryLeaks(presenter)
     return (presenter, view)
