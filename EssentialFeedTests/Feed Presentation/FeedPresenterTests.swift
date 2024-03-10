@@ -7,13 +7,31 @@
 
 import XCTest
 
+protocol FeedErrorView {
+  func display(_ viewModel: FeedErrorViewModel)
+}
+
+struct FeedErrorViewModel {
+  let message: String?
+  
+  static var noError: FeedErrorViewModel {
+    .init(message: nil)
+  }
+  
+  static func error(message: String) -> FeedErrorViewModel {
+    .init(message: message)
+  }
+}
+
 class FeedPresenter {
-  init(view: Any) {
-    
+  private let errorView: FeedErrorView
+  
+  init(view: FeedErrorView) {
+    self.errorView = view
   }
   
   func didStartLoadingFeed() {
-    
+    errorView.display(.noError)
   }
 }
 
@@ -25,9 +43,9 @@ class FeedPresenterTests: XCTestCase {
   }
   
   func test_didStartLoadingFeed_displayNoErrorMessage() {
-//    let (sut, view) = makeSUT()
-//    sut.didStartLoadingFeed()
-//    XCTAssertEqual(view.messages, [.display(errorMessage: .none)])
+    let (sut, view) = makeSUT()
+    sut.didStartLoadingFeed()
+    XCTAssertEqual(view.messages, [.display(errorMessage: .none)])
   }
   
   //MARK: - Helpers
@@ -40,12 +58,16 @@ class FeedPresenterTests: XCTestCase {
   }
   
   
-  private class ViewSpy {
+  private class ViewSpy: FeedErrorView {
     enum Message: Equatable {
       case display(errorMessage: String?)
     }
     
-    let messages: [Message] = []
+    private(set) var messages: [Message] = []
+    
+    func display(_ viewModel: FeedErrorViewModel) {
+      messages.append(.display(errorMessage: viewModel.message))
+    }
     
   }
   
