@@ -27,7 +27,17 @@ final class FeedImagePresenter<View: FeedImageView, Image> where View.Image == I
       location: model.location,
       image: nil,
       isLoading: true,
-      shouldRetry: false))  }
+      shouldRetry: false))
+  }
+  
+  func didFinishLoadingImageData(with error: Error, for model: FeedImage) {
+    view.display(FeedImageViewModel(
+      description: model.description,
+      location: model.location,
+      image: nil,
+      isLoading: false,
+      shouldRetry: true))
+  }
 }
 
 struct FeedImageViewModel<Image> {
@@ -54,11 +64,25 @@ final class FeedImagePresenterTests: XCTestCase {
     let (sut, view) = makeSUT()
     let image = uniqueImage()
     sut.didStartLoadingImageData(for: image)
+    trackForMemoryLeaks(sut)
+    trackForMemoryLeaks(view)
     XCTAssertEqual(view.messages, [.display(image: nil),
                                    .display(location: image.location),
                                    .display(description: image.description),
                                    .display(isLoading: true),
                                    .display(shouldRetry: false)
+                                  ])
+  }
+  
+  func test_didFinishLoadingImageDataWithError_displayNoImageAndNoLoadingAndNoRetry() {
+    let (sut, view) = makeSUT()
+    let image = uniqueImage()
+    sut.didFinishLoadingImageData(with: anyNSError(), for: image)
+    XCTAssertEqual(view.messages, [.display(image: nil),
+                                   .display(location: image.location),
+                                   .display(description: image.description),
+                                   .display(isLoading: false),
+                                   .display(shouldRetry: true)
                                   ])
   }
   
