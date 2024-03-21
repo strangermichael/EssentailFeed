@@ -66,9 +66,9 @@ public class CodableFeedStore: FeedStore {
         let encoder = JSONEncoder()
         let encoded = try encoder.encode(Cache(feed: items.map { CodableFeedImage($0) }, timestamp: timestamp))
         try encoded.write(to: storeURL)
-        completion(nil)
+        completion(.success(()))
       } catch {
-        completion(error)
+        completion(.failure(error))
       }
     }
   }

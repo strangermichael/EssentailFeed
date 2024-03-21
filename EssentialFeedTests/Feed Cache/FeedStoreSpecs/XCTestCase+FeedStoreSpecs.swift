@@ -122,8 +122,13 @@ extension FeedStoreSpecs where Self: XCTestCase {
   func insert(items: [LocalFeedImage], timestamp: Date, to sut: FeedStore) -> Error? {
     let exp = expectation(description: "Wait for cache retrieval")
     var insertionError: Error?
-    sut.insert(items: items, timestamp: timestamp) { error in
-      insertionError = error
+    sut.insert(items: items, timestamp: timestamp) { result in
+      switch result {
+      case .success:
+        break
+      case let .failure(error):
+        insertionError = error
+      }
       exp.fulfill()
     }
     wait(for: [exp], timeout: 1.0)

@@ -32,9 +32,14 @@ extension LocalFeedLoader {
   }
   
   private func cache(items: [FeedImage], completion: @escaping (SaveResult) -> Void) {
-    store.insert(items: items.toLocal(), timestamp: currentDate(), completion: { [weak self] cacheInsertionError in
+    store.insert(items: items.toLocal(), timestamp: currentDate(), completion: { [weak self] result in
       guard self != nil else { return }
-      completion(cacheInsertionError)
+      switch result {
+      case .success:
+        completion(nil)
+      case let .failure(cacheInsertionError):
+        completion(cacheInsertionError)
+      }
     })
   }
 }

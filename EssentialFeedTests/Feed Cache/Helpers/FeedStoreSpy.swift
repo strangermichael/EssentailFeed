@@ -34,11 +34,11 @@ class FeedStoreSpy: FeedStore {
   }
   
   func completeInsertion(with error: Error, at index: Int = 0) {
-    insertionCompletions[index](error)
+    insertionCompletions[index](.failure(error))
   }
   
   func completInsertionSuccessfully(at index: Int = 0) {
-    insertionCompletions[index](nil)
+    insertionCompletions[index](.success(()))
   }
   
   func insert(items: [LocalFeedImage], timestamp: Date, completion: @escaping InsertionCompletion) {
