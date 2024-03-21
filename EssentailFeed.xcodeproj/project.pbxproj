@@ -40,7 +40,7 @@
 		A659C2512B689141007C6037 /* EssentialFeed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A67EAA562ADF759200245BD2 /* EssentialFeed.framework */; };
 		A659C2522B689141007C6037 /* EssentialFeed.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A67EAA562ADF759200245BD2 /* EssentialFeed.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A659C2562B6891FA007C6037 /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = A67286EB2B3133110036FD4C /* XCTestCase+MemoryLeakTracking.swift */; };
-		A66738142B84C8FA008E70E9 /* FeedImageDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66738132B84C8FA008E70E9 /* FeedImageDataLoader.swift */; };
+		A6609EF62BABC0B800632B21 /* FeedImageDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66738132B84C8FA008E70E9 /* FeedImageDataLoader.swift */; };
 		A667381A2B84D7AB008E70E9 /* FeedImageCellController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66738192B84D7AB008E70E9 /* FeedImageCellController.swift */; };
 		A667381D2B84DD61008E70E9 /* FeedUIComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A667381C2B84DD61008E70E9 /* FeedUIComposer.swift */; };
 		A67286EC2B3133110036FD4C /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = A67286EB2B3133110036FD4C /* XCTestCase+MemoryLeakTracking.swift */; };
@@ -331,7 +331,6 @@
 		A62B7BB12B61EDF7006BAD8B /* EssentialFeediOS */ = {
 			isa = PBXGroup;
 			children = (
-				A66738122B84C8D2008E70E9 /* Feed Image Loader */,
 				A66738162B84C914008E70E9 /* Feed UI */,
 			);
 			path = EssentialFeediOS;
@@ -364,12 +363,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		A66738122B84C8D2008E70E9 /* Feed Image Loader */ = {
+		A6609EF52BABC0A600632B21 /* Feed Feature */ = {
 			isa = PBXGroup;
 			children = (
+				A67EAA6E2ADF759A00245BD2 /* FeedItem.swift */,
+				A6162B4E2AE0CAD800EC4F6E /* FeedLoader.swift */,
 				A66738132B84C8FA008E70E9 /* FeedImageDataLoader.swift */,
 			);
-			path = "Feed Image Loader";
+			path = "Feed Feature";
 			sourceTree = "<group>";
 		};
 		A66738152B84C908008E70E9 /* Controllers */ = {
@@ -431,10 +432,10 @@
 			isa = PBXGroup;
 			children = (
 				A67EAA582ADF759200245BD2 /* EssentialFeed */,
+				A62B7BB12B61EDF7006BAD8B /* EssentialFeediOS */,
 				A67EAA622ADF759200245BD2 /* EssentialFeedTests */,
 				A626CB212B326F6800C14763 /* EssentialFeedAPIEndToEndTests */,
 				A6F260662B5B7DDA00C79FD5 /* EssentialFeedCacheIntegrationTests */,
-				A62B7BB12B61EDF7006BAD8B /* EssentialFeediOS */,
 				A62B7BBB2B61EDF8006BAD8B /* EssentialFeediOSTests */,
 				A67EAA572ADF759200245BD2 /* Products */,
 				A659C2502B689141007C6037 /* Frameworks */,
@@ -461,8 +462,7 @@
 				A69208202B3E5FB20031F799 /* Feed Cache */,
 				A6ABE2CD2B1C20F7004E67FA /* Feed API */,
 				A67EAA592ADF759200245BD2 /* EssentailFeed.h */,
-				A67EAA6E2ADF759A00245BD2 /* FeedItem.swift */,
-				A6162B4E2AE0CAD800EC4F6E /* FeedLoader.swift */,
+				A6609EF52BABC0A600632B21 /* Feed Feature */,
 			);
 			path = EssentialFeed;
 			sourceTree = "<group>";
@@ -829,7 +829,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				A603574D2B89968800CDCCD3 /* FeedViewAdapter.swift in Sources */,
-				A66738142B84C8FA008E70E9 /* FeedImageDataLoader.swift in Sources */,
 				A6F1F2A72B770E87002E5D6B /* UIView+Shimmering.swift in Sources */,
 				A6B483D62B9CA881000BB8EC /* ErrorView.swift in Sources */,
 				A6D025552B883D2D00F5B47C /* UITableView+Dequeueing.swift in Sources */,
@@ -884,6 +883,7 @@
 				A69208222B3E5FC40031F799 /* LocalFeedLoader.swift in Sources */,
 				A6B483F32B9D5483000BB8EC /* FeedImageView.swift in Sources */,
 				A6B483F52B9D5495000BB8EC /* FeedImageViewModel.swift in Sources */,
+				A6609EF62BABC0B800632B21 /* FeedImageDataLoader.swift in Sources */,
 				A6B206582B53D8C2000D7BF4 /* CodableFeedStore.swift in Sources */,
 				A6ABE2D12B1C9D7E004E67FA /* HTTPClient.swift in Sources */,
 				A6B483EC2B9D47C0000BB8EC /* FeedViewModel.swift in Sources */,
