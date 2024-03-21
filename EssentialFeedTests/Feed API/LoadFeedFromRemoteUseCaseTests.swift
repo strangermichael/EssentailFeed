@@ -42,7 +42,7 @@ final class LoadFeedFromRemoteUseCaseTests: XCTestCase {
   func test_load_deliverErrorOnClientError() {
     let (sut, client) = makeSUT()
     expect(sut: sut, toCompleteWithResult: failure(.connectivity)) {
-      client.complete(error: NSError(domain: "Test", code: 0), at: 0)
+      client.complete(with: NSError(domain: "Test", code: 0), at: 0)
     }
   }
   
@@ -155,29 +155,5 @@ final class LoadFeedFromRemoteUseCaseTests: XCTestCase {
   
   func failure(_ error: RemoteFeedLoader.Error) -> RemoteFeedLoader.Result {
     .failure(error)
-  }
-  
-  class HTTPClientSpy: HTTPClient {
-    var requestedURLs: [URL] {
-      messages.map { $0.url }
-    }
-    
-    var messages: [(url: URL, completion: (HTTPClient.Result) -> Void)] = []
-    
-    func get(from url: URL, completion: @escaping (HTTPClient.Result) -> Void) {
-      messages.append((url, completion))
-    }
-    
-    func complete(error: Error, at index: Int) {
-      messages[index].completion(.failure(error))
-    }
-    
-    func complete(withStatusCode code: Int, data: Data, at index: Int = 0) {
-      let response = HTTPURLResponse(url: requestedURLs[index],
-                                     statusCode: code,
-                                     httpVersion: nil,
-                                     headerFields: nil)!
-      messages[index].completion(.success((response, data)))
-    }
   }
 }
