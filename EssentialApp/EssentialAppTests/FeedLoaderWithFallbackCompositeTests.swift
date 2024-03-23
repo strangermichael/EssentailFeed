@@ -11,7 +11,7 @@ import EssentialApp
 
 final class FeedLoaderWithFallbackCompositeTests: XCTestCase {
   
-  func test_load_deliversRemoteFeedOnRemoteSuccess() {
+  func test_load_deliversPrimaryFeedOnPrimarySuccess() {
     let primayFeed = uniqueFeed()
     let fallBackFeed = uniqueFeed()
     let sut = makeSUT(primaryResult: .success(primayFeed), fallbackResult: .success(fallBackFeed))
