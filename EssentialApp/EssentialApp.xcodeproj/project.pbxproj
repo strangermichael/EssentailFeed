@@ -20,6 +20,7 @@
 		A6E15E322BAE693C0016F771 /* FeedLoaderWithFallbackCompositeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6E15E312BAE693C0016F771 /* FeedLoaderWithFallbackCompositeTests.swift */; };
 		A6E15E342BAE7CDD0016F771 /* FeedLoaderWithFallbackComposite.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6E15E332BAE7CDD0016F771 /* FeedLoaderWithFallbackComposite.swift */; };
 		A6E15E362BAE7D940016F771 /* FeedImageLoaderWithFallbackCompositeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6E15E352BAE7D940016F771 /* FeedImageLoaderWithFallbackCompositeTests.swift */; };
+		A6E15E382BAE81D80016F771 /* SharedTestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6E15E372BAE81D80016F771 /* SharedTestHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +63,7 @@
 		A6E15E312BAE693C0016F771 /* FeedLoaderWithFallbackCompositeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedLoaderWithFallbackCompositeTests.swift; sourceTree = "<group>"; };
 		A6E15E332BAE7CDD0016F771 /* FeedLoaderWithFallbackComposite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedLoaderWithFallbackComposite.swift; sourceTree = "<group>"; };
 		A6E15E352BAE7D940016F771 /* FeedImageLoaderWithFallbackCompositeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedImageLoaderWithFallbackCompositeTests.swift; sourceTree = "<group>"; };
+		A6E15E372BAE81D80016F771 /* SharedTestHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedTestHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +125,7 @@
 			children = (
 				A6E15E312BAE693C0016F771 /* FeedLoaderWithFallbackCompositeTests.swift */,
 				A6E15E352BAE7D940016F771 /* FeedImageLoaderWithFallbackCompositeTests.swift */,
+				A6E15E372BAE81D80016F771 /* SharedTestHelper.swift */,
 			);
 			path = EssentialAppTests;
 			sourceTree = "<group>";
@@ -251,6 +254,7 @@
 			files = (
 				A6E15E362BAE7D940016F771 /* FeedImageLoaderWithFallbackCompositeTests.swift in Sources */,
 				A6E15E322BAE693C0016F771 /* FeedLoaderWithFallbackCompositeTests.swift in Sources */,
+				A6E15E382BAE81D80016F771 /* SharedTestHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
