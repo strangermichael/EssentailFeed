@@ -19,7 +19,14 @@ class FeedLoaderWithFallbackComposite: FeedLoader {
   }
   
   func load(completion: @escaping (FeedLoader.Result) -> Void) {
-    primary.load(completion: completion)
+    primary.load { [weak self] result in
+      switch result {
+      case .success:
+        completion(result)
+      case .failure:
+        self?.fallback.load(completion: completion)
+      }
+    }
   }
 }
 
@@ -43,8 +50,19 @@ final class FeedLoaderWithFallbackCompositeTests: XCTestCase {
   }
   
   func test_load_deliversFallbackFeedOnPrimaryFailure() {
-//    let fallBackFeed = uniqueFeed()
-//    let sut =
+    let fallBackFeed = uniqueFeed()
+    let sut = makeSUT(primaryResult: .failure(anyNSError()), fallbackResult: .success(fallBackFeed))
+    let exp = expectation(description: "Wait for load completion")
+    sut.load { result in
+      switch result {
+      case let .success(receivedFeed):
+        XCTAssertEqual(receivedFeed, fallBackFeed)
+      case .failure:
+        XCTFail("Expected successful load feed result, git \(result) intead")
+      }
+      exp.fulfill()
+    }
+    wait(for: [exp], timeout: 1.0)
   }
   
   //MARK: - Helpers
@@ -56,6 +74,10 @@ final class FeedLoaderWithFallbackCompositeTests: XCTestCase {
     trackForMemoryLeaks(fallbackLoader, file: file, line: line)
     trackForMemoryLeaks(sut, file: file, line: line)
     return sut
+  }
+  
+  func anyNSError() -> NSError {
+    NSError(domain: "any error", code: 0)
   }
   
   private func trackForMemoryLeaks(_ instance: AnyObject, file: StaticString = #file, line: UInt = #line) {
