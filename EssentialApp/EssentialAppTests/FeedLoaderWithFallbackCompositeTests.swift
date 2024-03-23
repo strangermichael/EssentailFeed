@@ -36,33 +36,13 @@ final class FeedLoaderWithFallbackCompositeTests: XCTestCase {
     let primayFeed = uniqueFeed()
     let fallBackFeed = uniqueFeed()
     let sut = makeSUT(primaryResult: .success(primayFeed), fallbackResult: .success(fallBackFeed))
-    let exp = expectation(description: "Wait for load completion")
-    sut.load { result in
-      switch result {
-      case let .success(receivedFeed):
-        XCTAssertEqual(receivedFeed, primayFeed)
-      case .failure:
-        XCTFail("Expected successful load feed result, git \(result) intead")
-      }
-      exp.fulfill()
-    }
-    wait(for: [exp], timeout: 1.0)
+    expect(sut, toCompleteWith: .success(primayFeed))
   }
   
   func test_load_deliversFallbackFeedOnPrimaryFailure() {
     let fallBackFeed = uniqueFeed()
     let sut = makeSUT(primaryResult: .failure(anyNSError()), fallbackResult: .success(fallBackFeed))
-    let exp = expectation(description: "Wait for load completion")
-    sut.load { result in
-      switch result {
-      case let .success(receivedFeed):
-        XCTAssertEqual(receivedFeed, fallBackFeed)
-      case .failure:
-        XCTFail("Expected successful load feed result, git \(result) intead")
-      }
-      exp.fulfill()
-    }
-    wait(for: [exp], timeout: 1.0)
+    expect(sut, toCompleteWith: .success(fallBackFeed))
   }
   
   //MARK: - Helpers
@@ -74,6 +54,22 @@ final class FeedLoaderWithFallbackCompositeTests: XCTestCase {
     trackForMemoryLeaks(fallbackLoader, file: file, line: line)
     trackForMemoryLeaks(sut, file: file, line: line)
     return sut
+  }
+  
+  private func expect(_ sut: FeedLoader, toCompleteWith expectedResult: FeedLoader.Result, file: StaticString = #file, line: UInt = #line) {
+    let exp = expectation(description: "Wait for load completion")
+    sut.load { receivedResult in
+      switch (receivedResult, expectedResult) {
+      case let (.success(receivedFeed), .success(expectedFeed)):
+        XCTAssertEqual(receivedFeed, expectedFeed, file: file, line: line)
+      case (.failure, .failure):
+        break
+      default:
+        XCTFail("Expected \(expectedResult), but got \(receivedResult) instead", file: file, line: line)
+      }
+      exp.fulfill()
+    }
+    wait(for: [exp], timeout: 1.0)
   }
   
   func anyNSError() -> NSError {
