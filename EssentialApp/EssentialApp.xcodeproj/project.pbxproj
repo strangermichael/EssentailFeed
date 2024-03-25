@@ -24,6 +24,7 @@
 		A6E15E3A2BAE863A0016F771 /* FeedImageDataLoaderWithFallbackComposite.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6E15E392BAE863A0016F771 /* FeedImageDataLoaderWithFallbackComposite.swift */; };
 		A6EA3B482BB0F4D800EC29D4 /* FeedLoaderCacheDecoratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6EA3B472BB0F4D800EC29D4 /* FeedLoaderCacheDecoratorTests.swift */; };
 		A6EA3B4A2BB0F75A00EC29D4 /* FeedLoaderStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6EA3B492BB0F75A00EC29D4 /* FeedLoaderStub.swift */; };
+		A6EA3B4C2BB0F93D00EC29D4 /* XCTestCase+FeedLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6EA3B4B2BB0F93D00EC29D4 /* XCTestCase+FeedLoader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +71,7 @@
 		A6E15E392BAE863A0016F771 /* FeedImageDataLoaderWithFallbackComposite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedImageDataLoaderWithFallbackComposite.swift; sourceTree = "<group>"; };
 		A6EA3B472BB0F4D800EC29D4 /* FeedLoaderCacheDecoratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedLoaderCacheDecoratorTests.swift; sourceTree = "<group>"; };
 		A6EA3B492BB0F75A00EC29D4 /* FeedLoaderStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedLoaderStub.swift; sourceTree = "<group>"; };
+		A6EA3B4B2BB0F93D00EC29D4 /* XCTestCase+FeedLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+FeedLoader.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,6 +154,7 @@
 			children = (
 				A6E15E372BAE81D80016F771 /* SharedTestHelper.swift */,
 				A6EA3B492BB0F75A00EC29D4 /* FeedLoaderStub.swift */,
+				A6EA3B4B2BB0F93D00EC29D4 /* XCTestCase+FeedLoader.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -273,6 +276,7 @@
 				A6E15E362BAE7D940016F771 /* FeedImageDataLoaderWithFallbackCompositeTests.swift in Sources */,
 				A6EA3B4A2BB0F75A00EC29D4 /* FeedLoaderStub.swift in Sources */,
 				A6E15E322BAE693C0016F771 /* FeedLoaderWithFallbackCompositeTests.swift in Sources */,
+				A6EA3B4C2BB0F93D00EC29D4 /* XCTestCase+FeedLoader.swift in Sources */,
 				A6E15E382BAE81D80016F771 /* SharedTestHelper.swift in Sources */,
 				A6EA3B482BB0F4D800EC29D4 /* FeedLoaderCacheDecoratorTests.swift in Sources */,
 			);
