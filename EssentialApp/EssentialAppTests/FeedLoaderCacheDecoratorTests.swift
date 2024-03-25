@@ -16,13 +16,18 @@ protocol FeedCache {
 
 class FeedLoaderCacheDecorator: FeedLoader {
   private let decoratee: FeedLoader
+  private let cache: FeedCache
   
   init(decoratee: FeedLoader, cache: FeedCache) {
     self.decoratee = decoratee
+    self.cache = cache
   }
   
   func load(completion: @escaping (FeedLoader.Result) -> Void) {
-    decoratee.load(completion: completion)
+    decoratee.load { [weak self] result in
+      self?.cache.save(items: (try? result.get()) ?? [], completion: { _ in })
+      completion(result)
+    }
   }
 }
 
