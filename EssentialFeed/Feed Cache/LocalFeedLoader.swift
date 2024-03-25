@@ -17,8 +17,8 @@ public final class LocalFeedLoader {
   }
 }
   
-extension LocalFeedLoader {
-  public typealias SaveResult = Error?
+extension LocalFeedLoader: FeedCache {
+  public typealias SaveResult = FeedCache.SaveResult
   
   public func save(items: [FeedImage], completion: @escaping (SaveResult) -> Void) {
     store.deleteCachedFeed { [weak self] cacheDeletionError in
