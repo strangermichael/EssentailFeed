@@ -6,6 +6,7 @@
 //
 
 import XCTest
+import EssentialFeed
 
 func anyNSError() -> NSError {
   NSError(domain: "any error", code: 0)
@@ -19,6 +20,11 @@ func anyData() -> Data {
   Data("any data".utf8)
 }
 
+func uniqueFeed() -> [FeedImage] {
+  [
+    FeedImage(id: UUID(), description: "any", location: "any", imageURL: URL(string: "http://any-url.com")!)
+  ]
+}
 
 public extension XCTestCase {
   func trackForMemoryLeaks(_ instance: AnyObject, file: StaticString = #file, line: UInt = #line) {
