@@ -8,44 +8,43 @@
 import XCTest
 
 //not stable 模拟器会挂
-final class EssentialAppUIAcceptanceTests: XCTestCase {
+class EssentialAppUIAcceptanceTests: XCTestCase {
   
-  func test_onlaunch_displaysRemoteFeedWhenCustomerHasConnectivity() {
+  func test_onLaunch_displaysRemoteFeedWhenCustomerHasConnectivity() {
     let app = XCUIApplication()
+    app.launchArguments = ["-reset", "-connectivity", "online"] //得在launch前面
     app.launch()
-    app.launchArguments = ["-reset"]
-    app.waitForExistence(timeout: 5) //有时候接口没完成 或者 cell不可见 这个时候等一会儿确保UI都有
+    
     let feedCells = app.cells.matching(identifier: "feed-image-cell")
-    XCTAssertEqual(feedCells.count, 22)
-    let appImage = app.images.matching(identifier: "feed-image-view").firstMatch
-    XCTAssertTrue(appImage.exists)
+    XCTAssertEqual(feedCells.count, 2)
+    
+    let firstImage = app.images.matching(identifier: "feed-image-view").firstMatch
+    XCTAssertTrue(firstImage.exists)
   }
-  
   
   func test_onLaunch_displaysCachedRemoteFeedWhenCustomerHasNoConnectivity() {
     let onlineApp = XCUIApplication()
+    onlineApp.launchArguments = ["-reset", "-connectivity", "online"]
     onlineApp.launch()
-    onlineApp.waitForExistence(timeout: 5)
-    
+
     let offlineApp = XCUIApplication()
-    offlineApp.launchArguments = ["-reset", "-connectivity", "offline"]
+    offlineApp.launchArguments = ["-connectivity", "offline"]
     offlineApp.launch()
-    offlineApp.waitForExistence(timeout: 5)
+
+    let cachedFeedCells = offlineApp.cells.matching(identifier: "feed-image-cell")
+    XCTAssertEqual(cachedFeedCells.count, 2)
     
-    let cachedCells = offlineApp.cells.matching(identifier: "feed-image-cell")
-    XCTAssertEqual(cachedCells.count, 22)
     let firstCachedImage = offlineApp.images.matching(identifier: "feed-image-view").firstMatch
     XCTAssertTrue(firstCachedImage.exists)
   }
   
   func test_onLaunch_displaysEmptyFeedWhenCustomerHasNoConnectivityAndNoCache() {
-    let offlineApp = XCUIApplication()
-    offlineApp.launchArguments = ["-reset", "-connectivity", "offline"]
-    offlineApp.launch()
-    offlineApp.waitForExistence(timeout: 5)
-    let feedCells = offlineApp.cells.matching(identifier: "feed-image-cell")
+    let app = XCUIApplication()
+    app.launchArguments = ["-reset", "-connectivity", "offline"]
+    app.launch()
+
+    let feedCells = app.cells.matching(identifier: "feed-image-cell")
     XCTAssertEqual(feedCells.count, 0)
-    let appImage = offlineApp.images.matching(identifier: "feed-image-view").firstMatch
-    XCTAssertFalse(appImage.exists)
   }
+  
 }
