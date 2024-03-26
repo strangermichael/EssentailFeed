@@ -22,8 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     guard let _ = (scene as? UIWindowScene) else { return }
     //这个ur是最新的，视频里url图片下载不了
     let remoteURL = URL(string: "https://ile-api.essentialdeveloper.com/essential-feed/v1/feed")!
-    let session = URLSession(configuration: .ephemeral)
-    let client = URLSessionHTTPClient(session: session)
+    let client = makeRemoteClient()
     let remoteFeedLoader = RemoteFeedLoader(client: client, url: remoteURL)
     let remoteImageLoader = RemoteFeedImageDataLoader(client: client)
     
@@ -39,6 +38,28 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                                                              imageLoader: FeedImageDataLoaderWithFallbackComposite(primary: localImageLoader,
                                                                                                                    fallback: FeedImageDataLoaderCacheDecorator(decoratee: remoteImageLoader, cache: localImageLoader)))
     window?.rootViewController = feedViewController
+  }
+  
+  private func makeRemoteClient() -> HTTPClient {
+    switch UserDefaults.standard.string(forKey: "connectivity") {
+    case "offline":
+      return AlwaysFailingHTTPClinet()
+    default:
+      return URLSessionHTTPClient(session: URLSession(configuration: .ephemeral))
+    }
+  }
+  
+  private class AlwaysFailingHTTPClinet: HTTPClient {
+    private class Task: HTTPClientTask {
+      func cancel() {
+        
+      }
+    }
+    
+    func get(from url: URL, completion: @escaping (AlwaysFailingHTTPClinet.Result) -> Void) -> HTTPClientTask {
+      completion(.failure(NSError(domain: "offline", code: 0)))
+      return Task()
+    }
   }
 
   func sceneDidDisconnect(_ scene: UIScene) {
