@@ -13,7 +13,7 @@ import CoreData
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
   var window: UIWindow?
-
+  let localStoreURL = NSPersistentContainer.defaultDirectoryURL().appendingPathComponent("feed-store.sqlite")
 
   func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
     // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
@@ -25,9 +25,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     let client = makeRemoteClient()
     let remoteFeedLoader = RemoteFeedLoader(client: client, url: remoteURL)
     let remoteImageLoader = RemoteFeedImageDataLoader(client: client)
-    
-    let localStoreURL = NSPersistentContainer.defaultDirectoryURL().appendingPathComponent("feed-store.sqlite")
-    print(localStoreURL)
     let localStore = try! CoreDataFeedStore(storeURL: localStoreURL, bundle: Bundle(for: CoreDataFeedStore.self))
     let localFeedLoader = LocalFeedLoader(store: localStore, currentDate: Date.init)
     let localImageLoader = LocalFeedImageDataLoader(store: localStore)
@@ -40,28 +37,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     window?.rootViewController = feedViewController
   }
   
-  private func makeRemoteClient() -> HTTPClient {
-    switch UserDefaults.standard.string(forKey: "connectivity") {
-    case "offline":
-      return AlwaysFailingHTTPClinet()
-    default:
-      return URLSessionHTTPClient(session: URLSession(configuration: .ephemeral))
-    }
+  func makeRemoteClient() -> HTTPClient {
+    URLSessionHTTPClient(session: URLSession(configuration: .ephemeral))
   }
   
-  private class AlwaysFailingHTTPClinet: HTTPClient {
-    private class Task: HTTPClientTask {
-      func cancel() {
-        
-      }
-    }
-    
-    func get(from url: URL, completion: @escaping (AlwaysFailingHTTPClinet.Result) -> Void) -> HTTPClientTask {
-      completion(.failure(NSError(domain: "offline", code: 0)))
-      return Task()
-    }
-  }
-
   func sceneDidDisconnect(_ scene: UIScene) {
     // Called as the scene is being released by the system.
     // This occurs shortly after the scene enters the background, or when its session is discarded.

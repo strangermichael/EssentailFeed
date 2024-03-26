@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A671F4CD2BB2492900573A70 /* EssentialAppUIAcceptanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A671F4CC2BB2492900573A70 /* EssentialAppUIAcceptanceTests.swift */; };
+		A671F4D62BB252B800573A70 /* DebuggingSceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A671F4D52BB252B800573A70 /* DebuggingSceneDelegate.swift */; };
 		A6DCF2D02BAD1163006AA91A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6DCF2CF2BAD1163006AA91A /* AppDelegate.swift */; };
 		A6DCF2D22BAD1163006AA91A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6DCF2D12BAD1163006AA91A /* SceneDelegate.swift */; };
 		A6DCF2D42BAD1163006AA91A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6DCF2D32BAD1163006AA91A /* ViewController.swift */; };
@@ -68,6 +69,7 @@
 /* Begin PBXFileReference section */
 		A671F4CA2BB2492900573A70 /* EssentialAppUIAcceptanceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EssentialAppUIAcceptanceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A671F4CC2BB2492900573A70 /* EssentialAppUIAcceptanceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EssentialAppUIAcceptanceTests.swift; sourceTree = "<group>"; };
+		A671F4D52BB252B800573A70 /* DebuggingSceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebuggingSceneDelegate.swift; sourceTree = "<group>"; };
 		A6DCF2CC2BAD1163006AA91A /* EssentialApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EssentialApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6DCF2CF2BAD1163006AA91A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A6DCF2D12BAD1163006AA91A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 			children = (
 				A6DCF2CF2BAD1163006AA91A /* AppDelegate.swift */,
 				A6DCF2D12BAD1163006AA91A /* SceneDelegate.swift */,
+				A671F4D52BB252B800573A70 /* DebuggingSceneDelegate.swift */,
 				A6DCF2D32BAD1163006AA91A /* ViewController.swift */,
 				A6E15E332BAE7CDD0016F771 /* FeedLoaderWithFallbackComposite.swift */,
 				A6E15E392BAE863A0016F771 /* FeedImageDataLoaderWithFallbackComposite.swift */,
@@ -345,6 +348,7 @@
 				A6DCF2D02BAD1163006AA91A /* AppDelegate.swift in Sources */,
 				A6E15E342BAE7CDD0016F771 /* FeedLoaderWithFallbackComposite.swift in Sources */,
 				A6EA3B502BB100C300EC29D4 /* FeedLoaderCacheDecorator.swift in Sources */,
+				A671F4D62BB252B800573A70 /* DebuggingSceneDelegate.swift in Sources */,
 				A6DCF2D22BAD1163006AA91A /* SceneDelegate.swift in Sources */,
 				A6E15E3A2BAE863A0016F771 /* FeedImageDataLoaderWithFallbackComposite.swift in Sources */,
 				A6EA3B522BB1035300EC29D4 /* FeedImageDataLoaderCacheDecorator.swift in Sources */,
