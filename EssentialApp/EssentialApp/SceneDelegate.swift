@@ -20,6 +20,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
     // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
     guard let _ = (scene as? UIWindowScene) else { return }
+    configureWindow()
+  }
+  
+  func configureWindow() {
     //这个ur是最新的，视频里url图片下载不了
     let remoteURL = URL(string: "https://ile-api.essentialdeveloper.com/essential-feed/v1/feed")!
     let client = makeRemoteClient()
@@ -34,7 +38,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                                                                                               fallback: localFeedLoader),
                                                              imageLoader: FeedImageDataLoaderWithFallbackComposite(primary: localImageLoader,
                                                                                                                    fallback: FeedImageDataLoaderCacheDecorator(decoratee: remoteImageLoader, cache: localImageLoader)))
-    window?.rootViewController = feedViewController
+    window?.rootViewController = UINavigationController(rootViewController: feedViewController)
   }
   
   func makeRemoteClient() -> HTTPClient {
