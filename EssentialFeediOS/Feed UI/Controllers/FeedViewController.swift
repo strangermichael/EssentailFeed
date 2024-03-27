@@ -8,13 +8,13 @@
 import UIKit
 import EssentialFeed
 
-protocol FeedViewControllerDelegate: AnyObject {
+public protocol FeedViewControllerDelegate: AnyObject {
   func didRequestFeedRefresh()
 }
 
 final public class FeedViewController: UITableViewController, UITableViewDataSourcePrefetching, FeedLoadingView, FeedErrorView {
-  var delegate: FeedViewControllerDelegate?
-  var tableModel: [FeedImageCellController] = [] {
+  public var delegate: FeedViewControllerDelegate?
+  private var tableModel: [FeedImageCellController] = [] {
     didSet {
       tableView.reloadData()
     }
@@ -28,6 +28,10 @@ final public class FeedViewController: UITableViewController, UITableViewDataSou
   
   @IBAction private func refresh() {
     delegate?.didRequestFeedRefresh()
+  }
+  
+  public func display(cellControllers: [FeedImageCellController]) {
+    tableModel = cellControllers
   }
   
   public override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

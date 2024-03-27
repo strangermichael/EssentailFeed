@@ -7,6 +7,7 @@
 
 import UIKit
 import EssentialFeed
+import EssentialFeediOS
 
 //这个逻辑放在组合层的原因是， [FeedImage]算是其它component的细节，应该放在这里, 万一以后换了其他的组件 搭配UI呢
 final class FeedViewAdapter: FeedView {
@@ -19,7 +20,7 @@ final class FeedViewAdapter: FeedView {
   }
   
   func display(viewModel: FeedViewModel) {
-    controller?.tableModel = viewModel.feed.map { model in
+    let cellControllers = viewModel.feed.map { model in
       let adapter = FeedImageDataLoaderPresentationAdapter<WeakRefVirtualProxy<FeedImageCellController>, UIImage>(model: model, imageLoader: imageLoader)
       let view = FeedImageCellController(delegate: adapter)
       adapter.presenter = FeedImagePresenter(
@@ -27,5 +28,6 @@ final class FeedViewAdapter: FeedView {
         imageTransformer: UIImage.init)
       return view
     }
+    controller?.display(cellControllers: cellControllers)
   }
 }

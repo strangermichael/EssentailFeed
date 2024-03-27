@@ -9,6 +9,7 @@ import XCTest
 import EssentialFeediOS
 import EssentialFeed
 
+
 extension FeedUIIntegrationTests {
   func localized(_ key: String, file: StaticString = #file, line: UInt = #line) -> String {
     let table = "Feed"
