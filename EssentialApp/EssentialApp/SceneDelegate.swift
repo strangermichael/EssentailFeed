@@ -23,6 +23,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                            bundle: Bundle(for: CoreDataFeedStore.self))
   }()
   
+  private lazy var localFeedLoader = LocalFeedLoader(store: store, currentDate: Date.init)
+  
   convenience init(httpClient: HTTPClient, store: FeedStore & FeedImageDataStore) {
     self.init()
     self.httpClient = httpClient
@@ -42,7 +44,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     let remoteURL = URL(string: "https://ile-api.essentialdeveloper.com/essential-feed/v1/feed")!
     let remoteFeedLoader = RemoteFeedLoader(client: httpClient, url: remoteURL)
     let remoteImageLoader = RemoteFeedImageDataLoader(client: httpClient)
-    let localFeedLoader = LocalFeedLoader(store: store, currentDate: Date.init)
     let localImageLoader = LocalFeedImageDataLoader(store: store)
     
     let feedViewController = FeedUIComposer.feedComposedWith(feedLoader:
@@ -66,8 +67,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
   }
 
   func sceneWillResignActive(_ scene: UIScene) {
-    // Called when the scene will move from an active state to an inactive state.
-    // This may occur due to temporary interruptions (ex. an incoming phone call).
+    localFeedLoader.validateCache()
   }
 
   func sceneWillEnterForeground(_ scene: UIScene) {
