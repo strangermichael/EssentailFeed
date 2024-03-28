@@ -21,6 +21,20 @@ final class FeedAcceptanceTests: XCTestCase {
     XCTAssertEqual(feed.simulateFeedImageViewVisible(at: 1)?.renderedImage, makeImageData())
   }
   
+  func test_onLaunch_displaysCachedRemoteFeedWhenCustomerHasNoConnectivity() {
+    //没有状态, 用的InMemoryFeedStore 很爽
+    let sharedStore = InMemoryFeedStore.empty
+    let onlineFeed = launch(httpClient: .online(response), store: sharedStore)
+    onlineFeed.simulateFeedImageViewVisible(at: 0)
+    onlineFeed.simulateFeedImageViewVisible(at: 1)
+    
+    let offlineFeed = launch(httpClient: .offline, store: sharedStore)
+    
+    XCTAssertEqual(offlineFeed.numberOfRenderedFeedImageViews(), 2)
+    XCTAssertEqual(offlineFeed.simulateFeedImageViewVisible(at: 0)?.renderedImage, makeImageData())
+    XCTAssertEqual(offlineFeed.simulateFeedImageViewVisible(at: 1)?.renderedImage, makeImageData())
+  }
+  
   private func launch(
     httpClient: HTTPClientStub = .offline,
     store: InMemoryFeedStore = .empty
