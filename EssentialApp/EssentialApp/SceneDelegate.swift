@@ -13,14 +13,14 @@ import CoreData
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
   var window: UIWindow?
-  let localStoreURL = NSPersistentContainer.defaultDirectoryURL().appendingPathComponent("feed-store.sqlite")
 
   private lazy var httpClient: HTTPClient = {
     URLSessionHTTPClient(session: URLSession(configuration: .ephemeral))
   }()
   
   private lazy var store: FeedStore & FeedImageDataStore = {
-    try! CoreDataFeedStore(storeURL: localStoreURL, bundle: Bundle(for: CoreDataFeedStore.self))
+    try! CoreDataFeedStore(storeURL: NSPersistentContainer.defaultDirectoryURL().appendingPathComponent("feed-store.sqlite"),
+                           bundle: Bundle(for: CoreDataFeedStore.self))
   }()
   
   convenience init(httpClient: HTTPClient, store: FeedStore & FeedImageDataStore) {
@@ -40,9 +40,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
   func configureWindow() {
     //这个ur是最新的，视频里url图片下载不了
     let remoteURL = URL(string: "https://ile-api.essentialdeveloper.com/essential-feed/v1/feed")!
-    let client = makeRemoteClient()
-    let remoteFeedLoader = RemoteFeedLoader(client: client, url: remoteURL)
-    let remoteImageLoader = RemoteFeedImageDataLoader(client: client)
+    let remoteFeedLoader = RemoteFeedLoader(client: httpClient, url: remoteURL)
+    let remoteImageLoader = RemoteFeedImageDataLoader(client: httpClient)
     let localFeedLoader = LocalFeedLoader(store: store, currentDate: Date.init)
     let localImageLoader = LocalFeedImageDataLoader(store: store)
     
@@ -52,10 +51,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                                                              imageLoader: FeedImageDataLoaderWithFallbackComposite(primary: localImageLoader,
                                                                                                                    fallback: FeedImageDataLoaderCacheDecorator(decoratee: remoteImageLoader, cache: localImageLoader)))
     window?.rootViewController = UINavigationController(rootViewController: feedViewController)
-  }
-  
-  func makeRemoteClient() -> HTTPClient {
-    httpClient
   }
   
   func sceneDidDisconnect(_ scene: UIScene) {
