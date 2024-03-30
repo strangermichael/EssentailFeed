@@ -30,6 +30,12 @@ final class FeedSnapshotTests: XCTestCase {
     record(snapshot: sut.snapshot(), name: "FEED_WITH_ERROR_MESSAGE")
   }
   
+  func test_feedWithFailedImageLoading() {
+    let sut = makeSUT()
+    sut.display(feedWithFailedImageLoading())
+    record(snapshot: sut.snapshot(), name: "FEED_WITH_FAILED_IMAGE_LOADING")
+  }
+  
   private func makeSUT() -> FeedViewController {
     let bundle = Bundle(for: FeedViewController.self)
     let storyboard = UIStoryboard(name: "Feed", bundle: bundle)
@@ -46,6 +52,13 @@ final class FeedSnapshotTests: XCTestCase {
     [
       ImageStub(description: "Test description", location: "East Side Gallery", image: UIImage.make(withColor: .red)),
       ImageStub(description: "Garth Pier description", location: "Garth Pier", image: UIImage.make(withColor: .purple))
+    ]
+  }
+  
+  private func feedWithFailedImageLoading() -> [ImageStub] {
+    [
+      ImageStub(description: nil, location: "East Side Gallery", image: nil),
+      ImageStub(description: nil, location: "Garth Pier", image: nil)
     ]
   }
   
