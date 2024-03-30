@@ -30,10 +30,6 @@ extension Date {
   }
 }
 
-func uniqueImage() -> FeedImage {
-  FeedImage(id: UUID(), description: "any", location: "any", imageURL: anyURL())
-}
-
 func uniqueImageFeed() -> (models: [FeedImage], local: [LocalFeedImage]) {
   let model = [uniqueImage(), uniqueImage()]
   let local = model.map {

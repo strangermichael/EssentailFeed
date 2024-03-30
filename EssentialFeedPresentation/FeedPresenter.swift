@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import EssentialFeed
 
 public class FeedPresenter {
   private let feedView: FeedView

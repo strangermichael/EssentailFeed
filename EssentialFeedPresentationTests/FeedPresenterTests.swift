@@ -7,6 +7,7 @@
 
 import XCTest
 import EssentialFeed
+import EssentialFeedPresentation
 
 class FeedPresenterTests: XCTestCase {
   
@@ -27,7 +28,7 @@ class FeedPresenterTests: XCTestCase {
   
   func test_didFinishLoadingFeed_displaysFeedAndStopsLoading() {
     let (sut, view) = makeSUT()
-    let feed = uniqueImageFeed().models
+    let feed = uniqueFeedImages()
     sut.didFinishLoadingFeed(with: feed)
     XCTAssertEqual(view.messages, [.display(feed: feed), .display(isLoading: false)])
   }

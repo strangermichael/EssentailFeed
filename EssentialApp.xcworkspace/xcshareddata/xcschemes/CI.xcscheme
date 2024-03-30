@@ -120,6 +120,16 @@
                ReferencedContainer = "container:EssentailFeed.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "A648B06D2BB7C22F00549AE8"
+               BuildableName = "EssentialFeedPresentationTests.xctest"
+               BlueprintName = "EssentialFeedPresentationTests"
+               ReferencedContainer = "container:EssentailFeed.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import EssentialFeed
 
 public final class FeedImagePresenter<View: FeedImageView, Image> where View.Image == Image {
   private let view: View

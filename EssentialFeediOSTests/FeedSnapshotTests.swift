@@ -5,10 +5,11 @@
 //  Created by Shengjun Xia on 2024/3/29.
 //
 
+import UIKit
 import XCTest
 import EssentialFeediOS
 import EssentialFeed
-import UIKit
+import EssentialFeedPresentation
 
 final class FeedSnapshotTests: XCTestCase {
   

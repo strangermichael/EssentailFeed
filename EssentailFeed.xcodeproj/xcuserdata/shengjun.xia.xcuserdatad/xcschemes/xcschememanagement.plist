@@ -22,17 +22,22 @@
 		<key>EssentialFeedAPI.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>7</integer>
+			<integer>10</integer>
 		</dict>
 		<key>EssentialFeedCache.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>8</integer>
+			<integer>7</integer>
 		</dict>
 		<key>EssentialFeedCacheInfrastructure.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>9</integer>
+		</dict>
+		<key>EssentialFeedPresentation.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>8</integer>
 		</dict>
 		<key>EssentialFeediOS.xcscheme_^#shared#^_</key>
 		<dict>
@@ -58,6 +63,36 @@
 			<true/>
 		</dict>
 		<key>A62B7BB62B61EDF7006BAD8B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A648B00E2BB7BDCE00549AE8</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A648B0152BB7BDCE00549AE8</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A648B0302BB7BF0400549AE8</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A648B0372BB7BF0400549AE8</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A648B0662BB7C22F00549AE8</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A648B06D2BB7C22F00549AE8</key>
 		<dict>
 			<key>primary</key>
 			<true/>
