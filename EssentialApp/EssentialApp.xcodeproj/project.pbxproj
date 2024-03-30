@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A648B0042BB7B9CF00549AE8 /* EssentialFeedAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A648B0032BB7B9CF00549AE8 /* EssentialFeedAPI.framework */; };
+		A648B0052BB7B9CF00549AE8 /* EssentialFeedAPI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A648B0032BB7B9CF00549AE8 /* EssentialFeedAPI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A66EADBA2BB4F4B8000B73D0 /* FeedAcceptanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66EADB92BB4F4B8000B73D0 /* FeedAcceptanceTests.swift */; };
 		A66EADBC2BB4F530000B73D0 /* SceneDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66EADBB2BB4F530000B73D0 /* SceneDelegateTests.swift */; };
 		A6AA570C2BB3B22C000FA2C6 /* MainQueueDispatchDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6AA57022BB3B194000FA2C6 /* MainQueueDispatchDecorator.swift */; };
@@ -67,6 +69,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				A648B0052BB7B9CF00549AE8 /* EssentialFeedAPI.framework in Embed Frameworks */,
 				A6DCF3032BAD1296006AA91A /* EssentialFeed.framework in Embed Frameworks */,
 				A6DCF3052BAD1296006AA91A /* EssentialFeediOS.framework in Embed Frameworks */,
 			);
@@ -76,6 +79,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		A648B0032BB7B9CF00549AE8 /* EssentialFeedAPI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = EssentialFeedAPI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A66EADB92BB4F4B8000B73D0 /* FeedAcceptanceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedAcceptanceTests.swift; sourceTree = "<group>"; };
 		A66EADBB2BB4F530000B73D0 /* SceneDelegateTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegateTests.swift; sourceTree = "<group>"; };
 		A6AA57002BB3B194000FA2C6 /* FeedUIComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedUIComposer.swift; sourceTree = "<group>"; };
@@ -125,6 +129,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A648B0042BB7B9CF00549AE8 /* EssentialFeedAPI.framework in Frameworks */,
 				A6DCF3022BAD1296006AA91A /* EssentialFeed.framework in Frameworks */,
 				A6DCF3042BAD1296006AA91A /* EssentialFeediOS.framework in Frameworks */,
 			);
@@ -234,6 +239,7 @@
 		A6DCF2FF2BAD1296006AA91A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A648B0032BB7B9CF00549AE8 /* EssentialFeedAPI.framework */,
 				A6DCF3002BAD1296006AA91A /* EssentialFeed.framework */,
 				A6DCF3012BAD1296006AA91A /* EssentialFeediOS.framework */,
 			);
