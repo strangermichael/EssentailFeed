@@ -7,6 +7,7 @@
 
 import XCTest
 import EssentialFeed
+import EssentialFeedCache
 
 extension FailableDeleteFeedStoreSpecs where Self: XCTestCase {
   func assertThatDeleteDeliversErrorOnDeletionError(on sut: FeedStore, file: StaticString = #file, line: UInt = #line) {

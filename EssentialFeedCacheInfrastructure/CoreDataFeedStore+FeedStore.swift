@@ -6,6 +6,7 @@
 //
 
 import CoreData
+import EssentialFeedCache
 
 extension CoreDataFeedStore: FeedStore {
   
@@ -20,7 +21,7 @@ extension CoreDataFeedStore: FeedStore {
     }
   }
   
-  public func insert(items: [EssentialFeed.LocalFeedImage], timestamp: Date, completion: @escaping InsertionCompletion) {
+  public func insert(items: [LocalFeedImage], timestamp: Date, completion: @escaping InsertionCompletion) {
     perform { context in
       do {
         let managedCache = try ManagedCache.newUniqueInstance(in: context)

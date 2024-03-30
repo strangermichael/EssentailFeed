@@ -100,6 +100,26 @@
                ReferencedContainer = "container:EssentailFeed.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "A648B0372BB7BF0400549AE8"
+               BuildableName = "EssentialFeedCacheInfrastructureTests.xctest"
+               BlueprintName = "EssentialFeedCacheInfrastructureTests"
+               ReferencedContainer = "container:EssentailFeed.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "A648B0152BB7BDCE00549AE8"
+               BuildableName = "EssentialFeedCacheTests.xctest"
+               BlueprintName = "EssentialFeedCacheTests"
+               ReferencedContainer = "container:EssentailFeed.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

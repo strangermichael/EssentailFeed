@@ -6,6 +6,7 @@
 //
 
 import CoreData
+import EssentialFeedCache
 
 @objc(ManagedCache)
 internal class ManagedCache: NSManagedObject {

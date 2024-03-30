@@ -7,6 +7,7 @@
 
 import Foundation
 import EssentialFeed
+import EssentialFeedCache
 
 extension Date {
   func minusFeedCacheMaxAge() -> Date {

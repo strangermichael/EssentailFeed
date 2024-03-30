@@ -7,6 +7,7 @@
 
 import XCTest
 import EssentialFeed
+import EssentialFeedCache
 
 final class ValidateFeedCacheUseCaseTests: XCTestCase {
   func test_init_doesNotMessageStoreUponCreation() {

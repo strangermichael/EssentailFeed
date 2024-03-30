@@ -6,6 +6,7 @@
 //
 
 import CoreData
+import EssentialFeedCache
 
 @objc(ManagedFeedImage)
 internal class ManagedFeedImage: NSManagedObject {

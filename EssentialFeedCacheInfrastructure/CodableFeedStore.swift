@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import EssentialFeedCache
 
 public class CodableFeedStore: FeedStore {
   private let storeURL: URL
