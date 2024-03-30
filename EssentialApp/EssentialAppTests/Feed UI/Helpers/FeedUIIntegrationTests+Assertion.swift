@@ -11,6 +11,9 @@ import EssentialFeediOS
 
 extension FeedUIIntegrationTests {
   func assertThat(_ sut: FeedViewController, isRendering feed: [FeedImage], file: StaticString = #file, line: UInt = #line) {
+    //reload data不会立刻更新布局，会在下一个layout cycle更新，所以运行测试的时候让它强制现在更新
+    sut.tableView.layoutIfNeeded()
+    RunLoop.main.run(until: Date())
     guard sut.numberOfRenderedFeedImageViews() == feed.count else {
       return XCTFail("Expected \(feed.count) images, got \(sut.numberOfRenderedFeedImageViews()) instead", file: file, line: line)
     }

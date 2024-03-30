@@ -20,6 +20,9 @@ final public class FeedViewController: UITableViewController, UITableViewDataSou
     }
   }
   @IBOutlet private(set) public weak var errorView: ErrorView!
+  
+  private var loadingControllers: [IndexPath: FeedImageCellController] = [:]
+  
   public override func viewDidLoad() {
     super.viewDidLoad()
     tableView.prefetchDataSource = self
@@ -36,6 +39,7 @@ final public class FeedViewController: UITableViewController, UITableViewDataSou
   }
   
   public func display(cellControllers: [FeedImageCellController]) {
+    loadingControllers = [:]
     tableModel = cellControllers
   }
   
@@ -48,6 +52,7 @@ final public class FeedViewController: UITableViewController, UITableViewDataSou
   }
   
   public override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    //数据源变了之后才reload data然后会调用end display，但是比如数据减少了 可能导致index访问越界crash, 或者访问到错误的数据
     cancelCellControllerLoad(forRowAt: indexPath)
   }
   
@@ -62,11 +67,14 @@ final public class FeedViewController: UITableViewController, UITableViewDataSou
   }
   
   private func cellController(forRowAt indexPath: IndexPath) -> FeedImageCellController {
-    tableModel[indexPath.row]
+    let controller = tableModel[indexPath.row]
+    loadingControllers[indexPath] = controller
+    return controller
   }
   
   private func cancelCellControllerLoad(forRowAt indexPath: IndexPath) {
-    cellController(forRowAt: indexPath).cancelLoad()
+    loadingControllers[indexPath]?.cancelLoad()
+    loadingControllers[indexPath] = nil
   }
   
   public func display(viewModel: FeedLoadingViewModel) {
