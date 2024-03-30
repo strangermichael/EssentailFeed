@@ -14,11 +14,11 @@ public protocol FeedErrorView {
 public struct FeedErrorViewModel {
   public let message: String?
   
-  static var noError: FeedErrorViewModel {
+  public static var noError: FeedErrorViewModel {
     .init(message: nil)
   }
   
-  static func error(message: String) -> FeedErrorViewModel {
+  public static func error(message: String) -> FeedErrorViewModel {
     .init(message: message)
   }
 }

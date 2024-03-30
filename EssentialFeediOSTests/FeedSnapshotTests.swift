@@ -24,6 +24,12 @@ final class FeedSnapshotTests: XCTestCase {
     record(snapshot: sut.snapshot(), name: "FEED_WITH_CONTENT")
   }
   
+  func test_feedWithErrorMessage() {
+    let sut = makeSUT()
+    sut.display(.error(message: "An error message"))
+    record(snapshot: sut.snapshot(), name: "FEED_WITH_ERROR_MESSAGE")
+  }
+  
   private func makeSUT() -> FeedViewController {
     let bundle = Bundle(for: FeedViewController.self)
     let storyboard = UIStoryboard(name: "Feed", bundle: bundle)
