@@ -16,18 +16,21 @@ internal final class FeedItemMapper {
           let root = try? JSONDecoder().decode(Root.self, from: data) else {
       throw RemoteFeedLoader.Error.invalidData
     }
-    return root.items.toModels()
+    return root.images
   }
   
   private struct Root: Decodable {
-    let items: [RemoteFeedItem]
-  }
-}
-
-private extension Array where Element == RemoteFeedItem {
-  func toModels() -> [FeedImage] {
-    map {
-      FeedImage(id: $0.id, description: $0.description, location: $0.location, imageURL: $0.image)
+    private let items: [RemoteFeedItem]
+    
+    private struct RemoteFeedItem: Decodable {
+      let id: UUID
+      let description: String?
+      let location: String?
+      let image: URL
+    }
+    
+    var images: [FeedImage] {
+      items.map{ FeedImage(id: $0.id, description: $0.description, location: $0.location, imageURL: $0.image) }
     }
   }
 }
