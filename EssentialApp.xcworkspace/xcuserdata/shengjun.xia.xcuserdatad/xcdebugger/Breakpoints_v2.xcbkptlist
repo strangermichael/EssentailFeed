@@ -100,5 +100,69 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A243EC84-F8BA-423D-8408-F349A771252E"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "EssentialFeedAPI/ImageCommentsMapper.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "22"
+            endingLineNumber = "22"
+            landmarkName = "map(_:_:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "A243EC84-F8BA-423D-8408-F349A771252E - c7d66192e437f822"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "static EssentialFeedAPI.ImageCommentsMapper.map(Foundation.Data, __C.NSHTTPURLResponse) throws -&gt; Swift.Array&lt;EssentialFeed.ImageComment&gt;"
+                  moduleName = "EssentialFeedAPI"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/shengjun.xia/Documents/personal/EssentailFeed/EssentialFeedAPI/ImageCommentsMapper.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "22"
+                  endingLineNumber = "22"
+                  offsetFromSymbolStart = "494">
+               </Location>
+               <Location
+                  uuid = "A243EC84-F8BA-423D-8408-F349A771252E - c7d66192e437f822"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "static EssentialFeedAPI.ImageCommentsMapper.map(Foundation.Data, __C.NSHTTPURLResponse) throws -&gt; Swift.Array&lt;EssentialFeed.ImageComment&gt;"
+                  moduleName = "EssentialFeedAPI"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/shengjun.xia/Documents/personal/EssentailFeed/EssentialFeedAPI/ImageCommentsMapper.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "22"
+                  endingLineNumber = "22"
+                  offsetFromSymbolStart = "540">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "841B520C-D76C-499B-B877-4F0A55915C48"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "EssentialFeedAPI/ImageCommentsMapper.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "24"
+            endingLineNumber = "24"
+            landmarkName = "map(_:_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

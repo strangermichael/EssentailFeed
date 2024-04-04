@@ -82,13 +82,13 @@ final class LoadImageCommentsFromRemoteUseCaseTests: XCTestCase {
   func test_load_deliverItemsOn200HTTPResponseWithJSONItems() {
     let (sut, client) = makeSUT()
     let item1 = makeItem(id: UUID(),
-                         description: nil,
-                         location: nil,
-                         imageURL: URL(string: "https://url.com")!)
+                         message: "a messgae",
+                         createdAt: (Date(timeIntervalSince1970: 1598627222), "2020-08-28T15:07:02+00:00"),
+                         userName: "a user name")
     let item2 = makeItem(id: UUID(),
-                         description: "a descrption",
-                         location: "location",
-                         imageURL: URL(string: "https://anotherUrl.com")!)
+                         message: "another message",
+                         createdAt: (Date(timeIntervalSince1970: 1577881882), "2020-01-01T12:31:22+00:00"),
+                         userName: "another user name")
     
     expect(sut: sut, toCompleteWithResult: .success([item1.model, item2.model])) {
       let json = makeItemsJSON([item1, item2].map { $0.json })
@@ -119,16 +119,19 @@ final class LoadImageCommentsFromRemoteUseCaseTests: XCTestCase {
     return (sut, client)
   }
   
-  func makeItem(id: UUID, description: String? = nil, location: String? = nil, imageURL: URL) -> (model: FeedImage, json: [String: Any]) {
-    let item = FeedImage(id: id,
-                        description: description,
-                        location: location,
-                        imageURL: imageURL)
+  //iso8601String: 不在工厂里做格式化原因是 时区变了测试可能会失败 所以传固定字符串
+  func makeItem(id: UUID, message: String, createdAt: (date: Date, iso8601String: String), userName: String) -> (model: ImageComment, json: [String: Any]) {
+    let item = ImageComment(id: id,
+                            message: message,
+                            createdAt: createdAt.date,
+                            userName: userName)
     let json = [
-      "id": item.id.uuidString,
-      "description": item.description,
-      "location": item.location,
-      "image": item.url.absoluteString
+      "id": id.uuidString,
+      "message": message,
+      "created_at": createdAt.iso8601String,
+      "author": [
+        "username": userName
+      ]
     ].compactMapValues { $0 }
     return (item, json)
   }
