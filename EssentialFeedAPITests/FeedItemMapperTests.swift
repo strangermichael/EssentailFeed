@@ -26,13 +26,13 @@ final class FeedItemMapperTests: XCTestCase {
     XCTAssertThrowsError(try FeedItemMapper.map(invalidJSON, .init(statusCode: 200)))
   }
   
-  func test_load_deliverNoItemsOn200ResponseWithEmptyJSONList() throws {
+  func test_map_deliverNoItemsOn200ResponseWithEmptyJSONList() throws {
     let emptyListJSON = makeItemsJSON([])
     let result = try FeedItemMapper.map(emptyListJSON, .init(statusCode: 200))
     XCTAssertEqual(result, [])
   }
   
-  func test_load_deliverItemsOn200HTTPResponseWithJSONItems() throws {
+  func test_map_deliverItemsOn200HTTPResponseWithJSONItems() throws {
     let item1 = makeItem(id: UUID(),
                          description: nil,
                          location: nil,
@@ -74,7 +74,7 @@ final class FeedItemMapperTests: XCTestCase {
   }
 }
 
-private extension HTTPURLResponse {
+extension HTTPURLResponse {
   convenience init(statusCode: Int) {
     self.init(url: anyURL(), statusCode: statusCode, httpVersion: nil, headerFields: nil)!
   }

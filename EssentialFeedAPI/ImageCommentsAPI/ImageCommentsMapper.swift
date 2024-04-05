@@ -8,13 +8,13 @@
 import Foundation
 import EssentialFeed
 
-internal final class ImageCommentsMapper {
+public final class ImageCommentsMapper {
   private static var okCode = 200
   private static func isOK(_ response: HTTPURLResponse) -> Bool {
     (200...299).contains(response.statusCode)
   }
   
-  internal static func map(_ data: Data, _ response: HTTPURLResponse) throws -> [ImageComment] {
+  public static func map(_ data: Data, _ response: HTTPURLResponse) throws -> [ImageComment] {
     let decoder = JSONDecoder()
     decoder.dateDecodingStrategy = .iso8601
     guard Self.isOK(response),
