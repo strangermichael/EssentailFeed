@@ -8,10 +8,10 @@
 import Foundation
 import EssentialFeed
 
-internal final class FeedItemMapper {
+public final class FeedItemMapper {
   private static var okCode = 200
   
-  internal static func map(_ data: Data, _ response: HTTPURLResponse) throws -> [FeedImage] {
+  public static func map(_ data: Data, _ response: HTTPURLResponse) throws -> [FeedImage] {
     guard response.statusCode == okCode,
           let root = try? JSONDecoder().decode(Root.self, from: data) else {
       throw RemoteFeedLoader.Error.invalidData
