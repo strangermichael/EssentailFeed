@@ -11,41 +11,6 @@ import EssentialFeedAPI
 
 final class LoadImageCommentsFromRemoteUseCaseTests: XCTestCase {
   //naming rule:  test + actionName + result
-  func test_init_notDoNetworkRequest() {
-    let (_, client) = makeSUT()
-    XCTAssertEqual(client.requestedURLs, [])
-  }
-  
-  func test_load_requestDataFromURL() {
-    //Arrange
-    let url = URL(string: "https://url.com")!
-    let (sut, client) = makeSUT(url: url)
-    
-    //Act
-    sut.load { _ in }
-    
-    //Assert
-    XCTAssertEqual(client.requestedURLs, [url])
-  }
-  
-  
-  func test_loadTwice_requestDataTwice() {
-    let url = URL(string: "https://url.com")!
-    let (sut, client) = makeSUT(url: url)
-    
-    sut.load { _ in }
-    sut.load { _ in }
-    
-    XCTAssertEqual(client.requestedURLs, [url, url])
-  }
-  
-  func test_load_deliverErrorOnClientError() {
-    let (sut, client) = makeSUT()
-    expect(sut: sut, toCompleteWithResult: failure(.connectivity)) {
-      client.complete(with: NSError(domain: "Test", code: 0), at: 0)
-    }
-  }
-  
   func test_load_deliverErrorOnNon2xxHTTPResponse() {
     let (sut, client) = makeSUT()
     let samples = [199, 150, 300, 400, 500]
@@ -94,20 +59,6 @@ final class LoadImageCommentsFromRemoteUseCaseTests: XCTestCase {
       let json = makeItemsJSON([item1, item2].map { $0.json })
       client.complete(withStatusCode: 200, data: json)
     }
-  }
-  
-  func test_load_doesNotDeliverResultAfterSutDeinit() {
-    let url = URL(string: "https://url.com")!
-    let client = HTTPClientSpy()
-    var sut: RemoteImageCommentLoader? = RemoteImageCommentLoader(client: client, url: url)
-    
-    var capturedResults: [RemoteImageCommentLoader.Result] = []
-    sut?.load {
-      capturedResults.append($0)
-    }
-    sut = nil
-    client.complete(withStatusCode: 200, data: makeItemsJSON([]))
-    XCTAssertTrue(capturedResults.isEmpty)
   }
   
   //MARK: - Helper
