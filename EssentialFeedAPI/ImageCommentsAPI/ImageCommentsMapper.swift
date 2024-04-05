@@ -14,12 +14,16 @@ public final class ImageCommentsMapper {
     (200...299).contains(response.statusCode)
   }
   
+  public enum Error: Swift.Error {
+    case invalidData
+  }
+  
   public static func map(_ data: Data, _ response: HTTPURLResponse) throws -> [ImageComment] {
     let decoder = JSONDecoder()
     decoder.dateDecodingStrategy = .iso8601
     guard Self.isOK(response),
           let root = try? decoder.decode(Root.self, from: data) else {
-      throw RemoteImageCommentLoader.Error.invalidData
+      throw Error.invalidData
     }
     return root.comments
   }

@@ -31,6 +31,8 @@
 		A6AA57292BB3B467000FA2C6 /* UIRefreshControl+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6AA57182BB3B44F000FA2C6 /* UIRefreshControl+TestHelpers.swift */; };
 		A6AA572A2BB3B467000FA2C6 /* FeedImageCell+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6AA57172BB3B44F000FA2C6 /* FeedImageCell+TestHelpers.swift */; };
 		A6AA572B2BB3B467000FA2C6 /* UIButton+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6AA571B2BB3B44F000FA2C6 /* UIButton+TestHelpers.swift */; };
+		A6B3F6392BBF94720015F79F /* RemoteFeedLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B3F6382BBF94720015F79F /* RemoteFeedLoader.swift */; };
+		A6B3F63A2BBF94720015F79F /* RemoteImageCommentLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B3F6372BBF94720015F79F /* RemoteImageCommentLoader.swift */; };
 		A6DCF2D02BAD1163006AA91A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6DCF2CF2BAD1163006AA91A /* AppDelegate.swift */; };
 		A6DCF2D22BAD1163006AA91A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6DCF2D12BAD1163006AA91A /* SceneDelegate.swift */; };
 		A6DCF2D42BAD1163006AA91A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6DCF2D32BAD1163006AA91A /* ViewController.swift */; };
@@ -105,6 +107,8 @@
 		A6AA571D2BB3B44F000FA2C6 /* FeedUIIntegrationTests+LoaderSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeedUIIntegrationTests+LoaderSpy.swift"; sourceTree = "<group>"; };
 		A6AA571E2BB3B44F000FA2C6 /* FeedUIIntegrationTests+Assertion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeedUIIntegrationTests+Assertion.swift"; sourceTree = "<group>"; };
 		A6AA57202BB3B44F000FA2C6 /* FeedUIIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedUIIntegrationTests.swift; sourceTree = "<group>"; };
+		A6B3F6372BBF94720015F79F /* RemoteImageCommentLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteImageCommentLoader.swift; sourceTree = "<group>"; };
+		A6B3F6382BBF94720015F79F /* RemoteFeedLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteFeedLoader.swift; sourceTree = "<group>"; };
 		A6DCF2CC2BAD1163006AA91A /* EssentialApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EssentialApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6DCF2CF2BAD1163006AA91A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A6DCF2D12BAD1163006AA91A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -213,6 +217,8 @@
 		A6DCF2CE2BAD1163006AA91A /* EssentialApp */ = {
 			isa = PBXGroup;
 			children = (
+				A6B3F6382BBF94720015F79F /* RemoteFeedLoader.swift */,
+				A6B3F6372BBF94720015F79F /* RemoteImageCommentLoader.swift */,
 				A6DCF2CF2BAD1163006AA91A /* AppDelegate.swift */,
 				A6DCF2D12BAD1163006AA91A /* SceneDelegate.swift */,
 				A6DCF2D32BAD1163006AA91A /* ViewController.swift */,
@@ -376,7 +382,9 @@
 				A6AA570F2BB3B22C000FA2C6 /* FeedViewAdapter.swift in Sources */,
 				A6E15E342BAE7CDD0016F771 /* FeedLoaderWithFallbackComposite.swift in Sources */,
 				A6EA3B502BB100C300EC29D4 /* FeedLoaderCacheDecorator.swift in Sources */,
+				A6B3F6392BBF94720015F79F /* RemoteFeedLoader.swift in Sources */,
 				A6DCF2D22BAD1163006AA91A /* SceneDelegate.swift in Sources */,
+				A6B3F63A2BBF94720015F79F /* RemoteImageCommentLoader.swift in Sources */,
 				A6AA570E2BB3B22C000FA2C6 /* FeedUIComposer.swift in Sources */,
 				A6E15E3A2BAE863A0016F771 /* FeedImageDataLoaderWithFallbackComposite.swift in Sources */,
 				A6AA57112BB3B22C000FA2C6 /* FeedLoaderPresentationAdapter.swift in Sources */,

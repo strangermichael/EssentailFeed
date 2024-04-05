@@ -7,6 +7,7 @@
 
 import Foundation
 import EssentialFeed
+import EssentialFeedAPI
 
 public typealias RemoteImageCommentLoader = RemoteLoader<[ImageComment]>
 
