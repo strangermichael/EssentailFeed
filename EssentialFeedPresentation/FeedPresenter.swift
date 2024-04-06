@@ -10,8 +10,8 @@ import EssentialFeed
 
 public class FeedPresenter {
   private let feedView: FeedView
-  private let loadingView: FeedLoadingView
-  private let errorView: FeedErrorView
+  private let loadingView: ResourceLoadingView
+  private let errorView: ResourceErrorView
   private var feedLoadError: String {
     NSLocalizedString("GENERIC_VIEW_CONNECTION_ERROR",
                       tableName: "Shared",
@@ -22,7 +22,7 @@ public class FeedPresenter {
     NSLocalizedString("FEED_VIEW_TITLE", tableName: "Feed", bundle: Bundle(for: FeedPresenter.self), comment: "Title for the feed view")
   }
   
-  public init(feedView: FeedView, loadingView: FeedLoadingView, errorView: FeedErrorView) {
+  public init(feedView: FeedView, loadingView: ResourceLoadingView, errorView: ResourceErrorView) {
     self.feedView = feedView
     self.loadingView = loadingView
     self.errorView = errorView
@@ -30,16 +30,16 @@ public class FeedPresenter {
   
   public func didStartLoadingFeed() {
     errorView.display(.noError)
-    loadingView.display(viewModel: FeedLoadingViewModel(isLoading: true))
+    loadingView.display(viewModel: ResourceLoadingViewModel(isLoading: true))
   }
   
   public func didFinishLoadingFeed(with feed: [FeedImage]) {
     feedView.display(viewModel: FeedViewModel(feed: feed))
-    loadingView.display(viewModel: FeedLoadingViewModel(isLoading: false))
+    loadingView.display(viewModel: ResourceLoadingViewModel(isLoading: false))
   }
   
   public func didFinishLoadingFeed(with error: Error) {
     errorView.display(.error(message: feedLoadError))
-    loadingView.display(viewModel: FeedLoadingViewModel(isLoading: false))
+    loadingView.display(viewModel: ResourceLoadingViewModel(isLoading: false))
   }
 }
