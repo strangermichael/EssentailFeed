@@ -19,10 +19,10 @@ public class LoadResourcePresenter<Resource, View: ResourceView> {
   private let loadingView: FeedLoadingView
   private let errorView: FeedErrorView
   private let mapper: Mapper
-  private var feedLoadError: String {
+  public static var loadError: String {
     NSLocalizedString("GENERIC_VIEW_CONNECTION_ERROR",
-                      tableName: "Feed",
-                      bundle: Bundle(for: FeedPresenter.self),
+                      tableName: "Shared",
+                      bundle: Bundle(for: Self.self),
                       comment: "Error message displayed when we can't load the image feed from the server")
   }
   
@@ -47,7 +47,7 @@ public class LoadResourcePresenter<Resource, View: ResourceView> {
   }
   
   public func didFinishLoading(with error: Error) {
-    errorView.display(.error(message: feedLoadError))
+    errorView.display(.error(message: Self.loadError))
     loadingView.display(viewModel: FeedLoadingViewModel(isLoading: false))
   }
 
