@@ -20,7 +20,7 @@
 		A6AA570E2BB3B22C000FA2C6 /* FeedUIComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6AA57002BB3B194000FA2C6 /* FeedUIComposer.swift */; };
 		A6AA570F2BB3B22C000FA2C6 /* FeedViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6AA57032BB3B194000FA2C6 /* FeedViewAdapter.swift */; };
 		A6AA57102BB3B22C000FA2C6 /* FeedImageDataLoaderPresentationAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6AA57042BB3B194000FA2C6 /* FeedImageDataLoaderPresentationAdapter.swift */; };
-		A6AA57112BB3B22C000FA2C6 /* FeedLoaderPresentationAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6AA57052BB3B194000FA2C6 /* FeedLoaderPresentationAdapter.swift */; };
+		A6AA57112BB3B22C000FA2C6 /* ResourceLoaderPresentationAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6AA57052BB3B194000FA2C6 /* ResourceLoaderPresentationAdapter.swift */; };
 		A6AA57222BB3B467000FA2C6 /* UIImage+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6AA571A2BB3B44F000FA2C6 /* UIImage+TestHelpers.swift */; };
 		A6AA57232BB3B467000FA2C6 /* FeedUIIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6AA57202BB3B44F000FA2C6 /* FeedUIIntegrationTests.swift */; };
 		A6AA57242BB3B467000FA2C6 /* FeedUIIntegrationTests+localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6AA57162BB3B44F000FA2C6 /* FeedUIIntegrationTests+localization.swift */; };
@@ -96,7 +96,7 @@
 		A6AA57022BB3B194000FA2C6 /* MainQueueDispatchDecorator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainQueueDispatchDecorator.swift; sourceTree = "<group>"; };
 		A6AA57032BB3B194000FA2C6 /* FeedViewAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewAdapter.swift; sourceTree = "<group>"; };
 		A6AA57042BB3B194000FA2C6 /* FeedImageDataLoaderPresentationAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedImageDataLoaderPresentationAdapter.swift; sourceTree = "<group>"; };
-		A6AA57052BB3B194000FA2C6 /* FeedLoaderPresentationAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedLoaderPresentationAdapter.swift; sourceTree = "<group>"; };
+		A6AA57052BB3B194000FA2C6 /* ResourceLoaderPresentationAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceLoaderPresentationAdapter.swift; sourceTree = "<group>"; };
 		A6AA57162BB3B44F000FA2C6 /* FeedUIIntegrationTests+localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeedUIIntegrationTests+localization.swift"; sourceTree = "<group>"; };
 		A6AA57172BB3B44F000FA2C6 /* FeedImageCell+TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeedImageCell+TestHelpers.swift"; sourceTree = "<group>"; };
 		A6AA57182BB3B44F000FA2C6 /* UIRefreshControl+TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIRefreshControl+TestHelpers.swift"; sourceTree = "<group>"; };
@@ -165,7 +165,7 @@
 				A6AA57022BB3B194000FA2C6 /* MainQueueDispatchDecorator.swift */,
 				A6AA57032BB3B194000FA2C6 /* FeedViewAdapter.swift */,
 				A6AA57042BB3B194000FA2C6 /* FeedImageDataLoaderPresentationAdapter.swift */,
-				A6AA57052BB3B194000FA2C6 /* FeedLoaderPresentationAdapter.swift */,
+				A6AA57052BB3B194000FA2C6 /* ResourceLoaderPresentationAdapter.swift */,
 			);
 			path = Composers;
 			sourceTree = "<group>";
@@ -387,7 +387,7 @@
 				A6B3F63A2BBF94720015F79F /* RemoteImageCommentLoader.swift in Sources */,
 				A6AA570E2BB3B22C000FA2C6 /* FeedUIComposer.swift in Sources */,
 				A6E15E3A2BAE863A0016F771 /* FeedImageDataLoaderWithFallbackComposite.swift in Sources */,
-				A6AA57112BB3B22C000FA2C6 /* FeedLoaderPresentationAdapter.swift in Sources */,
+				A6AA57112BB3B22C000FA2C6 /* ResourceLoaderPresentationAdapter.swift in Sources */,
 				A6EA3B522BB1035300EC29D4 /* FeedImageDataLoaderCacheDecorator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
