@@ -19,17 +19,6 @@ extension Date {
   }
 }
 
-extension Date {
-  //some days may not have 24 hours
-  func adding(days: Int) -> Date {
-    Calendar(identifier: .gregorian).date(byAdding: .day, value: days, to: self)!
-  }
-  
-  func adding(seconds: Double) -> Date {
-    self + seconds
-  }
-}
-
 func uniqueImageFeed() -> (models: [FeedImage], local: [LocalFeedImage]) {
   let model = [uniqueImage(), uniqueImage()]
   let local = model.map {

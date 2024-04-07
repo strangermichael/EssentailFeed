@@ -27,3 +27,18 @@ func uniqueImage() -> FeedImage {
 func uniqueFeedImages() -> [FeedImage] {
   [uniqueImage(), uniqueImage()]
 }
+
+extension Date {
+  //some days may not have 24 hours
+  func adding(days: Int, calendar: Calendar = Calendar(identifier: .gregorian)) -> Date {
+    calendar.date(byAdding: .day, value: days, to: self)!
+  }
+  
+  func adding(seconds: Double) -> Date {
+    self + seconds
+  }
+  
+  func adding(minutes: Double) -> Date {
+    self + minutes * 60
+  }
+}
