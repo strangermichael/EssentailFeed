@@ -9,23 +9,18 @@ import EssentialFeed
 import EssentialFeediOS
 import EssentialFeedPresentation
 
-public protocol ResourceLoader {
-  associatedtype Resource
+final class ResourceLoaderPresentationAdapter<Resource, View: ResourceView> {
   typealias Result = Swift.Result<Resource, Error>
-  func load(completion: @escaping (Result) -> Void)
-}
-
-final class ResourceLoaderPresentationAdapter<Resource, View: ResourceView, Loader: ResourceLoader> where Loader.Resource == Resource {
-  private let loader: Loader
+  private let loadFuction: (@escaping (Result) -> Void) -> Void
   var presenter: LoadResourcePresenter<Resource, FeedViewAdapter>?
   
-  init(loader: Loader) {
-    self.loader = loader
+  init(loadFuction: @escaping (@escaping (Result) -> Void) -> Void) {
+    self.loadFuction = loadFuction
   }
   
   func loadResource() {
     presenter?.didStartLoading()
-    loader.load { [weak self] result in
+    loadFuction { [weak self] result in
       switch result {
       case let .success(resource):
         self?.presenter?.didFinishLoadingResource(with: resource)
