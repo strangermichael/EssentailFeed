@@ -11,7 +11,8 @@ import EssentialFeediOS
 import EssentialFeedPresentation
 
 //这个逻辑放在组合层的原因是， [FeedImage]算是其它component的细节，应该放在这里, 万一以后换了其他的组件 搭配UI呢
-final class FeedViewAdapter: FeedView {
+final class FeedViewAdapter: ResourceView {
+  
   private weak var controller: FeedViewController?
   private let imageLoader: FeedImageDataLoader
   
@@ -20,7 +21,7 @@ final class FeedViewAdapter: FeedView {
     self.imageLoader = imageLoader
   }
   
-  func display(viewModel: FeedViewModel) {
+  func display(_ viewModel: FeedViewModel) {
     let cellControllers = viewModel.feed.map { model in
       let adapter = FeedImageDataLoaderPresentationAdapter<WeakRefVirtualProxy<FeedImageCellController>, UIImage>(model: model, imageLoader: imageLoader)
       let view = FeedImageCellController(delegate: adapter)
