@@ -30,9 +30,3 @@ final class ResourceLoaderPresentationAdapter<Resource, View: ResourceView> {
     }
   }
 }
-
-extension ResourceLoaderPresentationAdapter: FeedViewControllerDelegate {
-  func didRequestFeedRefresh() {
-    loadResource()
-  }
-}
