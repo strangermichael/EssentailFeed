@@ -12,7 +12,7 @@ import EssentialFeedPresentation
 
 public final class FeedUIComposer {
   private init() {}
-  public static func feedComposedWith(feedLoader: FeedLoader, imageLoader: FeedImageDataLoader) -> FeedViewController {
+  public static func feedComposedWith(feedLoader: FeedLoader, imageLoader: FeedImageDataLoader) -> ListViewController {
     let feedLoader = MainQueueDispatchDecorator(decoratee: feedLoader)
     let imageLoader = MainQueueDispatchDecorator(decoratee: imageLoader)
     let presentationAdapter = ResourceLoaderPresentationAdapter<[FeedImage], FeedViewAdapter>(loadFuction: feedLoader.load)
@@ -25,10 +25,10 @@ public final class FeedUIComposer {
     return feedController
   }
   
-  private static func makeWith(delegate: FeedViewControllerDelegate, title: String) -> FeedViewController {
-    let bundle = Bundle(for: FeedViewController.self)
+  private static func makeWith(delegate: FeedViewControllerDelegate, title: String) -> ListViewController {
+    let bundle = Bundle(for: ListViewController.self)
     let storyboard = UIStoryboard(name: "Feed", bundle: bundle)
-    let feedController = storyboard.instantiateInitialViewController() as! FeedViewController
+    let feedController = storyboard.instantiateInitialViewController() as! ListViewController
     feedController.delegate = delegate
     feedController.title = title
     return feedController
