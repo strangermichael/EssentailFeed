@@ -14,7 +14,7 @@ public protocol FeedImageCellControllerDelegate {
   func didCancelImageRequest()
 }
 
-public final class FeedImageCellController: FeedImageView {
+public final class FeedImageCellController: FeedImageView, CellController {
   private let delegate: FeedImageCellControllerDelegate
   private var cell: FeedImageCell?
   
@@ -22,17 +22,17 @@ public final class FeedImageCellController: FeedImageView {
     self.delegate = delegate
   }
   
-  func view(in tableView: UITableView) -> UITableViewCell {
+  public func view(in tableView: UITableView) -> UITableViewCell {
     cell = tableView.dequeueReusableCell()
     delegate.didRequestImage()
     return cell!
   }
   
-  func preload() {
+  public func preload() {
     delegate.didRequestImage()
   }
   
-  func cancelLoad() {
+  public func cancelLoad() {
     releaseCellForReuse()
     delegate.didCancelImageRequest()
   }
