@@ -37,10 +37,6 @@ final class FeedSnapshotTests: XCTestCase {
     return controller
   }
   
-  private func emptyFeed() -> [FeedImageCellController] {
-    []
-  }
-  
   private func feedWithContent() -> [ImageStub] {
     [
       ImageStub(description: "Test description", location: "East Side Gallery", image: UIImage.make(withColor: .red)),
