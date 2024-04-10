@@ -13,8 +13,8 @@ final class ImageCommentsSnapshotTest: XCTestCase {
   func test_feedWithContent() {
     let sut = makeSUT()
     sut.display(cellControllers: comments())
-    record(snapshot: sut.snapshot(for: .iPhone8(style: .light)), named: "IMAGE_COMMENTS_light")
-    record(snapshot: sut.snapshot(for: .iPhone8(style: .dark)), named: "IMAGE_COMMENTS_dark")
+    assert(snapshot: sut.snapshot(for: .iPhone8(style: .light)), named: "IMAGE_COMMENTS_light")
+    assert(snapshot: sut.snapshot(for: .iPhone8(style: .dark)), named: "IMAGE_COMMENTS_dark")
   }
   
   //MARK: - Helper
