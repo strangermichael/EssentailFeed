@@ -28,7 +28,7 @@ final class FeedViewAdapter: ResourceView {
       adapter.presenter = FeedImagePresenter(
         view: WeakRefVirtualProxy(view),
         imageTransformer: UIImage.init)
-      return view
+      return CellController(view)
     }
     controller?.display(cellControllers: cellControllers)
   }
