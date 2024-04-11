@@ -276,6 +276,18 @@ final class FeedUIIntegrationTests: XCTestCase {
     sut.simulateUserInitiatedFeedReload()
     XCTAssertEqual(sut.errorMessage, nil)
   }
+  
+  func test_tapOnErrorView_hideErrorMessage() {
+    let (sut, loader) = makeSUT()
+    sut.simulateAppearance()
+    XCTAssertEqual(sut.errorMessage, nil)
+    
+    loader.completeFeedloadingWithError(at: 0)
+    XCTAssertEqual(sut.errorMessage, loadError)
+    
+    sut.simulateErrorViewTap()
+    XCTAssertEqual(sut.errorMessage, nil)
+  }
 
   func test_loadFeedCompletion_rendersSuccessfullyLoadedEmptyFeedAfterNonEmptyFeed() {
     let image0 = makeImage()

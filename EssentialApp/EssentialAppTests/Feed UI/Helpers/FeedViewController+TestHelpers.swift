@@ -109,4 +109,8 @@ extension ListViewController {
     let index = IndexPath(row: row, section: feedImagesSection)
     ds?.tableView?(tableView, cancelPrefetchingForRowsAt: [index])
   }
+  
+  func simulateErrorViewTap() {
+    errorView.simulateTap()
+  }
 }
