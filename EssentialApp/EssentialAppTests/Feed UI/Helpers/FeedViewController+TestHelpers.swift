@@ -81,7 +81,8 @@ extension ListViewController {
 
   
   func numberOfRenderedFeedImageViews() -> Int {
-    tableView.numberOfRows(inSection: feedImagesSection)
+    //diff datasource 只有第一个snapshot来的时候section才不为0
+    tableView.numberOfSections == 0 ? 0 : tableView.numberOfRows(inSection: feedImagesSection)
   }
   
   private var feedImagesSection: Int {

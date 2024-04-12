@@ -17,13 +17,18 @@ final public class ListViewController: UITableViewController, UITableViewDataSou
   }
   private(set) public var errorView = ErrorView()
   
-  private var loadingControllers: [IndexPath: CellController] = [:]
+  private lazy var dataSource: UITableViewDiffableDataSource<Int, CellController> = {
+    .init(tableView: tableView) { tableView, indexPath, controller in
+      controller.dataSource.tableView(tableView, cellForRowAt: indexPath)
+    }
+  }()
+  
   public var onRefresh: (() -> Void)?
   private var onViewIsAppearing: ((ListViewController) -> Void)?
   
   public override func viewDidLoad() {
     super.viewDidLoad()
-    tableView.prefetchDataSource = self
+    tableView.dataSource = dataSource
     configureErrorView()
     onViewIsAppearing = { vc in
       vc.onViewIsAppearing = nil
@@ -47,35 +52,37 @@ final public class ListViewController: UITableViewController, UITableViewDataSou
   }
   
   public func display(cellControllers: [CellController]) {
-    loadingControllers = [:]
-    tableModel = cellControllers
+    var snapshot = NSDiffableDataSourceSnapshot<Int, CellController>()
+    snapshot.appendSections([0])
+    snapshot.appendItems(cellControllers, toSection: 0)
+    if #available(iOS 15.0, *) {
+      dataSource.applySnapshotUsingReloadData(snapshot) //不加这个测试过不了lol
+    } else {
+      dataSource.apply(snapshot)
+    }
   }
   
-  public override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    tableModel.count
-  }
-  
-  public override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let ds = cellController(forRowAt: indexPath).dataSource
-    return ds.tableView(tableView, cellForRowAt: indexPath)
+  public override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    let dl = cellController(at: indexPath)?.delegate
+    dl?.tableView?(tableView, willDisplay: cell, forRowAt: indexPath)
   }
   
   public override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
     //数据源变了之后才reload data然后会调用end display，但是比如数据减少了 可能导致index访问越界crash, 或者访问到错误的数据
-    let dl = removeLoadingController(forRowAt: indexPath)?.delegate
+    let dl = cellController(at: indexPath)?.delegate
     dl?.tableView?(tableView, didEndDisplaying: cell, forRowAt: indexPath)
   }
   
   public func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
     indexPaths.forEach { indexPath in
-      let dsp = cellController(forRowAt: indexPath).dataSourcePrefetching
+      let dsp = cellController(at: indexPath)?.dataSourcePrefetching
       dsp?.tableView(tableView, prefetchRowsAt: [indexPath])
     }
   }
   
   public func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {
     indexPaths.forEach{ indexPath in
-      let dsp = cellController(forRowAt: indexPath).dataSourcePrefetching
+      let dsp = cellController(at: indexPath)?.dataSourcePrefetching
       dsp?.tableView?(tableView, cancelPrefetchingForRowsAt: [indexPath])
     }
   }
@@ -102,17 +109,10 @@ final public class ListViewController: UITableViewController, UITableViewDataSou
     }
   }
   
-  private func cellController(forRowAt indexPath: IndexPath) -> CellController {
-    let controller = tableModel[indexPath.row]
-    loadingControllers[indexPath] = controller
-    return controller
+  private func cellController(at indexPath: IndexPath) -> CellController? {
+    dataSource.itemIdentifier(for: indexPath)
   }
   
-  private func removeLoadingController(forRowAt indexPath: IndexPath) -> CellController? {
-    let controller = loadingControllers[indexPath]
-    loadingControllers[indexPath] = nil
-    return controller
-  }
   
   public func display(viewModel: ResourceLoadingViewModel) {
     refreshControl?.update(isRefreshing: viewModel.isLoading)

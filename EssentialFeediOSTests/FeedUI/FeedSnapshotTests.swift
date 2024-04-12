@@ -64,7 +64,7 @@ private extension ListViewController {
     let cells: [CellController] = stubs.map { stub in
       let cellController = FeedImageCellController(delegate: stub)
       stub.controller = cellController
-      return CellController(cellController)
+      return CellController(id: UUID(), cellController)
     }
     display(cellControllers: cells)
   }

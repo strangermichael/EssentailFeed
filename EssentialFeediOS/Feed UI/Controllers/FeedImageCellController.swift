@@ -22,10 +22,16 @@ public final class FeedImageCellController: NSObject, FeedImageView, UITableView
     self.delegate = delegate
   }
   
+  //cellForRowAt可能会调用很多次，例如cell初识高度很小 屏幕可以要很多cell再布局
   public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     cell = tableView.dequeueReusableCell()
     delegate.didRequestImage()
     return cell!
+  }
+  
+  public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    self.cell = cell as? FeedImageCell
+    delegate.didRequestImage()
   }
   
   public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

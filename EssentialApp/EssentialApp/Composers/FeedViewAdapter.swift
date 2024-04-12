@@ -28,7 +28,7 @@ final class FeedViewAdapter: ResourceView {
       adapter.presenter = FeedImagePresenter(
         view: WeakRefVirtualProxy(view),
         imageTransformer: UIImage.init)
-      return CellController(view)
+      return CellController(id: model, view) //用和数据有关的id来标识
     }
     controller?.display(cellControllers: cellControllers)
   }
