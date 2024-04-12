@@ -21,6 +21,7 @@ final class ListSnapshotTests: XCTestCase {
     sut.display(.error(message: "This is a \n multiple line \n message"))
     assert(snapshot: sut.snapshot(for: .iPhone8(style: .light)), named: "LIST_WITH_ERROR_MESSAGE_light")
     assert(snapshot: sut.snapshot(for: .iPhone8(style: .dark)), named: "LIST_WITH_ERROR_MESSAGE_dark")
+    assert(snapshot: sut.snapshot(for: .iPhone8(style: .dark, contentSize: .extraExtraExtraLarge)), named: "Extra_LIST_WITH_ERROR_MESSAGE_dark")
   }
   
   //MARK: - Helper
