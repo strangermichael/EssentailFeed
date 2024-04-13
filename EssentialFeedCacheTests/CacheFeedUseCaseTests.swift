@@ -38,7 +38,7 @@ final class CacheFeedUseCaseTests: XCTestCase {
     XCTAssertEqual(store.receivedMessages, [.deleteCachedFeed, .insert(items.local, timestamp)])
   }
   
-  func test_save_failsOnDeletionError(file: StaticString = #file, line: UInt = #line) {
+  func test_save_failsOnDeletionError(file: StaticString = #filePath, line: UInt = #line) {
     let (sut, store) = makeSUT()
     let deletionError = anyNSError()
     expect(sut, toCompleteWithError: deletionError, when: {
@@ -46,7 +46,7 @@ final class CacheFeedUseCaseTests: XCTestCase {
     }, file: file, line: line)
   }
   
-  func test_save_failsOnInsertionError(file: StaticString = #file, line: UInt = #line) {
+  func test_save_failsOnInsertionError(file: StaticString = #filePath, line: UInt = #line) {
     let (sut, store) = makeSUT()
     let insertionError = anyNSError()
     expect(sut, toCompleteWithError: insertionError, when: {
@@ -55,7 +55,7 @@ final class CacheFeedUseCaseTests: XCTestCase {
     }, file: file, line: line)
   }
   
-  func test_save_succeedsOnSuccessfulCacheInsertion(file: StaticString = #file, line: UInt = #line) {
+  func test_save_succeedsOnSuccessfulCacheInsertion(file: StaticString = #filePath, line: UInt = #line) {
     let (sut, store) = makeSUT()
     expect(sut, toCompleteWithError: nil, when: {
       store.completDeletionSuccessfully()
@@ -88,7 +88,7 @@ final class CacheFeedUseCaseTests: XCTestCase {
     XCTAssertTrue(receivedResults.isEmpty)
   }
   
-  func expect(_ sut: LocalFeedLoader, toCompleteWithError expecedError: Error?, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
+  func expect(_ sut: LocalFeedLoader, toCompleteWithError expecedError: Error?, when action: () -> Void, file: StaticString = #filePath, line: UInt = #line) {
     let exp = expectation(description: "wait for save completion")
     var recivedError: Error?
     sut.save(items: [uniqueImage()]) { error in

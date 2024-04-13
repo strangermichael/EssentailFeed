@@ -30,7 +30,7 @@ final class FeedLoaderWithFallbackCompositeTests: XCTestCase, FeedLoaderTestCase
   }
   
   //MARK: - Helpers
-  private func makeSUT(primaryResult: FeedLoader.Result, fallbackResult: FeedLoader.Result, file: StaticString = #file, line: UInt = #line) -> FeedLoaderWithFallbackComposite {
+  private func makeSUT(primaryResult: FeedLoader.Result, fallbackResult: FeedLoader.Result, file: StaticString = #filePath, line: UInt = #line) -> FeedLoaderWithFallbackComposite {
     let primaryLoder = FeedLoaderStub(result: primaryResult)
     let fallbackLoader = FeedLoaderStub(result: fallbackResult)
     let sut = FeedLoaderWithFallbackComposite(primary: primaryLoder, fallback: fallbackLoader)

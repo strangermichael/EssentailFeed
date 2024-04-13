@@ -10,7 +10,7 @@ import XCTest
 
 typealias LocalizedBundle = (bundle: Bundle, localization: String)
 
-func assertLocalizedKeyAndValuesExist(in presentationBundle: Bundle, _ table: String, file: StaticString = #file, line: UInt = #line) {
+func assertLocalizedKeyAndValuesExist(in presentationBundle: Bundle, _ table: String, file: StaticString = #filePath, line: UInt = #line) {
   let localizationBundles = allLocalizationBundles(in: presentationBundle, file: file, line: line)
   let localizedStringKeys = allLocalizedStringKeys(in: localizationBundles, table: table, file: file, line: line)
   //localizationBundles就是一个语言一个bundle, 确保每个语言的bundle里有所有的key
@@ -27,7 +27,7 @@ func assertLocalizedKeyAndValuesExist(in presentationBundle: Bundle, _ table: St
 }
 
 // 获取每个语言的bundle
-func allLocalizationBundles(in bundle: Bundle, file: StaticString = #file, line: UInt = #line) -> [LocalizedBundle] {
+func allLocalizationBundles(in bundle: Bundle, file: StaticString = #filePath, line: UInt = #line) -> [LocalizedBundle] {
   return bundle.localizations.compactMap { localization in
     //localizations表示项目里设置的所有要支持的语言, 确保有这么个文件
     guard let path = bundle.path(forResource: localization, ofType: "lproj"),
@@ -40,7 +40,7 @@ func allLocalizationBundles(in bundle: Bundle, file: StaticString = #file, line:
 }
 
 // 拿到每个语言的strings文件(bundle + table来定位)里的所有的key再去重
-func allLocalizedStringKeys(in bundles: [LocalizedBundle], table: String, file: StaticString = #file, line: UInt = #line) -> Set<String> {
+func allLocalizedStringKeys(in bundles: [LocalizedBundle], table: String, file: StaticString = #filePath, line: UInt = #line) -> Set<String> {
   bundles.reduce([]) { acc, current in
     guard let path = current.bundle.path(forResource: table, ofType: "strings"),
           let strings = NSDictionary(contentsOfFile: path),

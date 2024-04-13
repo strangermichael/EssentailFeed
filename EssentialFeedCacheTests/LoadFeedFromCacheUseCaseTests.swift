@@ -122,7 +122,7 @@ final class LoadFeedFromCacheUseCaseTests: XCTestCase {
   }
   
   //Helper
-  private func makeSUT(currentDate: @escaping () -> Date = Date.init, file: StaticString = #file, line: UInt = #line) -> (sut: LocalFeedLoader, store: FeedStoreSpy) {
+  private func makeSUT(currentDate: @escaping () -> Date = Date.init, file: StaticString = #filePath, line: UInt = #line) -> (sut: LocalFeedLoader, store: FeedStoreSpy) {
     let store = FeedStoreSpy()
     let sut = LocalFeedLoader(store: store, currentDate: currentDate)
     trackForMemoryLeaks(sut)
@@ -130,7 +130,7 @@ final class LoadFeedFromCacheUseCaseTests: XCTestCase {
     return (sut, store)
   }
   
-  private func expect(_ sut: LocalFeedLoader, toCompletWith expectedResult: LocalFeedLoader.LoadResult, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
+  private func expect(_ sut: LocalFeedLoader, toCompletWith expectedResult: LocalFeedLoader.LoadResult, when action: () -> Void, file: StaticString = #filePath, line: UInt = #line) {
     let exp = expectation(description: "wait for load completion")
     sut.load { receivedResult in
       switch (receivedResult, expectedResult) {

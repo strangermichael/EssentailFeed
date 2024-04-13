@@ -87,7 +87,7 @@ final class RemoteLoaderTests: XCTestCase {
   //测试用范型的类 可以选一个简单的类型
   func makeSUT(url: URL = URL(string: "https://a-url.com")!,
                mapper: @escaping RemoteLoader<String>.Mapper = { _, _ in "any" },
-               file: StaticString = #file,
+               file: StaticString = #filePath,
                line: UInt = #line) -> (sut: RemoteLoader<String>, client: HTTPClientSpy) {
     let client = HTTPClientSpy()
     let sut = RemoteLoader<String>(client: client, url: url, mapper: mapper)
@@ -118,7 +118,7 @@ final class RemoteLoaderTests: XCTestCase {
     return json
   }
   
-  func expect(sut: RemoteLoader<String>, toCompleteWithResult expectedResult: RemoteLoader<String>.Result, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
+  func expect(sut: RemoteLoader<String>, toCompleteWithResult expectedResult: RemoteLoader<String>.Result, when action: () -> Void, file: StaticString = #filePath, line: UInt = #line) {
     
     let exp = expectation(description: "wait for load completion")
     sut.load { actualResult in
