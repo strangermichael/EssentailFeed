@@ -12,39 +12,39 @@ import EssentialFeedPresentation
 
 public final class CommentsUIComposer {
   private init() {}
-  public static func commentsComposedWith(commentsLoader: FeedLoader) -> ListViewController {
-    let feedLoader = MainQueueDispatchDecorator(decoratee: commentsLoader)
-    let presentationAdapter = ResourceLoaderPresentationAdapter<[FeedImage], FeedViewAdapter>(loadFuction: feedLoader.load)
+  public static func commentsComposedWith(commentsLoader: ImageCommentLoader) -> ListViewController {
+    let commentsLoader = MainQueueDispatchDecorator(decoratee: commentsLoader)
+    let presentationAdapter = ResourceLoaderPresentationAdapter<[ImageComment], CommentsViewAdapter>(loadFuction: commentsLoader.load)
     let feedController = makeWith(title: ImageCommentsPresenter.title)
     feedController.onRefresh = presentationAdapter.loadResource
-    let presenter = LoadResourcePresenter<[FeedImage], FeedViewAdapter>(resourceView: FeedViewAdapter(controller: feedController, imageLoader: FeedImageDataLoaderMock()),
-                                                                        loadingView: WeakRefVirtualProxy(feedController),
-                                                                        errorView: WeakRefVirtualProxy(feedController),
-                                                                        mapper: FeedPresenter.map)
+    let presenter = LoadResourcePresenter<[ImageComment], CommentsViewAdapter>(resourceView: CommentsViewAdapter(controller: feedController),
+                                                                               loadingView: WeakRefVirtualProxy(feedController),
+                                                                               errorView: WeakRefVirtualProxy(feedController),
+                                                                               mapper: { ImageCommentsPresenter.map($0) })
     presentationAdapter.presenter = presenter
     return feedController
   }
   
   private static func makeWith(title: String) -> ListViewController {
     let bundle = Bundle(for: ListViewController.self)
-    let storyboard = UIStoryboard(name: "Feed", bundle: bundle)
+    let storyboard = UIStoryboard(name: "Comment", bundle: bundle)
     let feedController = storyboard.instantiateInitialViewController() as! ListViewController
     feedController.title = title
     return feedController
   }
 }
 
-//will remove
-class FeedImageDataLoaderMock: FeedImageDataLoader {
-  func loadImageData(from url: URL, completion: @escaping (FeedImageDataLoader.Result) -> Void) -> EssentialFeed.FeedImageDataLoaderTask {
-    FeedImageDataLoaderTaskMock()
+final class CommentsViewAdapter: ResourceView {
+  
+  private weak var controller: ListViewController?
+  
+  init(controller: ListViewController? = nil) {
+    self.controller = controller
   }
   
-  
-}
-
-class FeedImageDataLoaderTaskMock: FeedImageDataLoaderTask {
-  func cancel() {
-    
+  func display(_ viewModel: ImageCommentsViewModel) {
+    controller?.display(cellControllers: viewModel.comments.map({ viewModel in
+      CellController(id: viewModel, ImageCommentCellController(model: viewModel))
+    }))
   }
 }

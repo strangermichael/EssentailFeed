@@ -52,11 +52,25 @@ extension ListViewController {
       _isRefreshing = false
     }
   }
-
+  
   func simulateUserInitiatedReload() {
     refreshControl?.simulatePullToRefresh()
   }
   
+  var isShowingLoadingUI: Bool {
+    refreshControl?.isRefreshing == true
+  }
+  
+  var errorMessage: String? {
+    errorView.message
+  }
+  
+  func simulateErrorViewTap() {
+    errorView.simulateTap()
+  }
+}
+
+extension ListViewController {
   @discardableResult
   func simulateFeedImageViewVisible(at index: Int) -> FeedImageCell? {
     feedImageView(at: index) as? FeedImageCell
@@ -70,15 +84,6 @@ extension ListViewController {
     delegate?.tableView?(tableView, didEndDisplaying: view!, forRowAt: index)
     return view
   }
-  
-  var isShowingLoadingUI: Bool {
-    refreshControl?.isRefreshing == true
-  }
-  
-  var errorMessage: String? {
-    errorView.message
-  }
-
   
   func numberOfRenderedFeedImageViews() -> Int {
     //diff datasource 只有第一个snapshot来的时候section才不为0
@@ -110,8 +115,37 @@ extension ListViewController {
     let index = IndexPath(row: row, section: feedImagesSection)
     ds?.tableView?(tableView, cancelPrefetchingForRowsAt: [index])
   }
+}
+
+
+extension ListViewController {
+  func numberOfRenderedComments() -> Int {
+    //diff datasource 只有第一个snapshot来的时候section才不为0
+    tableView.numberOfSections == 0 ? 0 : tableView.numberOfRows(inSection: commentsSection)
+  }
   
-  func simulateErrorViewTap() {
-    errorView.simulateTap()
+  private var commentsSection: Int {
+    0
+  }
+  
+  func commentMessage(at row: Int) -> String? {
+    commentView(at: row)?.messageLabel.text
+  }
+  
+  func commentDate(at row: Int) -> String? {
+    commentView(at: row)?.dateLabel.text
+  }
+  
+  func commentUserName(at row: Int) -> String? {
+    commentView(at: row)?.userNameLabel.text
+  }
+  
+  private func commentView(at row: Int) -> ImageCommentCell? {
+    guard numberOfRenderedFeedImageViews() > row else {
+      return nil
+    }
+    let ds = tableView.dataSource
+    let index = IndexPath(row: row, section: commentsSection)
+    return ds?.tableView(tableView, cellForRowAt: index) as? ImageCommentCell
   }
 }

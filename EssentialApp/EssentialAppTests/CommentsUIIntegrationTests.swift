@@ -10,6 +10,7 @@ import UIKit
 import EssentialFeed
 import EssentialFeediOS
 import EssentialApp
+import EssentialFeedPresentation
 
 class CommentsUIIntegrationTests: FeedUIIntegrationTests {
   func test_commentView_hasTitle() {
@@ -58,6 +59,47 @@ class CommentsUIIntegrationTests: FeedUIIntegrationTests {
     XCTAssertFalse(sut.isShowingLoadingUI, "Expected no loading once user initiated loading completes with error")
   }
   
+  func test_loadCommentsCompletion_rendersSuccessfullyLoadedComments() {
+    let comment0 = makeComment(message: "a description", username: "a username")
+    let comment1 = makeComment(message: "another description", username: "another username")
+    
+    let (sut, loader) = makeSUT()
+    sut.simulateAppearance()
+    assertThat(sut, isRendering: [ImageComment]())
+    
+    loader.completeCommentsLoading(with: [comment0], at: 0)
+    assertThat(sut, isRendering: [comment0])
+    
+    sut.simulateUserInitiatedReload()
+    loader.completeCommentsLoading(with: [comment0, comment1], at: 1)
+    assertThat(sut, isRendering: [comment0, comment1])
+  }
+  
+  func test_loadCommentsCompletion_rendersSuccessfullyLoadedEmptyCommentsAfterNonEmptyComments() {
+    let comment = makeComment()
+    let (sut, loader) = makeSUT()
+    sut.simulateAppearance()
+    loader.completeCommentsLoading(with: [comment], at: 0)
+    assertThat(sut, isRendering: [comment])
+    
+    sut.simulateUserInitiatedReload()
+    loader.completeCommentsLoading(with: [], at: 1)
+    assertThat(sut, isRendering: [ImageComment]())
+  }
+  
+  func test_loadCommentCompletion_doesNotAlterCurrentRenderingStateOnError() {
+    let comment = makeComment()
+    let (sut, loader) = makeSUT()
+    
+    sut.simulateAppearance()
+    loader.completeCommentsLoading(with: [comment], at: 0)
+    assertThat(sut, isRendering: [comment])
+    
+    sut.simulateUserInitiatedReload()
+    loader.completeCommentsLoadingWithError(at: 1)
+    assertThat(sut, isRendering: [comment])
+  }
+  
   override func test_loadFeedCompletion_dispatchesFromBackgroundToMainThread() {
     let (sut, loader) = makeSUT()
     sut.simulateAppearance()
@@ -103,25 +145,45 @@ class CommentsUIIntegrationTests: FeedUIIntegrationTests {
     return (sut, loader)
   }
   
-  private class LoaderSpy: FeedLoader {
+  private class LoaderSpy: ImageCommentLoader {
     var loadCommentsCallCount: Int {
       requests.count
     }
     
     private(set) var cancelledImageURLs: [URL] = []
     
-    private var requests: [(FeedLoader.Result) -> Void] = []
+    private var requests: [(ImageCommentLoader.Result) -> Void] = []
     
-    func load(completion: @escaping (FeedLoader.Result) -> Void) {
+    func load(completion: @escaping (ImageCommentLoader.Result) -> Void) {
       requests.append(completion)
     }
     
-    func completeCommentsLoading(with images: [FeedImage] = [], at index: Int = 0) {
+    func completeCommentsLoading(with images: [ImageComment] = [], at index: Int = 0) {
       requests[index](.success(images))
     }
     
     func completeCommentsLoadingWithError(at index: Int) {
       requests[index](.failure(anyNSError()))
+    }
+  }
+  
+  private func makeComment(message: String = "any message", username: String = "any username") -> ImageComment {
+    ImageComment(id: UUID(), message: message, createdAt: .now, userName: username)
+  }
+  
+  private func anyImageData() -> Data {
+    UIImage.make(withColor: .red).pngData()!
+  }
+  
+  private func assertThat(_ sut: ListViewController, isRendering comments: [ImageComment], file: StaticString = #file, line: UInt = #line) {
+    guard sut.numberOfRenderedComments() == comments.count else {
+      return XCTFail("Expected \(comments.count) comments, got \(sut.numberOfRenderedFeedImageViews()) instead", file: file, line: line)
+    }
+    let viewModel = ImageCommentsPresenter.map(comments)
+    viewModel.comments.enumerated().forEach { index, comment in
+      XCTAssertEqual(sut.commentMessage(at: index), comment.message, "message at \(index)", file: file, line: line)
+      XCTAssertEqual(sut.commentDate(at: index), comment.date, "message at \(index)", file: file, line: line)
+      XCTAssertEqual(sut.commentUserName(at: index), comment.username, "message at \(index)", file: file, line: line)
     }
   }
 }

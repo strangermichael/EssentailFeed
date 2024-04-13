@@ -12,7 +12,7 @@ import EssentialFeedPresentation
 final class ResourceLoaderPresentationAdapter<Resource, View: ResourceView> {
   typealias Result = Swift.Result<Resource, Error>
   private let loadFuction: (@escaping (Result) -> Void) -> Void
-  var presenter: LoadResourcePresenter<Resource, FeedViewAdapter>?
+  var presenter: LoadResourcePresenter<Resource, View>?
   
   init(loadFuction: @escaping (@escaping (Result) -> Void) -> Void) {
     self.loadFuction = loadFuction
