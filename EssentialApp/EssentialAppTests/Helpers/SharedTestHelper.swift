@@ -7,6 +7,7 @@
 
 import XCTest
 import EssentialFeed
+import EssentialFeedPresentation
 
 func anyNSError() -> NSError {
   NSError(domain: "any error", code: 0)
@@ -32,4 +33,20 @@ public extension XCTestCase {
       XCTAssertNil(instance, "Instance should have been deallocated. Potential memory leak.", file: file, line: line)
     }
   }
+}
+
+private class DummyView: ResourceView {
+  func display(_ viewModel: Any) { }
+}
+
+var loadError: String {
+  LoadResourcePresenter<Any, DummyView>.loadError
+}
+
+var feedTitle: String {
+  FeedPresenter.title
+}
+
+var commentsTitle: String {
+  ImageCommentsPresenter.title
 }
