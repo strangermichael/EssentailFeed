@@ -18,26 +18,26 @@ class CommentsUIIntegrationTests: FeedUIIntegrationTests {
     XCTAssertEqual(sut.title, commentsTitle)
   }
   
-  override func test_loadFeedActions_requestFeedFromLoader() {
+  func test_loadCommentsActions_requestCommentsFromLoader() {
     let (sut, loader) = makeSUT()
-    XCTAssertEqual(loader.loadFeedCallCount, 0, "Expected no loading requests before view appears")
+    XCTAssertEqual(loader.loadCommentsCallCount, 0, "Expected no loading requests before view appears")
     sut.simulateAppearance()
-    XCTAssertEqual(loader.loadFeedCallCount, 1, "Expected no loading requests once view appears")
-    sut.simulateUserInitiatedFeedReload()
-    XCTAssertEqual(loader.loadFeedCallCount, 2, "Expected another loading requests once usee initiates a load")
-    sut.simulateUserInitiatedFeedReload()
-    XCTAssertEqual(loader.loadFeedCallCount, 3, "Expected a third loading requests once usee initiates another load")
+    XCTAssertEqual(loader.loadCommentsCallCount, 1, "Expected no loading requests once view appears")
+    sut.simulateUserInitiatedReload()
+    XCTAssertEqual(loader.loadCommentsCallCount, 2, "Expected another loading requests once usee initiates a load")
+    sut.simulateUserInitiatedReload()
+    XCTAssertEqual(loader.loadCommentsCallCount, 3, "Expected a third loading requests once usee initiates another load")
   }
   
   override func test_loadFeedActions_runsAutomaticallyOnlyOnFirstAppearance() {
     let (sut, loader) = makeSUT()
-    XCTAssertEqual(loader.loadFeedCallCount, 0, "Expected no loading requests before view appears")
+    XCTAssertEqual(loader.loadCommentsCallCount, 0, "Expected no loading requests before view appears")
 
     sut.simulateAppearance()
-    XCTAssertEqual(loader.loadFeedCallCount, 1, "Expected a loading request once view appears")
+    XCTAssertEqual(loader.loadCommentsCallCount, 1, "Expected a loading request once view appears")
 
     sut.simulateAppearance()
-    XCTAssertEqual(loader.loadFeedCallCount, 1, "Expected no loading request the second time view appears")
+    XCTAssertEqual(loader.loadCommentsCallCount, 1, "Expected no loading request the second time view appears")
   }
 
   
@@ -47,12 +47,12 @@ class CommentsUIIntegrationTests: FeedUIIntegrationTests {
     XCTAssertEqual(sut.isShowingLoadingUI, true, "Expected show loading once view appears")
     loader.completeFeedLoading(at: 0)
     XCTAssertEqual(sut.isShowingLoadingUI, false, "Expected no loading once loader is completed")
-    sut.simulateUserInitiatedFeedReload()
+    sut.simulateUserInitiatedReload()
     XCTAssertEqual(sut.isShowingLoadingUI, true, "Expected show loading once user initiates a reload")
     loader.completeFeedLoading(at: 1)
     XCTAssertEqual(sut.isShowingLoadingUI, false, "Expected no loading once user initiated loading is completed")
     
-    sut.simulateUserInitiatedFeedReload()
+    sut.simulateUserInitiatedReload()
     XCTAssertEqual(sut.isShowingLoadingUI, true, "Expected show loading once user initiates a reload")
     loader.completeFeedloadingWithError(at: 1)
     XCTAssertFalse(sut.isShowingLoadingUI, "Expected no loading once user initiated loading completes with error")
@@ -78,7 +78,7 @@ class CommentsUIIntegrationTests: FeedUIIntegrationTests {
     loader.completeFeedloadingWithError(at: 0)
     XCTAssertEqual(sut.errorMessage, loadError)
     
-    sut.simulateUserInitiatedFeedReload()
+    sut.simulateUserInitiatedReload()
     XCTAssertEqual(sut.errorMessage, nil)
   }
   
@@ -101,5 +101,27 @@ class CommentsUIIntegrationTests: FeedUIIntegrationTests {
     trackForMemoryLeaks(sut, file: file, line: line)
     trackForMemoryLeaks(loader, file: file, line: line)
     return (sut, loader)
+  }
+  
+  private class LoaderSpy: FeedLoader {
+    var loadCommentsCallCount: Int {
+      requests.count
+    }
+    
+    private(set) var cancelledImageURLs: [URL] = []
+    
+    private var requests: [(FeedLoader.Result) -> Void] = []
+    
+    func load(completion: @escaping (FeedLoader.Result) -> Void) {
+      requests.append(completion)
+    }
+    
+    func completeFeedLoading(with images: [FeedImage] = [], at index: Int = 0) {
+      requests[index](.success(images))
+    }
+    
+    func completeFeedloadingWithError(at index: Int) {
+      requests[index](.failure(anyNSError()))
+    }
   }
 }
