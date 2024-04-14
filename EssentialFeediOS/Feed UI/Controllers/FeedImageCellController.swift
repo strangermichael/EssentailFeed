@@ -17,9 +17,11 @@ public protocol FeedImageCellControllerDelegate {
 public final class FeedImageCellController: NSObject, FeedImageView, UITableViewDataSource, UITableViewDelegate, UITableViewDataSourcePrefetching {
   private let delegate: FeedImageCellControllerDelegate
   private var cell: FeedImageCell?
+  private let selection: () -> Void
   
-  public init(delegate: FeedImageCellControllerDelegate) {
+  public init(delegate: FeedImageCellControllerDelegate, selection: @escaping () -> Void) {
     self.delegate = delegate
+    self.selection = selection
   }
   
   //cellForRowAt可能会调用很多次，例如cell初识高度很小 屏幕可以要很多cell再布局
@@ -48,6 +50,10 @@ public final class FeedImageCellController: NSObject, FeedImageView, UITableView
   
   public func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
     cancelLoad()
+  }
+  
+  public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    selection()
   }
   
   private func cancelLoad() {
