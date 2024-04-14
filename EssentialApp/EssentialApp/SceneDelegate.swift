@@ -21,12 +21,29 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     URLSessionHTTPClient(session: URLSession(configuration: .ephemeral))
   }()
   
+  private lazy var baseURL = URL(string: "https://ile-api.essentialdeveloper.com/essential-feed")!
+  
   private lazy var store: FeedStore & FeedImageDataStore = {
     try! CoreDataFeedStore(storeURL: NSPersistentContainer.defaultDirectoryURL().appendingPathComponent("feed-store.sqlite"),
                            bundle: Bundle(for: CoreDataFeedStore.self))
   }()
   
   private lazy var localFeedLoader = LocalFeedLoader(store: store, currentDate: Date.init)
+  
+  private lazy var navigationController: UINavigationController = {
+    //这个ur是最新的，视频里url图片下载不了
+    let remoteURL = baseURL.appending(path: "/v1/feed")
+    let remoteFeedLoader = RemoteFeedLoader(client: httpClient, url: remoteURL)
+    let remoteImageLoader = RemoteFeedImageDataLoader(client: httpClient)
+    let localImageLoader = LocalFeedImageDataLoader(store: store)
+    let feedViewController = FeedUIComposer.feedComposedWith(feedLoader:
+                                                              FeedLoaderWithFallbackComposite(primary: FeedLoaderCacheDecorator(decoratee: remoteFeedLoader, cache: localFeedLoader),
+                                                                                              fallback: localFeedLoader),
+                                                             imageLoader: FeedImageDataLoaderWithFallbackComposite(primary: localImageLoader,
+                                                                                                                   fallback: FeedImageDataLoaderCacheDecorator(decoratee: remoteImageLoader, cache: localImageLoader)),
+    selection: showComments)
+    return UINavigationController(rootViewController: feedViewController)
+  }()
   
   convenience init(httpClient: HTTPClient, store: FeedStore & FeedImageDataStore) {
     self.init()
@@ -44,19 +61,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
   }
   
   func configureWindow() {
-    //这个ur是最新的，视频里url图片下载不了
-    let remoteURL = URL(string: "https://ile-api.essentialdeveloper.com/essential-feed/v1/feed")!
-    let remoteFeedLoader = RemoteFeedLoader(client: httpClient, url: remoteURL)
-    let remoteImageLoader = RemoteFeedImageDataLoader(client: httpClient)
-    let localImageLoader = LocalFeedImageDataLoader(store: store)
-    
-    let feedViewController = FeedUIComposer.feedComposedWith(feedLoader:
-                                                              FeedLoaderWithFallbackComposite(primary: FeedLoaderCacheDecorator(decoratee: remoteFeedLoader, cache: localFeedLoader),
-                                                                                              fallback: localFeedLoader),
-                                                             imageLoader: FeedImageDataLoaderWithFallbackComposite(primary: localImageLoader,
-                                                                                                                   fallback: FeedImageDataLoaderCacheDecorator(decoratee: remoteImageLoader, cache: localImageLoader)))
-    window?.rootViewController = UINavigationController(rootViewController: feedViewController)
+    window?.rootViewController = navigationController
     window?.makeKeyAndVisible()
+  }
+  
+  private func showComments(image: FeedImage) {
+    let url = ImageCommentsEndpoint.get(image.id).url(baseURL: baseURL)
+    let comments = CommentsUIComposer.commentsComposedWith(commentsLoader: makeRemoteCommentsLoader(url: url))
+    navigationController.pushViewController(comments, animated: true)
+  }
+  
+  private func makeRemoteCommentsLoader(url: URL) -> RemoteImageCommentLoader {
+    RemoteImageCommentLoader(client: httpClient, url: url)
   }
   
   func sceneDidDisconnect(_ scene: UIScene) {
@@ -90,3 +106,4 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 }
 
 extension RemoteLoader: FeedLoader where Resource == [FeedImage] {}
+extension RemoteLoader: ImageCommentLoader where Resource == [ImageComment] {}

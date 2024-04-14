@@ -54,7 +54,23 @@ final class FeedAcceptanceTests: XCTestCase {
     XCTAssertNotNil(store.feedCache, "Expected to keep non-expired cache")
   }
   
+  func test_onFeedImageSelection_displaysComments() {
+    let comments = showCommentsForFirstImage()
+    XCTAssertEqual(comments.numberOfRenderedComments(), 1)
+    XCTAssertEqual(comments.commentMessage(at: 0), makeCommentMessage())
+  }
+  
   //MARK: - Helpers
+  private func showCommentsForFirstImage() -> ListViewController {
+    let feed = launch(httpClient: .online(response), store: .empty)
+    feed.simulaTapOnFeedImage(at: 0)
+    RunLoop.current.run(until: Date()) //push有动画, list的页面不会马上render, 这样强制它render
+    let nav = feed.navigationController
+    let vc = nav?.topViewController as! ListViewController
+    vc.simulateAppearance()
+    return vc
+  }
+  
   private func launch(
     httpClient: HTTPClientStub = .offline,
     store: InMemoryFeedStore = .empty
@@ -152,7 +168,8 @@ final class FeedAcceptanceTests: XCTestCase {
     switch url.absoluteString {
     case "http://image.com":
       return makeImageData()
-      
+    case "https://ile-api.essentialdeveloper.com/essential-feed/v1/image/2AB2AE66-A4B7-4A16-B374-51BBAC8DB086/comments":
+      return makeCommentsData()
     default:
       return makeFeedData()
     }
@@ -164,9 +181,25 @@ final class FeedAcceptanceTests: XCTestCase {
   
   private func makeFeedData() -> Data {
     return try! JSONSerialization.data(withJSONObject: ["items": [
-      ["id": UUID().uuidString, "image": "http://image.com"],
+      ["id": "2AB2AE66-A4B7-4A16-B374-51BBAC8DB086", "image": "http://image.com"],
       ["id": UUID().uuidString, "image": "http://image.com"]
     ]])
   }
 
+  private func makeCommentsData() -> Data {
+    try! JSONSerialization.data(withJSONObject: ["items": [
+      [
+        "id": UUID().uuidString,
+        "message": makeCommentMessage(),
+        "created_at": "2020-05-20T11:24:59+0000",
+        "author": [
+          "username": "a username"
+        ]
+      ] as [String: Any],
+    ]])
+  }
+  
+  private func makeCommentMessage() -> String {
+    "a message"
+  }
 }
