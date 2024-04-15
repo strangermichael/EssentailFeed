@@ -26,3 +26,9 @@ extension LoadMoreCellController: ResourceLoadingView {
     cell.isLoading = viewModel.isLoading
   }
 }
+
+extension LoadMoreCellController: ResourceErrorView {
+  public func display(_ viewModel: EssentialFeedPresentation.ResourceErrorViewModel) {
+    cell.message = viewModel.message
+  }
+}
