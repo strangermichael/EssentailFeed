@@ -124,7 +124,7 @@ final class EssentialFeedCacheIntegrationTests: XCTestCase {
     sut.load { result in
       switch result {
       case let .success(loadedFeed):
-        XCTAssertEqual(loadedFeed, expecedFeed)
+        XCTAssertEqual(loadedFeed.feed, expecedFeed)
       case let .failure(error):
         XCTFail("Expected to get successful feed result, but got \(error) instead")
       }

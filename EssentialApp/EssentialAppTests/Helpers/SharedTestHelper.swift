@@ -21,10 +21,10 @@ func anyData() -> Data {
   Data("any data".utf8)
 }
 
-func uniqueFeed() -> [FeedImage] {
-  [
+func uniqueFeed() -> Paginated<FeedImage> {
+  Paginated(feed: [
     FeedImage(id: UUID(), description: "any", location: "any", imageURL: URL(string: "http://any-url.com")!)
-  ]
+  ])
 }
 
 public extension XCTestCase {

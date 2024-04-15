@@ -13,7 +13,8 @@ class EssentialFeedAPIEndToEndTests: XCTestCase {
   
   func test_endToEndTestServerGETFeedResult_matchesFixedTestAccountData() {
     switch getFeedResult() {
-    case let .success(images):
+    case let .success(paginatedImages):
+      let images = paginatedImages.feed
       XCTAssertEqual(images.count, 8, "Exepected 8 items in the test data")
       XCTAssertEqual(images[0], expecedImage(at: 0))
       XCTAssertEqual(images[1], expecedImage(at: 1))
@@ -46,7 +47,9 @@ class EssentialFeedAPIEndToEndTests: XCTestCase {
   private func getFeedResult() -> FeedLoader.Result? {
     let testServerURL = URL(string: "https://www.essentialdeveloper.com/feed-case-study/test-api/feed")!
     let client = URLSessionHTTPClient(session: URLSession(configuration: .ephemeral))
-    let loader = RemoteLoader(client: client, url: testServerURL, mapper: FeedItemMapper.map)
+    let loader = RemoteLoader<Paginated<FeedImage>>(client: client, url: testServerURL, mapper: {data, response in
+      try Paginated(feed: FeedItemMapper.map(data, response))
+    })
     let exp = expectation(description: "wait for load completion")
     trackForMemoryLeaks(client)
     trackForMemoryLeaks(loader)

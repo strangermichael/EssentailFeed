@@ -20,7 +20,7 @@ public class FeedLoaderCacheDecorator: FeedLoader {
   public func load(completion: @escaping (FeedLoader.Result) -> Void) {
     decoratee.load { [weak self] result in
       completion(result.map({ feed in
-        self?.cache.saveIgnoringResult(feed)
+        self?.cache.saveIgnoringResult(feed.feed)
         return feed
       }))
     }

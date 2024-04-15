@@ -23,7 +23,7 @@ final class FeedViewAdapter: ResourceView {
     self.selection = selection
   }
   
-  func display(_ viewModel: FeedViewModel) {
+  func display(_ viewModel: Paginated<FeedImage>) {
     let cellControllers = viewModel.feed.map { model in
       let adapter = FeedImageDataLoaderPresentationAdapter<WeakRefVirtualProxy<FeedImageCellController>, UIImage>(model: model, imageLoader: imageLoader)
       let view = FeedImageCellController(delegate: adapter, selection: { [weak self] in

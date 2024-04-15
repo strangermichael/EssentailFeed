@@ -160,6 +160,7 @@
 		A6F4AC582BCCC6D900C33A72 /* FEED_WITH_LOADING_ERROR_light.png in Resources */ = {isa = PBXBuildFile; fileRef = A6F4AC562BCCC6D800C33A72 /* FEED_WITH_LOADING_ERROR_light.png */; };
 		A6F4AC592BCCC6D900C33A72 /* FEED_WITH_LOADING_ERROR_dark.png in Resources */ = {isa = PBXBuildFile; fileRef = A6F4AC572BCCC6D800C33A72 /* FEED_WITH_LOADING_ERROR_dark.png */; };
 		A6F4AC5B2BCCC76400C33A72 /* Extra_FEED_WITH_LOADING_ERROR_dark.png in Resources */ = {isa = PBXBuildFile; fileRef = A6F4AC5A2BCCC76400C33A72 /* Extra_FEED_WITH_LOADING_ERROR_dark.png */; };
+		A6F4AC5E2BCCD24D00C33A72 /* Paginated.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6F4AC5C2BCCCFAE00C33A72 /* Paginated.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -497,6 +498,7 @@
 		A6F4AC562BCCC6D800C33A72 /* FEED_WITH_LOADING_ERROR_light.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FEED_WITH_LOADING_ERROR_light.png; sourceTree = "<group>"; };
 		A6F4AC572BCCC6D800C33A72 /* FEED_WITH_LOADING_ERROR_dark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FEED_WITH_LOADING_ERROR_dark.png; sourceTree = "<group>"; };
 		A6F4AC5A2BCCC76400C33A72 /* Extra_FEED_WITH_LOADING_ERROR_dark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Extra_FEED_WITH_LOADING_ERROR_dark.png; sourceTree = "<group>"; };
+		A6F4AC5C2BCCCFAE00C33A72 /* Paginated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Paginated.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -900,6 +902,7 @@
 		A6609EF52BABC0A600632B21 /* Feed Feature */ = {
 			isa = PBXGroup;
 			children = (
+				A6F4AC5C2BCCCFAE00C33A72 /* Paginated.swift */,
 				A67EAA6E2ADF759A00245BD2 /* FeedItem.swift */,
 				A6162B4E2AE0CAD800EC4F6E /* FeedLoader.swift */,
 				A6EA3B4D2BB1004300EC29D4 /* FeedCache.swift */,
@@ -1856,6 +1859,7 @@
 				A6609EF62BABC0B800632B21 /* FeedImageDataLoader.swift in Sources */,
 				A67EAA6F2ADF759A00245BD2 /* FeedItem.swift in Sources */,
 				A6884F692BBE403200DB58B5 /* ImageComment.swift in Sources */,
+				A6F4AC5E2BCCD24D00C33A72 /* Paginated.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -32,7 +32,7 @@ final class LoadFeedFromCacheUseCaseTests: XCTestCase {
   
   func test_load_deliversNoImagesOnEmptyCache() {
     let (sut, store) = makeSUT()
-    expect(sut, toCompletWith: .success([])) {
+    expect(sut, toCompletWith: .success(Paginated(feed: []))) {
       store.complelteRetrievalWithEmptyCache()
     }
   }
@@ -42,7 +42,7 @@ final class LoadFeedFromCacheUseCaseTests: XCTestCase {
     let (sut, store) = makeSUT(currentDate: { fixedCurrentDate })
     let feed = uniqueImageFeed()
     let nonExpiredtimestamp = fixedCurrentDate.minusFeedCacheMaxAge().adding(seconds: 1)
-    expect(sut, toCompletWith: .success(feed.models)) {
+    expect(sut, toCompletWith: .success(Paginated(feed: feed.models))) {
       store.complelteRetrieval(with: feed.local, timestamp: nonExpiredtimestamp)
     }
   }
@@ -52,7 +52,7 @@ final class LoadFeedFromCacheUseCaseTests: XCTestCase {
     let (sut, store) = makeSUT(currentDate: { fixedCurrentDate })
     let feed = uniqueImageFeed()
     let expirationtimestamp = fixedCurrentDate.minusFeedCacheMaxAge()
-    expect(sut, toCompletWith: .success([])) {
+    expect(sut, toCompletWith: .success(Paginated<FeedImage>(feed: []))) {
       store.complelteRetrieval(with: feed.local, timestamp: expirationtimestamp)
     }
   }
@@ -62,7 +62,7 @@ final class LoadFeedFromCacheUseCaseTests: XCTestCase {
     let (sut, store) = makeSUT(currentDate: { fixedCurrentDate })
     let feed = uniqueImageFeed()
     let expiredtimestamp = fixedCurrentDate.minusFeedCacheMaxAge().adding(seconds: -1)
-    expect(sut, toCompletWith: .success([])) {
+    expect(sut, toCompletWith: .success(Paginated<FeedImage>(feed: []))) {
       store.complelteRetrieval(with: feed.local, timestamp: expiredtimestamp)
     }
   }

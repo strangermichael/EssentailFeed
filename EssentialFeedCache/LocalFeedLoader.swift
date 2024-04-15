@@ -57,9 +57,9 @@ extension LocalFeedLoader: FeedLoader {
       case let .failure(error):
         completion(.failure(error))
       case let .success(.some(cache)) where FeedCachePolicy.validate(cache.timestamp, against: this.currentDate()):
-        completion(.success(cache.feed.toModels()))
+        completion(.success(Paginated<FeedImage>(feed: cache.feed.toModels())))
       case .success(.some), .success(.none):
-        completion(.success([]))
+        completion(.success(Paginated<FeedImage>(feed: [])))
       }
     }
   }

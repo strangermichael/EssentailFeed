@@ -9,10 +9,12 @@ import Foundation
 import EssentialFeed
 import EssentialFeedAPI
 
-public typealias RemoteFeedLoader = RemoteLoader<[FeedImage]>
+public typealias RemoteFeedLoader = RemoteLoader<Paginated<FeedImage>>
 
 public extension RemoteFeedLoader {
   convenience init(client: HTTPClient, url: URL) {
-    self.init(client: client, url: url, mapper: FeedItemMapper.map)
+    self.init(client: client, url: url, mapper: { data, response in
+      try Paginated(feed: FeedItemMapper.map(data, response))
+    })
   }
 }

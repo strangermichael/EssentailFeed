@@ -27,7 +27,7 @@ final class FeedLoaderCacheDecoratorTests: XCTestCase, FeedLoaderTestCase {
     let feed = uniqueFeed()
     let sut = makeSUT(loaderResult: .success(feed), cache: cache)
     sut.load { _ in }
-    XCTAssertEqual(cache.messages, [.save(feed)])
+    XCTAssertEqual(cache.messages, [.save(feed.feed)])
   }
   
   func test_load_doesNotCacheOnLoaderFailure() {

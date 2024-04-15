@@ -29,7 +29,7 @@ extension FeedUIIntegrationTests {
     }
     
     func completeFeedLoading(with images: [FeedImage] = [], at index: Int = 0) {
-      feedRequests[index](.success(images))
+      feedRequests[index](.success(Paginated(feed: images)))
     }
     
     func completeFeedloadingWithError(at index: Int) {
