@@ -24,7 +24,7 @@ final class FeedViewAdapter: ResourceView {
   }
   
   func display(_ viewModel: Paginated<FeedImage>) {
-    let cellControllers = viewModel.feed.map { model in
+     let feedCellControllers = viewModel.feed.map { model in
       let adapter = FeedImageDataLoaderPresentationAdapter<WeakRefVirtualProxy<FeedImageCellController>, UIImage>(model: model, imageLoader: imageLoader)
       let view = FeedImageCellController(delegate: adapter, selection: { [weak self] in
         self?.selection(model)
@@ -34,6 +34,13 @@ final class FeedViewAdapter: ResourceView {
         imageTransformer: UIImage.init)
       return CellController(id: model, view) //用和数据有关的id来标识
     }
-    controller?.display(cellControllers: cellControllers)
+    
+    let loadMoreCellController = LoadMoreCellController(callback: { [weak self] in
+      viewModel.loadMore?( { _ in
+        
+      })
+    })
+    let loadMoreCellControllers = [CellController(id: UUID(), loadMoreCellController)]
+    controller?.display(feedCellControllers, loadMoreCellControllers)
   }
 }

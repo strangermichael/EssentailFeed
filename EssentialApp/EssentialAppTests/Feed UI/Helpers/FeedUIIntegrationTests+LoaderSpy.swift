@@ -15,6 +15,8 @@ extension FeedUIIntegrationTests {
       feedRequests.count
     }
     
+    private(set) var loadMoreCallCount: Int = 0
+    
     private var imageRequests = [(url: URL, completion: (FeedImageDataLoader.Result) -> Void)]()
     var loadedImageURLs: [URL] {
       imageRequests.map{ $0.url }
@@ -29,7 +31,9 @@ extension FeedUIIntegrationTests {
     }
     
     func completeFeedLoading(with images: [FeedImage] = [], at index: Int = 0) {
-      feedRequests[index](.success(Paginated(feed: images)))
+      feedRequests[index](.success(Paginated(feed: images, loadMore: {[weak self] _ in
+        self?.loadMoreCallCount += 1
+      })))
     }
     
     func completeFeedloadingWithError(at index: Int) {

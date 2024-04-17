@@ -51,10 +51,12 @@ final public class ListViewController: UITableViewController, UITableViewDataSou
     onRefresh?()
   }
   
-  public func display(cellControllers: [CellController]) {
+  public func display(_ sections: [CellController]...) {
     var snapshot = NSDiffableDataSourceSnapshot<Int, CellController>()
-    snapshot.appendSections([0])
-    snapshot.appendItems(cellControllers, toSection: 0)
+    sections.enumerated().forEach { section, cellController in
+      snapshot.appendSections([section])
+      snapshot.appendItems(cellController, toSection: section)
+    }
     if #available(iOS 15.0, *) {
       dataSource.applySnapshotUsingReloadData(snapshot) //不加这个测试过不了lol
     } else {

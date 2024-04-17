@@ -85,6 +85,16 @@ extension ListViewController {
     return view
   }
   
+  func cell(row: Int, section: Int) -> UITableViewCell? {
+    let numberOfRenderedFeedImageViews = tableView.numberOfSections == 0 ? 0 : tableView.numberOfRows(inSection: section)
+    guard numberOfRenderedFeedImageViews > row else {
+      return nil
+    }
+    let ds = tableView.dataSource
+    let index = IndexPath(row: row, section: section)
+    return ds?.tableView(tableView, cellForRowAt: index)
+  }
+  
   func numberOfRenderedFeedImageViews() -> Int {
     //diff datasource 只有第一个snapshot来的时候section才不为0
     tableView.numberOfSections == 0 ? 0 : tableView.numberOfRows(inSection: feedImagesSection)
@@ -92,6 +102,10 @@ extension ListViewController {
   
   private var feedImagesSection: Int {
     0
+  }
+  
+  private var feedLoadMoreSection: Int {
+    1
   }
   
   func feedImageView(at row: Int) -> UITableViewCell? {
@@ -120,6 +134,13 @@ extension ListViewController {
     let delegate = tableView.delegate
     let index = IndexPath(row: row, section: feedImagesSection)
     delegate?.tableView?(tableView, didSelectRowAt: index)
+  }
+  
+  func simulateLoadMoreFeedAction() {
+    guard let view = cell(row: 0, section: feedLoadMoreSection) else { return }
+    let delegate = tableView.delegate
+    let index = IndexPath(row: 0, section: feedLoadMoreSection)
+    delegate?.tableView?(tableView, willDisplay: view, forRowAt: index)
   }
 }
 

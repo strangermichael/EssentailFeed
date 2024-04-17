@@ -155,6 +155,15 @@ class FeedUIIntegrationTests: XCTestCase {
     XCTAssertEqual(view1?.renderedImage, imageData1, "Expected image for second view once loading completes successfully")
   }
   
+  func test_loadMoreActions_requestMoreFromLoader() {
+    let (sut, loader) = makeSUT()
+    sut.simulateAppearance()
+    loader.completeFeedLoading(with: [makeImage(), makeImage()])
+    XCTAssertEqual(loader.loadMoreCallCount, 0, "Expected no load more requests until load more action")
+    sut.simulateLoadMoreFeedAction()
+    XCTAssertEqual(loader.loadMoreCallCount, 1, "Expected load more requests once load more")
+  }
+  
   func test_feedImageViewRetryButton_isVisibleOnImageURLLoadError() {
     let (sut, loader) = makeSUT()
     sut.simulateAppearance()
