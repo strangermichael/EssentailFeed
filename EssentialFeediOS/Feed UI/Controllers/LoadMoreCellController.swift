@@ -9,7 +9,7 @@ import UIKit
 import EssentialFeedPresentation
 
 public class LoadMoreCellController: NSObject, UITableViewDataSource, UITableViewDelegate {
-  let cell = LoadMoreCell()
+  let loadMoreCell = LoadMoreCell()
   
   private let callback: () -> Void
   
@@ -22,10 +22,11 @@ public class LoadMoreCellController: NSObject, UITableViewDataSource, UITableVie
   }
   
   public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    cell
+    loadMoreCell
   }
   
   public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    guard loadMoreCell.isLoading == false else { return }
     callback()
   }
 }
@@ -33,12 +34,12 @@ public class LoadMoreCellController: NSObject, UITableViewDataSource, UITableVie
 
 extension LoadMoreCellController: ResourceLoadingView {
   public func display(viewModel: EssentialFeedPresentation.ResourceLoadingViewModel) {
-    cell.isLoading = viewModel.isLoading
+    loadMoreCell.isLoading = viewModel.isLoading
   }
 }
 
 extension LoadMoreCellController: ResourceErrorView {
   public func display(_ viewModel: EssentialFeedPresentation.ResourceErrorViewModel) {
-    cell.message = viewModel.message
+    loadMoreCell.message = viewModel.message
   }
 }
