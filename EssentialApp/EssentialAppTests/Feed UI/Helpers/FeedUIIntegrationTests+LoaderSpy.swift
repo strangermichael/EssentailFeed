@@ -15,7 +15,9 @@ extension FeedUIIntegrationTests {
       feedRequests.count
     }
     
-    private(set) var loadMoreCallCount: Int = 0
+    var loadMoreCallCount: Int {
+      loadMoreRequests.count
+    }
     
     private var imageRequests = [(url: URL, completion: (FeedImageDataLoader.Result) -> Void)]()
     var loadedImageURLs: [URL] {
@@ -25,19 +27,32 @@ extension FeedUIIntegrationTests {
     private(set) var cancelledImageURLs: [URL] = []
     
     private var feedRequests: [(FeedLoader.Result) -> Void] = []
+    private var loadMoreRequests: [(Result<Paginated<FeedImage>, Error>) -> Void] = []
     
     func load(completion: @escaping (FeedLoader.Result) -> Void) {
       feedRequests.append(completion)
     }
     
     func completeFeedLoading(with images: [FeedImage] = [], at index: Int = 0) {
-      feedRequests[index](.success(Paginated(feed: images, loadMore: {[weak self] _ in
-        self?.loadMoreCallCount += 1
+      feedRequests[index](.success(Paginated(feed: images, loadMore: { [weak self] completionHandler in
+        self?.loadMoreRequests.append(completionHandler)
       })))
     }
     
     func completeFeedloadingWithError(at index: Int) {
       feedRequests[index](.failure(anyNSError()))
+    }
+    
+    func completLoadMore(images: [FeedImage], lastPage: Bool, at index: Int) {
+      loadMoreRequests[index](.success(Paginated(feed: images,
+                                                 loadMore: { [weak self] completionHandler in
+        guard lastPage == false else { return }
+        self?.loadMoreRequests.append(completionHandler)
+      })))
+    }
+    
+    func completLoadMoreWithError(at index: Int) {
+      loadMoreRequests[index](.failure(anyNSError()))
     }
     
     func loadImageData(from url: URL, completion: @escaping (FeedImageDataLoader.Result) -> Void) -> FeedImageDataLoaderTask {

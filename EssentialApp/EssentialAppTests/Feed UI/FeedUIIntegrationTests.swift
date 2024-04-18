@@ -164,6 +164,18 @@ class FeedUIIntegrationTests: XCTestCase {
     XCTAssertEqual(loader.loadMoreCallCount, 1, "Expected load more requests once load more")
     sut.simulateLoadMoreFeedAction()
     XCTAssertEqual(loader.loadMoreCallCount, 1, "Expected no request while loading more")
+    
+    loader.completLoadMore(images: [makeImage()], lastPage: false, at: 0)
+    sut.simulateLoadMoreFeedAction()
+    XCTAssertEqual(loader.loadMoreCallCount, 2, "Expected request after finishing loading more")
+    
+    loader.completLoadMoreWithError(at: 1)
+    sut.simulateLoadMoreFeedAction()
+    XCTAssertEqual(loader.loadMoreCallCount, 3, "Expected request after finishing loading more")
+    
+    loader.completLoadMore(images: [makeImage()], lastPage: true, at: 2)
+    sut.simulateLoadMoreFeedAction()
+    XCTAssertEqual(loader.loadMoreCallCount, 3, "Expected no more request after got the last page data")
   }
   
   func test_feedImageViewRetryButton_isVisibleOnImageURLLoadError() {
