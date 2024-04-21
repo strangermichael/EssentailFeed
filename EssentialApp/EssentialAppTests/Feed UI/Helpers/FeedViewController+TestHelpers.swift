@@ -61,6 +61,14 @@ extension ListViewController {
     refreshControl?.isRefreshing == true
   }
   
+  var isShowingLoadingMore: Bool {
+    loadMoreCell()?.isLoading == true
+  }
+  
+  private func loadMoreCell() -> LoadMoreCell? {
+    cell(row: 0, section: feedLoadMoreSection) as? LoadMoreCell
+  }
+  
   var errorMessage: String? {
     errorView.message
   }
@@ -137,7 +145,7 @@ extension ListViewController {
   }
   
   func simulateLoadMoreFeedAction() {
-    guard let view = cell(row: 0, section: feedLoadMoreSection) else { return }
+    guard let view = loadMoreCell() else { return }
     let delegate = tableView.delegate
     let index = IndexPath(row: 0, section: feedLoadMoreSection)
     delegate?.tableView?(tableView, willDisplay: view, forRowAt: index)

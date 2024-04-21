@@ -339,6 +339,22 @@ class FeedUIIntegrationTests: XCTestCase {
     XCTAssertEqual(selectedImages, [image0, image1])
   }
   
+  func test_loadingMore_isVisibleWhileLoadingMore() {
+    let (sut, loader) = makeSUT()
+    sut.simulateAppearance()
+    XCTAssertEqual(sut.isShowingLoadingMore, false, "Expected no loading more once view appears")
+    loader.completeFeedLoading(at: 0)
+    XCTAssertEqual(sut.isShowingLoadingMore, false, "Expected no loading once loader is completed")
+    sut.simulateLoadMoreFeedAction()
+    XCTAssertEqual(sut.isShowingLoadingMore, true, "Expected show loading once user initiates load more")
+    loader.completLoadMore(images: [makeImage()], lastPage: false, at: 0)
+    XCTAssertEqual(sut.isShowingLoadingMore, false, "Expected no loading more once user finish load more")
+    sut.simulateLoadMoreFeedAction()
+    XCTAssertEqual(sut.isShowingLoadingMore, true, "Expected show loading once user initiates load more")
+    loader.completLoadMoreWithError(at: 1)
+    XCTAssertEqual(sut.isShowingLoadingMore, false, "Expected no loading more once user finish load more")
+  }
+  
   //MARK: - Helpers
   private func makeSUT(selection: @escaping (FeedImage) -> Void = { _ in }, file: StaticString = #filePath, line: UInt = #line) -> (sut: ListViewController, loader: LoaderSpy) {
     let loader = LoaderSpy()
