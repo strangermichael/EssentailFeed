@@ -46,8 +46,8 @@
             filePath = "EssentialApp/EssentialAppTests/Feed UI/FeedUIIntegrationTests.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "164"
-            endingLineNumber = "164"
+            startingLineNumber = "172"
+            endingLineNumber = "172"
             landmarkName = "test_loadMoreActions_requestMoreFromLoader()"
             landmarkType = "7">
          </BreakpointContent>
