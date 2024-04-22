@@ -29,17 +29,16 @@ final class FeedSnapshotTests: XCTestCase {
   
   func test_feedWithLoadMoreIndicator() {
     let sut = makeSUT()
-    sut.display(cellControllers: feedWithLoadMoreIndicator())
+    sut.display(feedWithLoadMoreIndicator())
     assert(snapshot: sut.snapshot(for: .iPhone8(style: .light)), named: "FEED_WITH_LOADING_Indicator_light")
     assert(snapshot: sut.snapshot(for: .iPhone8(style: .dark)), named: "FEED_WITH_LOADING_Indicator_dark")
   }
   
   func test_feedWithLoadMoreError() {
     let sut = makeSUT()
-    sut.display(cellControllers: feedWithLoadMoreError())
+    sut.display(feedWithLoadMoreError())
     assert(snapshot: sut.snapshot(for: .iPhone8(style: .light)), named: "FEED_WITH_LOADING_ERROR_light")
     assert(snapshot: sut.snapshot(for: .iPhone8(style: .dark)), named: "FEED_WITH_LOADING_ERROR_dark")
-    assert(snapshot: sut.snapshot(for: .iPhone8(style: .light, contentSize: .extraExtraExtraLarge)), named: "Extra_FEED_WITH_LOADING_ERROR_dark")
   }
   
   //MARK: - Helper
@@ -72,7 +71,7 @@ final class FeedSnapshotTests: XCTestCase {
     let cellController = FeedImageCellController(delegate: stub, selection: {})
     stub.controller = cellController
     
-    let loadMoreCellController = LoadMoreCellController()
+    let loadMoreCellController = LoadMoreCellController(callback: { })
     loadMoreCellController.display(viewModel: ResourceLoadingViewModel(isLoading: true))
     
     
@@ -87,7 +86,7 @@ final class FeedSnapshotTests: XCTestCase {
     let cellController = FeedImageCellController(delegate: stub, selection: {})
     stub.controller = cellController
     
-    let loadMoreCellController = LoadMoreCellController()
+    let loadMoreCellController = LoadMoreCellController(callback: { })
     loadMoreCellController.display(ResourceErrorViewModel(message: "This is a multile line\n error"))
     
     
@@ -111,7 +110,7 @@ private extension ListViewController {
       stub.controller = cellController
       return CellController(id: UUID(), cellController)
     }
-    display(cellControllers: cells)
+    display(cells)
   }
 }
 

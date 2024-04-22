@@ -32,7 +32,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
   
   private lazy var navigationController: UINavigationController = {
     //这个ur是最新的，视频里url图片下载不了
-    let remoteURL = baseURL.appending(path: "/v1/feed")
+    let remoteURL = FeedEndpoint.get.url(baseURL: baseURL)!
     let remoteFeedLoader = RemoteFeedLoader(client: httpClient, url: remoteURL)
     let remoteImageLoader = RemoteFeedImageDataLoader(client: httpClient)
     let localImageLoader = LocalFeedImageDataLoader(store: store)

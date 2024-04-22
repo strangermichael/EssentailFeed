@@ -11,7 +11,7 @@ import EssentialFeediOS
 final class ListSnapshotTests: XCTestCase {
   func test_emptyList() {
     let sut = makeSUT()
-    sut.display(cellControllers: emptyList())
+    sut.display(emptyList())
     assert(snapshot: sut.snapshot(for: .iPhone8(style: .light)), named: "EMPTY_LIST_light")
     assert(snapshot: sut.snapshot(for: .iPhone8(style: .dark)), named: "EMPTY_LIST_dark")
   }
