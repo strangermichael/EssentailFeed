@@ -73,6 +73,10 @@ extension ListViewController {
     errorView.message
   }
   
+  var loadMoreErrorMessage: String? {
+    loadMoreCell()?.message
+  }
+  
   func simulateErrorViewTap() {
     errorView.simulateTap()
   }
@@ -141,6 +145,12 @@ extension ListViewController {
   func simulaTapOnFeedImage(at row: Int) {
     let delegate = tableView.delegate
     let index = IndexPath(row: row, section: feedImagesSection)
+    delegate?.tableView?(tableView, didSelectRowAt: index)
+  }
+  
+  func simulateTapOnLoadMoreError() {
+    let delegate = tableView.delegate
+    let index = IndexPath(row: 0, section: feedLoadMoreSection)
     delegate?.tableView?(tableView, didSelectRowAt: index)
   }
   
